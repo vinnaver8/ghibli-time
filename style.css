@@ -1,34 +1,19 @@
 body {
   margin: 0;
   padding: 0;
+  height: 100vh;
   background-size: cover;
   background-position: center;
-  background-repeat: no-repeat;
-  height: 100vh;
+  font-family: 'Segoe UI', sans-serif;
+  color: white;
+  text-shadow: 0 0 8px rgba(0,0,0,0.6);
   transition: background-image 1s ease-in-out;
-  font-family: 'Garamond', serif;
 }
 
-.overlay {
-  position: relative;
-  z-index: 2;
-  color: white;
+.content {
   text-align: center;
-  padding-top: 20%;
-}
-
-button {
-  padding: 12px 24px;
-  font-size: 1.2em;
-  border: none;
-  background-color: rgba(255, 255, 255, 0.7);
-  border-radius: 10px;
-  cursor: pointer;
-  box-shadow: 0 0 20px gold;
-  transition: all 0.3s ease-in-out;
-}
-
-button:hover {
-  background-color: gold;
-  color: white;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
