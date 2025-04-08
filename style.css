@@ -3,25 +3,32 @@ body {
   padding: 0;
   background-size: cover;
   background-position: center;
-  transition: background-image 1s ease-in-out;
+  background-repeat: no-repeat;
   height: 100vh;
-  font-family: 'Poppins', sans-serif;
+  transition: background-image 1s ease-in-out;
+  font-family: 'Garamond', serif;
 }
 
-.toggle-container {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-}
-
-#themeToggle {
-  background: rgba(255, 255, 255, 0.1);
+.overlay {
+  position: relative;
+  z-index: 2;
   color: white;
-  border: 2px solid white;
-  padding: 10px 20px;
-  border-radius: 12px;
+  text-align: center;
+  padding-top: 20%;
+}
+
+button {
+  padding: 12px 24px;
+  font-size: 1.2em;
+  border: none;
+  background-color: rgba(255, 255, 255, 0.7);
+  border-radius: 10px;
   cursor: pointer;
-  backdrop-filter: blur(6px);
-  font-weight: bold;
-  box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+  box-shadow: 0 0 20px gold;
+  transition: all 0.3s ease-in-out;
+}
+
+button:hover {
+  background-color: gold;
+  color: white;
 }
