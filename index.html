@@ -7,6 +7,32 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <title>Scroll-Driven Card with Redbox Bounce/Pulse</title>
   <style>
+    .glow-box {
+  border: 2px solid red;
+  border-radius: 12px;
+  animation: glow 2s ease-in-out infinite, scalePulse 4s ease-in-out infinite;
+}
+
+@keyframes glow {
+  0% {
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.6);
+  }
+  100% {
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
+  }
+}
+
+@keyframes scalePulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.03);
+  }
+}
     /* ----------------------------------------
        Basic setup: enough vertical scroll space
        ---------------------------------------- */
@@ -152,31 +178,21 @@
               </svg>
             </div>
           </div>
-
-          <!-- REDBOX SECTION -->
-          <div id="redbox" class="anim2">
-            <!-- Inner wrapper for bounce/pulse -->
-            <div id="redbox-inner">
-              <img src="redbox.png"
-                   alt="Version Stack"
-                   class="stack w-[250%] h-[250] rounded-xl shadow-lg"/>
-            </div>
-          </div>
-
-          <!-- “Version History” text -->
-          <div class="absolute bottom-6 left-6">
-            <h3 id="t2" class="text-lg font-semibold text-white drop-shadow">Version History</h3>
-            <p id="p2" class="text-white text-sm drop-shadow">
-              Track every edit effortlessly, and never lose a single change.
-            </p>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </div>
-
-  <script>
+<!-- REDBOX SECTION -->
+<div id="slot1"></div>
+<div id="slot2">
+<div id="yourRedBox" class="glow-box">
+<img src="your-image.jpg" />
+</div>
+</div>
+<!-- “Version History” text -->
+<div class="absolute bottom-6 left-6">
+<h3 id="t2" class="text-lg font-semibold text-white drop-shadow">Version History</h3>
+<p id="p2" class="text-white text-sm drop-shadow">
+ Track every edit effortlessly, and never lose a single change.
+</p>
+</div></div></div></div></div>
+<script>
     (function() {
       const container = document.getElementById('scroll-container');
       const vh = window.innerHeight;
@@ -202,6 +218,14 @@
         const p1 = Math.min(Math.max((prog - 0) / half, 0), 1);
         /* p2 from 0 → 1 during 50%–100% scroll */
         const p2 = Math.min(Math.max((prog - half) / half, 0), 1);
+        function moveToSlot1() {
+  const slot1 = document.getElementById('slot1');
+  const slot2 = document.getElementById('slot2');
+  const content = document.getElementById('yourRedBox');
+
+  slot1.appendChild(content); // move instantly
+  content.classList.remove('glow-box'); // remove glow and animation
+        }
 
         /* ── Slot 1 animations: fly up & fade out as p1→1; instantly visible when p1=0 ── */
         slot1Els.forEach(el => {
