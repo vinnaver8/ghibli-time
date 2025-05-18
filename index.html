@@ -2,122 +2,172 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Auto-Scrolling Box</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <!-- TailwindCSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <title>3D Scroll-Triggered Card Animation</title>
   <style>
-    body {
-      height: 2000px; /* Just for scrolling demo */
-      margin: 0;
-      padding: 0;
-      background: #f0f0f0;
+    /* 1. Give plenty of vertical space so scrolling can happen */
+    #scroll-container {
+      height: 200vh; /* Two “card heights” worth of scroll */
     }
-    .scroll-section {
-      width: 300px;
-      height: 400px;
-      margin: 150px auto;
-      border: 2px solid #333;
-      overflow: hidden;
-      background: #fff;
-      position: relative;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
+
+    /* 2. Pin the .card-wrapper in mid-viewport with perspective for 3D */
+    #sticky-card {
+      position: sticky;
+      top: 50vh; /* sticks at halfway down the screen */
+      transform: translateY(-50%);
+      perspective: 1000px; /* enable 3D transforms on children */
     }
-    .scroll-content {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      /* Make content taller than box for scrolling */
-      height: 700px;
-      padding: 10px 0;
+
+    /* 3. Each card shares the same absolute area inside .card-wrapper */
+    .card {
+      position: absolute;
+      left: 50%;
+      top: 0;
+      transform: translateX(-50%);
+      width: 18rem;       /* 288px */
+      height: 12rem;      /* 192px */
+      border-radius: 1rem; /* rounded-2xl */
+      background-color: white;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      transform-style: preserve-3d;
+      transition: transform 0.8s ease, opacity 0.8s ease;
+      opacity: 0;
     }
-    .scroll-content img {
-      width: 80%;
-      margin: 20px 0;
-      border-radius: 12px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.07);
-    }
+
+    /* 4. Card 1 initially visible (opacity=1), Card 2 hidden */
+    .card-1 { opacity: 1; }
+    .card-2 { opacity: 0; }
+
+    /* 5. Arrow styling (initially hidden at center of Card 1) */
     .arrow {
       position: absolute;
-      left: 12px;
-      font-size: 28px;
-      color: #555;
-      z-index: 2;
-      transition: transform 0.2s;
-      user-select: none;
-      pointer-events: none;
+      width: 2.5rem; /* 40px */
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      opacity: 0;
+      transition: transform 1s ease, opacity 1s ease;
     }
-    .arrow.up { top: 10px; }
-    .arrow.down { bottom: 10px; }
+
+    /* 6. Card 2 icon: starts small+transparent at center */
+    .svg-icon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.5);
+      opacity: 0;
+      transition: transform 0.8s ease, opacity 0.8s ease;
+      width: 3rem;  /* 48px */
+    }
+
+    /* 7. When `.animate-card1` is added to .card-1 */
+    .card-1.animate-card1 {
+      transform: translateX(-50%) translateY(120px) rotateX(20deg);
+      opacity: 1;
+    }
+    /* Make arrows fly out */
+    .card-1.animate-card1 .arrow-left {
+      opacity: 1;
+      transform: translate(-200px, -200px) rotate(-360deg);
+    }
+    .card-1.animate-card1 .arrow-right {
+      opacity: 1;
+      transform: translate(200px, 200px) rotate(360deg);
+    }
+
+    /* 8. When `.animate-card2` is added to .card-2 */
+    .card-2.animate-card2 {
+      transform: translateX(-50%) translateY(0) rotateX(0);
+      opacity: 1;
+    }
+    .card-2.animate-card2 .svg-icon {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
   </style>
 </head>
-<body>
-  <div class="scroll-section" id="autoscroll-box">
-    <div class="arrow up">▲</div>
-    <div class="arrow down">▼</div>
-    <div class="scroll-content" id="scroll-content">
-      <!-- Your image and content -->
-      <img src="lbox.png" alt="Box Image" />
-      <img src="lbox.png" alt="Box Image" />
-      <img src="lbox.png" alt="Box Image" />
-      <img src="lbox.png" alt="Box Image" />
-      <img src="lbox.png" alt="Box Image" />
-      <!-- Add more images/content as needed -->
+<body class="bg-gray-100">
+
+  <!-- 1. SCROLL CONTAINER -->
+  <div id="scroll-container">
+    <!-- 2. STICKY WRAPPER (pins cards in view) -->
+    <div id="sticky-card">
+      <!-- CARD 1 -->
+      <div class="card card-1 left-1/2 top-0">
+        <!-- Two centered arrows -->
+        <img src="arrow.svg" class="arrow arrow-left" alt="Arrow Left" />
+        <img src="arrow.svg" class="arrow arrow-right" alt="Arrow Right" />
+        <!-- Card 1 content -->
+        <div class="absolute inset-0 flex flex-col items-center justify-center">
+          <h2 class="text-2xl font-bold">Card 1</h2>
+          <p class="mt-2 text-sm text-gray-600">This is the first card.</p>
+        </div>
+      </div>
+
+      <!-- CARD 2 -->
+      <div class="card card-2 left-1/2 top-0">
+        <!-- Your custom SVG icon appears from center -->
+        <img src="your-icon.svg" class="svg-icon" alt="Card 2 Icon" />
+        <!-- Card 2 content -->
+        <div class="absolute inset-0 flex flex-col items-center justify-center">
+          <h2 class="text-2xl font-bold">Card 2</h2>
+          <p class="mt-2 text-sm text-gray-600">This is the second card.</p>
+        </div>
+      </div>
     </div>
   </div>
 
+  <!-- 3. SCROLL-TRIGGER LOGIC -->
   <script>
-    const section = document.getElementById('autoscroll-box');
-    const content = document.getElementById('scroll-content');
-    let direction = 1; // 1 = down, -1 = up
-    let scrolling = false;
-    let scrollInterval = null;
+    (function() {
+      // Grab references
+      const container = document.getElementById('scroll-container');
+      const card1 = document.querySelector('.card-1');
+      const card2 = document.querySelector('.card-2');
 
-    // Helper: Check if section is in viewport
-    function isInViewport(elem) {
-      const rect = elem.getBoundingClientRect();
-      return (
-        rect.top < window.innerHeight &&
-        rect.bottom > 0
-      );
-    }
+      let triggeredCard1 = false;
+      let triggeredCard2 = false;
 
-    function startAutoScroll() {
-      if (scrolling) return;
-      scrolling = true;
-      scrollInterval = setInterval(() => {
-        // Scroll the box content
-        section.scrollTop += direction * 1.5; // speed
-        // Reverse at top or bottom
-        if (
-          section.scrollTop + section.clientHeight >= content.clientHeight ||
-          section.scrollTop <= 0
-        ) {
-          direction *= -1;
+      // Determine at what scroll position to trigger Card 1’s throw
+      const triggerPoint1 = window.innerHeight * 0.2; // 20% down viewport
+      // Determine at what scroll position to revert to Card 2
+      const triggerPoint2 = window.innerHeight * 0.2; // same threshold for reverse
+
+      window.addEventListener('scroll', () => {
+        const scrollY = window.scrollY;
+
+        // ---- TRIGGER CARD 1 “THROW” when scrolling DOWN past triggerPoint1 ----
+        if (!triggeredCard1 && scrollY > triggerPoint1) {
+          triggeredCard1 = true;
+          // 1) Animate Card 1 falling + arrows splitting
+          card1.classList.add('animate-card1');
+          // 2) Hide Card 2 if visible
+          card2.classList.remove('animate-card2');
+          triggeredCard2 = false; // reset so Card 2 can re-trigger on scroll-up
         }
-      }, 13); // ~60 frames/sec
-    }
 
-    function stopAutoScroll() {
-      scrolling = false;
-      clearInterval(scrollInterval);
-    }
+        // ---- TRIGGER CARD 2 “POP-IN” when scrolling UP above triggerPoint2 ----
+        if (!triggeredCard2 && scrollY < triggerPoint2) {
+          triggeredCard2 = true;
+          // 1) Show Card 2 pop-in
+          card2.classList.add('animate-card2');
+          // 2) Reset Card 1 to original position (remove the throw)
+          card1.classList.remove('animate-card1');
+          triggeredCard1 = false; // allow re-trigger on next scroll-down
+        }
+      });
 
-    // Watch scroll/resize
-    function checkScroll() {
-      if (isInViewport(section)) {
-        startAutoScroll();
-      } else {
-        stopAutoScroll();
-      }
-    }
-
-    window.addEventListener('scroll', checkScroll);
-    window.addEventListener('resize', checkScroll);
-    // In case user reloads with section already in view
-    checkScroll();
+      // OPTIONAL: Trigger on load if already scrolled
+      window.addEventListener('load', () => {
+        const scrollY = window.scrollY;
+        if (scrollY > triggerPoint1) {
+          card1.classList.add('animate-card1');
+          triggeredCard1 = true;
+        }
+      });
+    })();
   </script>
 </body>
 </html>
