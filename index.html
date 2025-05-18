@@ -87,52 +87,55 @@
             </p>
           </div>
         </div>
-
-        <!-- ====== SLOT 2: appears second ====== -->
-        <div id="slot-2" class="card-content p-6">
-          <!-- Version badge in top‐left -->
-          <div class="absolute top-4 left-4">
-            <div
-              id="b3"
-              class="animatable bg-blue-500 text-white px-2 py-1 rounded-full text-xs drop-shadow"
-            >
-              v1.2
-            </div>
-          </div>
-
-          <!-- History icon (using your SVG) in left‐center -->
-          <div class="absolute left-0 top-1/2 transform -translate-y-1/2">
-            <div
-              id="a3"
-              class="animatable bg-blue-500 w-8 h-8 flex items-center justify-center rounded-full shadow-lg drop-shadow"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" class="w-5 h-5 text-white">
-                <path d="M24,46A22,22,0,1,1,46,24,22,22,0,0,1,24,46Z" fill="#38b1e7"/>
-                <circle cx="24" cy="24" r="16" fill="#b7e3f6"/>
-                <path d="M29.09,29.78a2,2,0,0,1-1.19-.39l-5.09-3.78A2,2,0,0,1,22,24V16a2,2,0,0,1,4,0v7l4.29,3.18A2,2,0,0,1,29.09,29.78Z" fill="#495660"/>
-              </svg>
-            </div>
-          </div>
-
-          <!-- REDBOX IMAGE: starts off-screen (below) and flies up to center -->
-          <div id="redbox" class="animatable absolute left-1/2 bottom-[-80px] transform -translate-x-1/2">
-            <img src="redbox.png" alt="Version Stack" class="w-40 rounded-xl shadow-lg" />
-          </div>
-
-          <!-- “Version History” text: appears during slot 2, static (no translate) -->
-          <div class="absolute bottom-6 left-6">
-            <h3 id="t2" class="text-lg font-semibold text-white drop-shadow">Version History</h3>
-            <p id="p2" class="text-white text-sm drop-shadow">
-              Track every edit effortlessly, and never lose a single change.
-            </p>
-          </div>
-        </div>
-
-      </div>
+<!-- SLOT 2: -->
+<div id="slot-2" class="card-content p-6">
+  <!-- Version badge in top-left -->
+  <div class="absolute top-4 left-4">
+    <div
+      id="b3"
+      class="animatable bg-blue-500 text-white px-2 py-1 rounded-full text-xs drop-shadow"
+    >
+      v1.2
     </div>
   </div>
 
-  <script>
+  <!-- History icon (as before) -->
+  <div class="absolute left-0 top-1/2 transform -translate-y-1/2">
+    <div
+      id="a3"
+      class="animatable bg-blue-500 w-8 h-8 flex items-center justify-center rounded-full shadow-lg drop-shadow"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" class="w-5 h-5 text-white">
+        <path d="M24,46A22,22,0,1,1,46,24,22,22,0,0,1,24,46Z" fill="#38b1e7"/>
+        <circle cx="24" cy="24" r="16" fill="#b7e3f6"/>
+        <path d="M29.09,29.78a2,2,0,0,1-1.19-.39l-5.09-3.78A2,2,0,0,1,22,24V16a2,2,0,0,1,4,0v7l4.29,3.18A2,2,0,0,1,29.09,29.78Z" fill="#495660"/>
+      </svg>
+    </div>
+  </div>
+ <!-- REDBOX IMAGE: 80% inside card, 20% outside for 3D effect -->
+  <div
+    id="redbox"
+    class="animatable absolute left-1/2 bottom-[-70px] transform -translate-x-1/2"
+  >
+    <img
+      src="redbox.png"
+      alt="Version Stack"
+      class="w-[80%] h-auto rounded-xl shadow-lg"
+    />
+  </div>
+
+  <!-- “Version History” text: appears during slot 2, static -->
+  <div class="absolute bottom-6 left-6">
+    <h3 id="t2" class="text-lg font-semibold text-white drop-shadow">Version History</h3>
+    <p id="p2" class="text-white text-sm drop-shadow">
+      Track every edit effortlessly, and never lose a single change.
+    </p>
+  </div>
+</div>
+</div>
+</div>
+</div>
+ <script>
     (function() {
       const container = document.getElementById('scroll-container');
       const vh = window.innerHeight;
