@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Anime.js Arrows Animation</title>
+  <title>Anime.js Arrows Stay Center</title>
   <style>
     body {
       display: flex;
@@ -21,7 +21,6 @@
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
       overflow: hidden;
     }
-    /* 'Team' text starts hidden (opacity 0, scale 0.5) */
     #team {
       position: absolute;
       top: 20px;
@@ -31,27 +30,24 @@
       font-size: 24px;
       opacity: 0;
     }
-    /* Arrow shapes: CSS triangles */
     .arrow {
       position: absolute;
       width: 0;
       height: 0;
-      border-top: 10px solid transparent;
-      border-bottom: 10px solid transparent;
+      border-top: 12px solid transparent;
+      border-bottom: 12px solid transparent;
+      transform: scale(1);
     }
     #arrow1 {
-      /* Right-pointing black triangle */
-      border-left: 20px solid black;
+      border-left: 24px solid black;
       left: 20px;
-      top: -40px; /* start above card */
+      top: -40px;
     }
     #arrow2 {
-      /* Left-pointing black triangle */
-      border-right: 20px solid black;
+      border-right: 24px solid black;
       left: 280px;
-      top: -40px; /* start above card */
+      top: -40px;
     }
-    /* User tags (initially hidden) */
     .tag {
       position: absolute;
       padding: 4px 10px;
@@ -66,12 +62,12 @@
     #tag1 {
       background: #4A90E2;
       left: 20px;
-      top: -50px; /* just above arrow1 */
+      top: -50px;
     }
     #tag2 {
       background: #FF6A6A;
       left: 280px;
-      top: -50px; /* just above arrow2 */
+      top: -50px;
     }
   </style>
 </head>
@@ -84,63 +80,57 @@
     <div id="tag2" class="tag">Lillanna</div>
   </div>
 
-  <!-- Include Anime.js from CDN -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
   <script>
-    // Create timeline with easing and duration
     const tl = anime.timeline({
       easing: 'easeInOutQuad',
       duration: 1000,
       autoplay: true
     });
 
-    // Animate arrows into place
+    // Move and grow arrow1 to center-left
     tl.add({
       targets: '#arrow1',
-      translateX: 100, // move right
-      translateY: 80,  // move down
-      rotate: 30       // tilt
+      translateX: 110,
+      translateY: 160,
+      rotate: 30,
+      scale: [1, 1.4],
     })
+
+    // Move and grow arrow2 to center-right
     .add({
       targets: '#arrow2',
-      translateX: -100, // move left
-      translateY: 80,   // move down
-      rotate: -30       // tilt
-    }, 0) // start arrow2 at same time as arrow1
+      translateX: -110,
+      translateY: 160,
+      rotate: -30,
+      scale: [1, 1.4],
+    }, 0) // start at same time
 
-    // Fade and scale in the 'Team' text
+    // Fade in team label
     .add({
       targets: '#team',
       scale: [0.5, 1],
       opacity: [0, 1],
       duration: 300
-    }, 1000) // start after arrows finish
+    }, 1000)
 
-    // Fade and scale in the tags (moving them with translate)
+    // Fade in tags
     .add({
       targets: '#tag1',
-      translateX: 100,
-      translateY: 80,
+      translateX: 110,
+      translateY: 160,
       scale: [0.5, 1],
       opacity: [0, 1],
       duration: 300
     }, 1000)
     .add({
       targets: '#tag2',
-      translateX: -100,
-      translateY: 80,
+      translateX: -110,
+      translateY: 160,
       scale: [0.5, 1],
       opacity: [0, 1],
       duration: 300
     }, 1000);
-
-    // After 500ms pause, reverse the animation
-    tl.finished.then(() => {
-      setTimeout(() => {
-        tl.reverse(); // play backwards4
-        tl.play();
-      }, 500);
-    });
   </script>
 </body>
 </html>
