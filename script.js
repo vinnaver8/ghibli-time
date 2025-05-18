@@ -1,27 +1,20 @@
-async function setBackgroundImage() {
-  const hour = new Date().getHours();
-  let timeOfDay;
+window.onload = () => {
+  anime({
+    targets: '#cursor1',
+    translateX: [ -100, 40 ],
+    translateY: [ -100, 10 ],
+    rotate: 45,
+    duration: 1500,
+    easing: 'easeOutExpo'
+  });
 
-  if (hour >= 5 && hour < 12) timeOfDay = 'morning';
-  else if (hour >= 12 && hour < 16) timeOfDay = 'noon';
-  else if (hour >= 16 && hour < 20) timeOfDay = 'evening';
-  else timeOfDay = 'night';
-
-  let weather = 'clear';
-
-  try {
-    const response = await fetch('https://wttr.in/?format=%C');
-    const condition = await response.text();
-
-    if (condition.toLowerCase().includes('snow')) weather = 'snow';
-    else if (condition.toLowerCase().includes('rain') || condition.toLowerCase().includes('drizzle')) weather = 'rain';
-
-  } catch (err) {
-    console.warn('Weather fetch failed:', err);
-  }
-
-  let bgFile = `assets/${timeOfDay}${weather !== 'clear' ? '-' + weather : ''}.jpg`;
-  document.body.style.backgroundImage = `url('${bgFile}')`;
-}
-
-setBackgroundImage();
+  anime({
+    targets: '#cursor2',
+    translateX: [ 300, 160 ],
+    translateY: [ -150, 20 ],
+    rotate: -20,
+    duration: 1800,
+    easing: 'easeOutExpo',
+    delay: 200
+  });
+};
