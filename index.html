@@ -82,55 +82,55 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
   <script>
-    const tl = anime.timeline({
-      easing: 'easeInOutQuad',
-      duration: 1000,
-      autoplay: true
-    });
+  const tl = anime.timeline({
+    easing: 'easeInOutQuad',
+    duration: 1000,
+    autoplay: true
+  });
 
-    // Move and grow arrow1 to center-left
-    tl.add({
-      targets: '#arrow1',
-      translateX: 110,
-      translateY: 160,
-      rotate: 30,
-      scale: [1, 1.4],
-    })
+  // Move and grow arrow1 to center-left (stop short of full center)
+  tl.add({
+    targets: '#arrow1',
+    translateX: 90, // reduced from 110 to leave a gap
+    translateY: 160,
+    rotate: 30,
+    scale: [1, 1.4],
+  })
 
-    // Move and grow arrow2 to center-right
-    .add({
-      targets: '#arrow2',
-      translateX: -110,
-      translateY: 160,
-      rotate: -30,
-      scale: [1, 1.4],
-    }, 0) // start at same time
+  // Move and grow arrow2 to center-right (stop short of full center)
+  .add({
+    targets: '#arrow2',
+    translateX: -90, // reduced from -110 to leave a gap
+    translateY: 160,
+    rotate: -30,
+    scale: [1, 1.4],
+  }, 0) // start at same time
 
-    // Fade in team label
-    .add({
-      targets: '#team',
-      scale: [0.5, 1],
-      opacity: [0, 1],
-      duration: 300
-    }, 1000)
+  // Fade in team label
+  .add({
+    targets: '#team',
+    scale: [0.5, 1],
+    opacity: [0, 1],
+    duration: 300
+  }, 1000)
 
-    // Fade in tags
-    .add({
-      targets: '#tag1',
-      translateX: 110,
-      translateY: 160,
-      scale: [0.5, 1],
-      opacity: [0, 1],
-      duration: 300
-    }, 1000)
-    .add({
-      targets: '#tag2',
-      translateX: -110,
-      translateY: 160,
-      scale: [0.5, 1],
-      opacity: [0, 1],
-      duration: 300
-    }, 1000);
+  // Fade in tags
+  .add({
+    targets: '#tag1',
+    translateX: 90,
+    translateY: 160,
+    scale: [0.5, 1],
+    opacity: [0, 1],
+    duration: 300
+  }, 1000)
+  .add({
+    targets: '#tag2',
+    translateX: -90,
+    translateY: 160,
+    scale: [0.5, 1],
+    opacity: [0, 1],
+    duration: 300
+  }, 1000);
   </script>
 </body>
 </html>
