@@ -123,26 +123,33 @@
       const slot2Els = [
         'b3','a3','d1','t2','p2'
       ].map(id => document.getElementById(id));
-
       function update() {
-        const prog = Math.min(Math.max(window.scrollY / maxScroll(), 0), 1);
-        const half = 0.5;
-        // p1 runs 0→1 over first half of the scroll
-        const p1 = Math.min(Math.max((prog - 0) / half, 0), 1);
-        // p2 runs 0→1 over second half of the scroll
-        const p2 = Math.min(Math.max((prog - half) / half, 0), 1);
+  const prog = Math.min(Math.max(window.scrollY / maxScroll(), 0), 1);
+  const half = 0.5;
+  const p1 = Math.min(Math.max((prog - 0) / half, 0), 1);
+  const p2 = Math.min(Math.max((prog - half) / half, 0), 1);
 
-        // Slot 1: translate up (–100px) & fade out (opacity 1→0)
-        slot1Els.forEach(el => {
-          el.style.transform = `translateY(${-100 * p1}px)`;
-          el.style.opacity   = `${1 - p1}`;
-        });
+  // Slot 1: animate other elements, but NOT t1/p1
+  slot1Els.forEach(el => {
+    if (el.id === 't1' || el.id === 'p1') {
+      el.style.opacity = prog < 0.5 ? '1' : '0'; // just visible during slot 1
+      el.style.transform = 'translateY(0)';
+    } else {
+      el.style.transform = `translateY(${-100 * p1}px)`;
+      el.style.opacity   = `${1 - p1}`;
+    }
+  });
 
-        // Slot 2: translate down from –100px→0 & fade in (0→1)
-        slot2Els.forEach(el => {
-          el.style.transform = `translateY(${-100 * (1 - p2)}px)`;
-          el.style.opacity   = `${p2}`;
-        });
+  // Slot 2: animate others, but NOT t2/p2
+  slot2Els.forEach(el => {
+    if (el.id === 't2' || el.id === 'p2') {
+      el.style.opacity = prog >= 0.5 ? '1' : '0'; // visible only in slot 2
+      el.style.transform = 'translateY(0)';
+    } else {
+      el.style.transform = `translateY(${-100 * (1 - p2)}px)`;
+      el.style.opacity   = `${p2}`;
+    }
+  });
       }
 
       window.addEventListener('scroll', update);
