@@ -64,7 +64,7 @@ class="animatable absolute top-12 left-20 w-0 h-0 border-l-6 border-r-6 border-b
 <div id="a2"
 class="animatable absolute bottom-12 right-20 w-0 h-0 border-l-6 border-r-6 border-t-6 border-transparent border-t-black rotate-45 drop-shadow">
 </div>
-  <!-- “Collaborate” text: static (visible during slot 1, no translate) -->
+<!-- “Collaborate” text: static (visible during slot 1, no translate) -->
 <div class="absolute bottom-20 left-6">
 <h3 id="t1" class="text-lg font-semibold text-white drop-shadow">Collaborate</h3>
 <p id="p1" class="text-white text-sm drop-shadow">
@@ -107,14 +107,12 @@ Track every edit effortlessly, and never lose a single change.
 </div>
 </div>
 </div>
- <script>
-    (function() {
-      const container = document.getElementById('scroll-container');
-      const vh = window.innerHeight;
-      const maxScroll = () => container.offsetHeight - vh;
-
-      // Slot 1 elements (all animate except t1 & p1)
-      const slot1Els = [
+<script>
+(function() {
+const container = document.getElementById('scroll-container');
+const vh = window.innerHeight;
+const maxScroll = () => container.offsetHeight - vh;
+ const slot1Els = [
         'h1','b1','b2','a1','a2',
         // t1 & p1 stay static in slot 1
       ].map(id => document.getElementById(id));
@@ -160,7 +158,6 @@ Track every edit effortlessly, and never lose a single change.
       window.addEventListener('resize', update);
       update();
     })();
-  </script>
-
+</script>
 </body>
 </html>
