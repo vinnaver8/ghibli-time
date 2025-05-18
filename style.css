@@ -52,3 +52,6 @@ body {
   font-size: 24px;
   margin-top: 200px;
 }
+.animatable {
+  transition: transform 0.6s ease, opacity 0.6s ease;
+}
