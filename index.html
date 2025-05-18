@@ -26,7 +26,7 @@
 
     /* Card wrapper: rounded corners + fixed height + background image */
     #card {
-      overflow: hidden;
+      overflow: visible;
       height: 350px;               /* adjust as needed */
       border-radius: 1rem;         /* matches Tailwind’s rounded-2xl */
       background-image: url('lbox.png');
@@ -78,8 +78,7 @@
             id="a2"
             class="animatable absolute bottom-12 right-20 w-0 h-0 border-l-6 border-r-6 border-t-6 border-transparent border-t-black rotate-45 drop-shadow"
           ></div>
-
-          <!-- “Collaborate” text: static (visible during slot 1, no translate) -->
+  <!-- “Collaborate” text: static (visible during slot 1, no translate) -->
           <div class="absolute bottom-20 left-6">
             <h3 id="t1" class="text-lg font-semibold text-white drop-shadow">Collaborate</h3>
             <p id="p1" class="text-white text-sm drop-shadow">
