@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Anime.js Arrows Animation</title>
+  <style>
+    body {
+      display: flex;
+      height: 100vh;
+      margin: 0;
+      align-items: center;
+      justify-content: center;
+      background: #f0f0f0;
+    }
+    #card {
+      position: relative;
+      width: 300px;
+      height: 400px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      overflow: hidden;
+    }
+    /* 'Team' text starts hidden (opacity 0, scale 0.5) */
+    #team {
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%) scale(0.5);
+      font-family: sans-serif;
+      font-size: 24px;
+      opacity: 0;
+    }
+    /* Arrow shapes: CSS triangles */
+    .arrow {
+      position: absolute;
+      width: 0;
+      height: 0;
+      border-top: 10px solid transparent;
+      border-bottom: 10px solid transparent;
+    }
+    #arrow1 {
+      /* Right-pointing black triangle */
+      border-left: 20px solid black;
+      left: 20px;
+      top: -40px; /* start above card */
+    }
+    #arrow2 {
+      /* Left-pointing black triangle */
+      border-right: 20px solid black;
+      left: 280px;
+      top: -40px; /* start above card */
+    }
+    /* User tags (initially hidden) */
+    .tag {
+      position: absolute;
+      padding: 4px 10px;
+      font-family: sans-serif;
+      font-size: 12px;
+      color: #fff;
+      border-radius: 12px;
+      opacity: 0;
+      transform: scale(0.5);
+      white-space: nowrap;
+    }
+    #tag1 {
+      background: #4A90E2;
+      left: 20px;
+      top: -50px; /* just above arrow1 */
+    }
+    #tag2 {
+      background: #FF6A6A;
+      left: 280px;
+      top: -50px; /* just above arrow2 */
+    }
+  </style>
+</head>
+<body>
+  <div id="card">
+    <div id="team">Team</div>
+    <div id="arrow1" class="arrow"></div>
+    <div id="tag1" class="tag">John S.</div>
+    <div id="arrow2" class="arrow"></div>
+    <div id="tag2" class="tag">Lillanna</div>
+  </div>
+
+  <!-- Include Anime.js from CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+  <script>
+    // Create timeline with easing and duration
+    const tl = anime.timeline({
+      easing: 'easeInOutQuad',
+      duration: 1000,
+      autoplay: true
+    });
+
+    // Animate arrows into place
+    tl.add({
+      targets: '#arrow1',
+      translateX: 100, // move right
+      translateY: 80,  // move down
+      rotate: 30       // tilt
+    })
+    .add({
+      targets: '#arrow2',
+      translateX: -100, // move left
+      translateY: 80,   // move down
+      rotate: -30       // tilt
+    }, 0) // start arrow2 at same time as arrow1
+
+    // Fade and scale in the 'Team' text
+    .add({
+      targets: '#team',
+      scale: [0.5, 1],
+      opacity: [0, 1],
+      duration: 300
+    }, 1000) // start after arrows finish
+
+    // Fade and scale in the tags (moving them with translate)
+    .add({
+      targets: '#tag1',
+      translateX: 100,
+      translateY: 80,
+      scale: [0.5, 1],
+      opacity: [0, 1],
+      duration: 300
+    }, 1000)
+    .add({
+      targets: '#tag2',
+      translateX: -100,
+      translateY: 80,
+      scale: [0.5, 1],
+      opacity: [0, 1],
+      duration: 300
+    }, 1000);
+
+    // After 500ms pause, reverse the animation
+    tl.finished.then(() => {
+      setTimeout(() => {
+        tl.reverse(); // play backwards4
+        tl.play();
+      }, 500);
+    });
+  </script>
+</body>
+</html>
