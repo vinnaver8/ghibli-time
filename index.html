@@ -3,68 +3,83 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <!-- TailwindCSS latest via CDN -->
+  <!-- Latest Tailwind via CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <title>Scroll-Driven Card Animation (With lbox.png)</title>
+  <title>Scroll-Driven Card (Background Image + Overlay)</title>
   <style>
+    /* Create enough vertical space for two “card” scroll phases */
     #scroll-container {
       height: 200vh;
     }
+    /* Pin the card at vertical center */
     #sticky-card {
       position: sticky;
       top: 50vh;
       transform: translateY(-50%);
       perspective: 600px;
     }
+    /* Stack both slot-1 and slot-2 in the same area */
     .card-content {
       position: absolute;
       inset: 0;
     }
-     #card {
+    /* Card’s container (white background + rounded) */
+    #card {
       overflow: hidden;
       height: 350px;
     }
-     .animatable {
+    /* Any element we animate on scroll */
+    .animatable {
       will-change: transform, opacity;
       transition: none;
     }
   </style>
 </head>
 <body class="bg-gray-100">
-<div id="scroll-container" class="relative">
-    <!-- The sticky wrapper “pins” the card at mid-viewport -->
+
+  <div id="scroll-container" class="relative">
+    <!-- Sticky wrapper: holds the card centered in viewport -->
     <div id="sticky-card" class="w-full max-w-sm mx-auto">
       <div id="card" class="bg-white rounded-2xl shadow-xl relative">
-<!-- ====== SLOT 1 ====== -->
-        <div id="slot-1" class="card-content p-6">
-          <!-- Replace gradient box with your lbox.png -->
-          <div class="relative rounded md:absolute md:top-50 h-48 rounded-t-2xl overflow-hidden">
-          <img id="img1"
-              src="lbox.png"
-              alt="Card background"
-              class="w-full h-full top-2 object-cover animatable"
-            />
-            <!-- (Optional) An overlay container if you want “slot content” text over the image -->
-            <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
-              <!-- Example placeholder text on top of image -->
-              <!-- Remove or replace this line if you do not need text over the image -->
-              <span class="text-white text-lg font-semibold">slot content</span>
-            </div>
 
-            <!-- All other Slot-1 elements (they’ll animate together) -->
-            <h2 id="h1" class="animatable text-3xl font-bold text-gray-800 absolute top-4 left-4">Team</h2>
-            <div id="b1" class="animatable absolute top-2 left-2 bg-blue-600 text-white px-2 py-1 rounded-full text-xs">
+        <!-- ====== SLOT 1 (uses background-image) ====== -->
+        <div id="slot-1" class="card-content p-6">
+          <!-- Box with lbox.png as background -->
+          <div
+            class="relative w-full h-48 rounded-t-2xl overflow-hidden"
+            style="background-image: url('lbox.png'); background-size: cover; background-position: center;"
+          >
+            <!-- All “animatable” elements sit on top of this bg -->
+            <h2
+              id="h1"
+              class="animatable text-3xl font-bold text-white absolute top-4 left-4 drop-shadow-lg"
+            >
+              Team
+            </h2>
+            <div
+              id="b1"
+              class="animatable absolute top-2 left-2 bg-blue-600 text-white px-2 py-1 rounded-full text-xs drop-shadow"
+            >
               John S.
             </div>
-            <div id="b2" class="animatable absolute bottom-2 right-2 bg-red-400 text-white px-2 py-1 rounded-full text-xs">
+            <div
+              id="b2"
+              class="animatable absolute bottom-2 right-2 bg-red-400 text-white px-2 py-1 rounded-full text-xs drop-shadow"
+            >
               Lilianna
             </div>
-            <div id="a1" class="animatable absolute top-12 left-20 w-0 h-0 border-l-6 border-r-6 border-b-6 border-transparent border-b-black rotate-45"></div>
-            <div id="a2" class="animatable absolute bottom-12 right-20 w-0 h-0 border-l-6 border-r-6 border-t-6 border-transparent border-t-black rotate-45"></div>
+            <div
+              id="a1"
+              class="animatable absolute top-12 left-20 w-0 h-0 border-l-6 border-r-6 border-b-6 border-transparent border-b-black rotate-45 drop-shadow"
+            ></div>
+            <div
+              id="a2"
+              class="animatable absolute bottom-12 right-20 w-0 h-0 border-l-6 border-r-6 border-t-6 border-transparent border-t-black rotate-45 drop-shadow"
+            ></div>
           </div>
-
+          <!-- Text below the image box -->
           <div class="p-4">
-            <h3 id="t1" class="animatable text-lg font-semibold">Collaborate</h3>
+            <h3 id="t1" class="animatable text-lg font-semibold text-gray-800">Collaborate</h3>
             <p id="p1" class="animatable text-gray-500 text-sm">
               Enhance teamwork with powerful real-time collaboration features.
             </p>
@@ -74,18 +89,29 @@
         <!-- ====== SLOT 2 ====== -->
         <div id="slot-2" class="card-content p-6">
           <div class="relative w-full h-48 rounded-t-2xl overflow-hidden bg-gradient-to-br from-indigo-200 to-white">
-            <div id="b3" class="animatable absolute top-2 left-2 bg-blue-500 text-white px-2 py-1 rounded-full text-xs">v1.2</div>
-            <div id="a3" class="animatable absolute -left-6 top-1/2 transform -translate-y-1/2 bg-blue-500 text-white w-8 h-8 flex items-center justify-center rounded-full shadow-lg">
+            <div
+              id="b3"
+              class="animatable absolute top-2 left-2 bg-blue-500 text-white px-2 py-1 rounded-full text-xs drop-shadow"
+            >
+              v1.2
+            </div>
+            <div
+              id="a3"
+              class="animatable absolute -left-6 top-1/2 transform -translate-y-1/2 bg-blue-500 text-white w-8 h-8 flex items-center justify-center rounded-full shadow-lg drop-shadow"
+            >
               &#x21bb;
             </div>
-            <div id="d1" class="animatable absolute bottom-8 left-8 bg-white p-2 rounded-xl shadow-lg w-40 text-xs">
+            <div
+              id="d1"
+              class="animatable absolute bottom-8 left-8 bg-white p-2 rounded-xl shadow-lg w-40 text-xs"
+            >
               <p><strong>Finn Hayes</strong><br/>Today, 3:18 PM</p>
               <hr class="my-1"/>
               <p><strong>Zoe Quinn</strong><br/>Today, 1:59 PM</p>
             </div>
           </div>
           <div class="p-4">
-            <h3 id="t2" class="animatable text-lg font-semibold">Version History</h3>
+            <h3 id="t2" class="animatable text-lg font-semibold text-gray-800">Version History</h3>
             <p id="p2" class="animatable text-gray-500 text-sm">
               Track every edit effortlessly, and never lose a single change.
             </p>
@@ -102,11 +128,13 @@
       const vh = window.innerHeight;
       const maxScroll = () => container.offsetHeight - vh;
 
-      // Include the image (“img1”) as part of Slot-1’s animatable elements
+      // Include the image container’s children (h1, b1, b2, a1, a2, t1, p1)
+      // All are top-level animatable elements in Slot 1
       const slot1Els = [
-        'img1', 'h1', 'b1', 'b2', 'a1', 'a2', 't1', 'p1'
+        'h1', 'b1', 'b2', 'a1', 'a2', 't1', 'p1'
       ].map(id => document.getElementById(id));
 
+      // Slot 2’s animatable elements
       const slot2Els = [
         'b3', 'a3', 'd1', 't2', 'p2'
       ].map(id => document.getElementById(id));
@@ -114,18 +142,18 @@
       function update() {
         const prog = Math.min(Math.max(window.scrollY / maxScroll(), 0), 1);
         const half = 0.5;
-        // 0 → 1 over first half for Slot-1
+        // 0→1 for first half of scroll
         const p1 = Math.min(Math.max((prog - 0) / half, 0), 1);
-        // 0 → 1 over second half for Slot-2
+        // 0→1 for second half of scroll
         const p2 = Math.min(Math.max((prog - half) / half, 0), 1);
 
-        // Slot 1: fly all elements (including image) up and fade out
+        // Slot 1: move up (−100px) and fade out (1→0)
         slot1Els.forEach(el => {
           el.style.transform = `translateY(${-100 * p1}px)`;
           el.style.opacity   = `${1 - p1}`;
         });
 
-        // Slot 2: fly all elements in from above and fade in
+        // Slot 2: move in from above (−100px→0) and fade in (0→1)
         slot2Els.forEach(el => {
           el.style.transform = `translateY(${-100 * (1 - p2)}px)`;
           el.style.opacity   = `${p2}`;
