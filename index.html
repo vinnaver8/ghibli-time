@@ -5,28 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <!-- Tailwind CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <title>Scroll-Driven Card with Redbox Bounce/Pulse</title>
+  <title>Slot 2 Redbox Bounce on Enter</title>
   <style>
-    .glow-box {
-  border-radius: 12px;
-  animation:scalePulse 4s ease-in-out infinite;
-}
-@keyframes scalePulse {
-  0%, 100% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.03);
-  }
-}
-    /* ----------------------------------------
-       Basic setup: enough vertical scroll space
-       ---------------------------------------- */
+    /* ───── Container & Sticky Card ───── */
     #scroll-container {
-      height: 200vh; /* Two screens’ worth of scrolling */
+      height: 200vh; /* Enough vertical space to scroll from 0→100% */
     }
 
-    /* Pin the card in the center */
     #sticky-card {
       position: sticky;
       top: 50vh;
@@ -34,108 +19,87 @@
       perspective: 600px;
     }
 
-    /* Both slot‐1 and slot‐2 sit on top of each other */
     .card-content {
       position: absolute;
       inset: 0;
     }
 
-    /* Card wrapper styling */
     #card {
-      overflow: visible;
-      height: 350px;            
-      border-radius: 1rem;      
+      height: 350px;
+      border-radius: 1rem;
       background-image: url('lbox.png');
       background-size: cover;
       background-position: center;
       box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      overflow: visible;
     }
 
-    /* ←── Slot 1: NO transitions on these so they snap instantly ──→ */
+    /* ───── Slot 1 Elements (snap instantly) ───── */
     #slot-1 .anim1 {
       will-change: transform, opacity;
-      transition: none;
+      transition: none; /* no tweening—just snap */
     }
 
-    /* ←── Slot 2 elements: we animate their translateY & opacity via JS, 
-               but the REDBOX‐INNER will get its own CSS keyframe. ──→ */
+    /* ───── Slot 2 Elements (excluding #redbox) ───── */
     #slot-2 .anim2 {
       will-change: transform, opacity;
-      transition: none; /* we drive transform/opacity manually */
+      transition: none; /* JS will set transform/opacity per frame */
     }
 
-    /* REDBOX: outer container is positioned by JS (translateY). 
-       Inner wrapper does the bounce/pulse. */
+    /* ───── Redbox Initial State ───── */
     #redbox {
       position: absolute;
       left: 50%;
-      bottom: -70px;           /* start partly outside card */
-      transform: translateX(-50%); 
-      /* no transition here—JS will set transform/opacity per frame */
+      /* We’ll control vertical position via JS’s translateY; start off-screen */
+      transform: translateX(-50%) translateY(80px);
+      opacity: 0;
     }
 
-    /* Inner wrapper around the <img> so we can scale it via CSS */
-    #redbox-inner {
-      display: inline-block;
-      /* start at normal scale */
-      transform-origin: 50% 50%;
-      /* initially paused; only animate when .slot2-active is applied */
-      animation: none;
-    }
-
-    /* ── Define the bounce+pulse keyframes ── */
-    @keyframes bouncePulse {
+    /* ───── Bounce-Up Keyframes for Slot 2 Entry ───── */
+    @keyframes bounceUp {
       0% {
-        transform: translateY(0px) scale(1);
+        transform: translateX(-50%) translateY(80px);
+        opacity: 0;
       }
-      25% {
-        transform: translateY(-10px) scale(1.05);
+      30% {
+        transform: translateX(-50%) translateY(-10px);
+        opacity: 1;
       }
-      50% {
-        transform: translateY(0px) scale(1);
-      }
-      75% {
-        transform: translateY(-5px) scale(1.02);
+      60% {
+        transform: translateX(-50%) translateY(4px);
       }
       100% {
-        transform: translateY(0px) scale(1);
+        transform: translateX(-50%) translateY(0px);
       }
     }
 
-    /* When Slot 2 is active (p2 > 0), add this class to #redbox-inner: */
-    #redbox-inner.slot2-active {
-      animation: bouncePulse 1.2s ease-in-out infinite;
+    /* ───── Applied to #redbox when entering Slot 2 ───── */
+    #redbox.bounce-enter {
+      animation: bounceUp 0.8s ease-out forwards;
     }
   </style>
 </head>
 <body class="bg-gray-100">
+
   <div id="scroll-container" class="relative">
-    <!-- Pinned card wrapper -->
     <div id="sticky-card" class="w-full max-w-sm mx-auto">
       <div id="card" class="relative">
 
         <!-- ====== SLOT 1 ====== -->
         <div id="slot-1" class="card-content p-6">
-          <!-- Slot 1 elements: give them class "anim1" -->
-          <h2 id="h1"
-              class="anim1 text-3xl font-bold text-white drop-shadow-lg absolute top-4 left-4">
+          <!-- These elements have class="anim1" so they “snap” instantly when p1=0 -->
+          <h2 id="h1" class="anim1 text-3xl font-bold text-white drop-shadow-lg absolute top-4 left-4">
             Team
           </h2>
-          <div id="b1"
-               class="anim1 absolute top-2 left-2 bg-blue-600 text-white px-2 py-1 rounded-full text-xs drop-shadow">
+          <div id="b1" class="anim1 absolute top-2 left-2 bg-blue-600 text-white px-2 py-1 rounded-full text-xs drop-shadow">
             John S.
           </div>
-          <div id="b2"
-               class="anim1 absolute bottom-2 right-2 bg-red-400 text-white px-2 py-1 rounded-full text-xs drop-shadow">
+          <div id="b2" class="anim1 absolute bottom-2 right-2 bg-red-400 text-white px-2 py-1 rounded-full text-xs drop-shadow">
             Lilianna
           </div>
-          <div id="a1"
-               class="anim1 absolute top-12 left-20 w-0 h-0 border-l-6 border-r-6 border-b-6 border-transparent border-b-black rotate-45 drop-shadow">
-          </div>
-          <div id="a2"
-               class="anim1 absolute bottom-12 right-20 w-0 h-0 border-l-6 border-r-6 border-t-6 border-transparent border-t-black rotate-45 drop-shadow">
-          </div>
-          <!-- “Collaborate” text: always visible in slot 1 -->
+          <div id="a1" class="anim1 absolute top-12 left-20 w-0 h-0 border-l-6 border-r-6 border-b-6 border-transparent border-b-black rotate-45 drop-shadow"></div>
+          <div id="a2" class="anim1 absolute bottom-12 right-20 w-0 h-0 border-l-6 border-r-6 border-t-6 border-transparent border-t-black rotate-45 drop-shadow"></div>
+          <!-- “Collaborate” text stays static when in Slot 1 -->
           <div class="absolute bottom-20 left-6">
             <h3 id="t1" class="text-lg font-semibold text-white drop-shadow">Collaborate</h3>
             <p id="p1" class="text-white text-sm drop-shadow">
@@ -146,17 +110,14 @@
 
         <!-- ====== SLOT 2 ====== -->
         <div id="slot-2" class="card-content p-6">
-          <!-- Slot 2 elements: class "anim2" -->
+          <!-- Other Slot 2 elements (static fade/fly in via JS) -->
           <div class="absolute top-4 left-4">
-            <div id="b3"
-                 class="anim2 bg-blue-500 text-white px-2 py-1 rounded-full text-xs drop-shadow">
+            <div id="b3" class="anim2 bg-blue-500 text-white px-2 py-1 rounded-full text-xs drop-shadow">
               v1.2
             </div>
           </div>
-          <!-- History icon -->
           <div class="absolute left-0 top-1/2 transform -translate-y-1/2">
-            <div id="a3"
-                 class="anim2 bg-blue-500 w-8 h-8 flex items-center justify-center rounded-full shadow-lg drop-shadow">
+            <div id="a3" class="anim2 bg-blue-500 w-8 h-8 flex items-center justify-center rounded-full shadow-lg drop-shadow">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" class="w-5 h-5 text-white">
                 <path d="M24,46A22,22,0,1,1,46,24,22,22,0,0,1,24,46Z" fill="#38b1e7"/>
                 <circle cx="24" cy="24" r="16" fill="#b7e3f6"/>
@@ -164,98 +125,109 @@
               </svg>
             </div>
           </div>
-<!-- REDBOX SECTION -->
-<div id="slot1"></div>
-<div id="slot2">
-<div id="yourRedBox" class="glow-box">
-<img src="redbox.png" />
-</div>
-</div>
-<!-- “Version History” text -->
-<div class="absolute bottom-6 left-6">
-<h3 id="t2" class="text-lg font-semibold text-white drop-shadow">Version History</h3>
-<p id="p2" class="text-white text-sm drop-shadow">
- Track every edit effortlessly, and never lose a single change.
-</p>
-</div></div></div></div></div>
-<script>
+
+          <!-- REDBOX PNG: initially hidden; will get “.bounce-enter” on crossing into Slot 2 -->
+          <div id="redbox">
+            <img src="redbox.png"
+                 alt="Version Stack"
+                 class="w-[250%] h-[250] rounded-xl shadow-lg"/>
+          </div>
+
+          <!-- “Version History” text -->
+          <div class="absolute bottom-6 left-6">
+            <h3 id="t2" class="text-lg font-semibold text-white drop-shadow">Version History</h3>
+            <p id="p2" class="text-white text-sm drop-shadow">
+              Track every edit effortlessly, and never lose a single change.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script>
     (function() {
       const container = document.getElementById('scroll-container');
       const vh = window.innerHeight;
       const maxScroll = () => container.offsetHeight - vh;
 
-      /* Slot 1 elements: all IDs in slot 1 except t1 & p1 (which stay static) */
+      // Slot 1 elements (fly up & fade out); “snap” back when p1 = 0
       const slot1Els = ['h1','b1','b2','a1','a2']
         .map(id => document.getElementById(id));
 
-      /* Slot 2 elements (except t2 & p2 which stay static) */
-      const slot2Els = ['b3','a3','redbox']
+      // Slot 2 elements (fly in & fade in); except redbox is handled separately
+      const slot2Els = ['b3','a3']
         .map(id => document.getElementById(id));
 
-      /* Redbox’s inner wrapper for adding/removing the bounce animation */
-      const redboxInner = document.getElementById('redbox-inner');
+      // Redbox container & “has-bounced” flag
+      const redbox   = document.getElementById('redbox');
+      let inSlot2    = false; // tracks whether we’re currently ≥50%
 
       function update() {
         const scrollY = window.scrollY;
+        // Normalize to [0..1]
         const prog = Math.min(Math.max(scrollY / maxScroll(), 0), 1);
         const half = 0.5;
 
-        /* p1 from 0 → 1 during 0%–50% scroll */
+        // p1: 0→1 over 0%–50% scroll; p2: 0→1 over 50%–100% scroll
         const p1 = Math.min(Math.max((prog - 0) / half, 0), 1);
-        /* p2 from 0 → 1 during 50%–100% scroll */
         const p2 = Math.min(Math.max((prog - half) / half, 0), 1);
-        function moveToSlot1() {
-  const slot1 = document.getElementById('slot1');
-  const slot2 = document.getElementById('slot2');
-  const content = document.getElementById('yourRedBox');
 
-  slot1.appendChild(content); // move instantly
-  content.classList.remove('glow-box'); // remove glow and animation
-        }
-
-        /* ── Slot 1 animations: fly up & fade out as p1→1; instantly visible when p1=0 ── */
+        /* ───── SLOT 1 — fly up & fade out; snap back at p1=0 ───── */
         slot1Els.forEach(el => {
           if (p1 === 0) {
-            // instantly snap into original place, fully opaque
+            // Snap instantly into place
             el.style.transform = 'translateY(0)';
             el.style.opacity   = '1';
           } else {
-            // during [0..1], fly up by 100px and fade out
+            // Animate Y from 0 → –100px, opacity from 1 → 0
             el.style.transform = `translateY(${-100 * p1}px)`;
             el.style.opacity   = `${1 - p1}`;
           }
         });
-        // t1 & p1 (static Slot 1 text) are either visible or hidden instantly
+        // t1 & p1 text: instantly show/hide
         document.getElementById('t1').style.opacity = (prog < 0.5 ? '1' : '0');
         document.getElementById('p1').style.opacity = (prog < 0.5 ? '1' : '0');
 
-        /* ── Slot 2 animations: if p2>0, fade+fly in; if p2=0, hide instantly ── */
+        /* ───── SLOT 2 — fly in & fade in; plus bounce only once on entering ───── */
+        // First, handle the two “anim2” elements (b3, a3):
         slot2Els.forEach(el => {
           if (p2 === 0) {
-            // instantly hide/off-screen
-            el.style.transform = `translateY(-80px)`;
+            // Instantly off-screen & hidden
+            el.style.transform = 'translateY(-80px)';
             el.style.opacity   = '0';
           } else {
-            // fly in from -80px → 0 as p2→1, fade in from 0→1
+            // TranslateY: from -80px → 0 as p2 goes 0→1; opacity 0→1
             const translateY = -80 + 80 * p2;
-            if (el.id === 'redbox') {
-              // Keep horizontal centering for redbox; vertical is p2‐driven
-              el.style.transform = `translateX(-50%) translateY(${translateY}px)`;
-            } else {
-              el.style.transform = `translateY(${translateY}px)`;
-            }
-            el.style.opacity = `${p2}`;
+            el.style.transform = `translateY(${translateY}px)`;
+            el.style.opacity   = `${p2}`;
           }
         });
-        // t2 & p2 (static Slot 2 text) snap on/off based on p2 threshold
+        // t2 & p2 text: instantly show/hide based on p2
         document.getElementById('t2').style.opacity = (prog >= 0.5 ? '1' : '0');
         document.getElementById('p2').style.opacity = (prog >= 0.5 ? '1' : '0');
 
-        /* ── Toggle the bounce/pulse CSS animation on #redbox-inner ── */
+        // Now, REDBOX itself:
         if (p2 > 0) {
-          redboxInner.classList.add('slot2-active');
+          // Just now crossing into Slot 2?
+          if (!inSlot2) {
+            inSlot2 = true;
+            // Remove any existing classes, then force a reflow before adding .bounce-enter
+            redbox.style.opacity = '0';
+            redbox.style.transform = 'translateX(-50%) translateY(80px)';
+            redbox.classList.remove('bounce-enter');
+            // Force reflow:
+            void redbox.offsetWidth;
+            // Now add bounce class:
+            redbox.classList.add('bounce-enter');
+          }
         } else {
-          redboxInner.classList.remove('slot2-active');
+          // Scroll back above 50%: hide redbox and reset flag
+          inSlot2 = false;
+          redbox.classList.remove('bounce-enter');
+          redbox.style.opacity = '0';
+          redbox.style.transform = 'translateX(-50%) translateY(80px)';
         }
       }
 
