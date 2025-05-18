@@ -21,3 +21,11 @@ window.onload = () => {
       easing: 'easeOutExpo'
     });
 };
+function moveToSlot1() {
+  const slot1 = document.getElementById('slot1');
+  const slot2 = document.getElementById('slot2');
+  const content = document.getElementById('yourRedBox');
+
+  slot1.appendChild(content); // move instantly
+  content.classList.remove('glow-box'); // remove glow and animation
+}
