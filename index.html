@@ -39,16 +39,23 @@
       border-bottom: 12px solid transparent;
       transform: scale(1);
     }
-    #arrow1 {
-      border-left: 24px solid black;
-      left: 20px;
-      top: -40px;
-    }
-    #arrow2 {
-      border-right: 24px solid black;
-      left: 280px;
-      top: -40px;
-    }
+#arrow1 {
+  position: absolute;
+  top: -40px;
+  left: 100px; /* Adjust this for fine control */
+  border-left: 24px solid black;
+  border-top: 20px solid transparent;
+  border-bottom: 20px solid transparent;
+}
+
+#arrow2 {
+  position: absolute;
+  top: -40px;
+  left: 180px; /* Adjust this for fine control */
+  border-right: 24px solid black;
+  border-top: 20px solid transparent;
+  border-bottom: 20px solid transparent;
+}
     .tag {
       position: absolute;
       padding: 4px 10px;
