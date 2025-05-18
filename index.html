@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Converging Arrows Into Center</title>
+  <meta charset="UTF-8" />
+  <title>Converging Arrows</title>
   <style>
-    body, html {
+    html, body {
       margin: 0;
       height: 100%;
       display: flex;
@@ -16,32 +16,25 @@
       position: relative;
       width: 400px;
       height: 300px;
-      background: white;
+      background: #fff;
       border: 2px solid #ccc;
       overflow: hidden;
     }
     .arrow {
       position: absolute;
-      width: 24px;
-      height: 24px;
-      background: black;
+      width: 24px; height: 24px;
+      background: #000;
       clip-path: polygon(0 0, 100% 50%, 0 100%);
+      /* start fully off the top */
+      top: -30px;
     }
-    #arrowLeft {
-      top: -40px;
-      left: -40px;
-    }
-    #arrowRight {
-      top: -40px;
-      right: -40px;
-      transform: rotate(180deg);
-    }
+    #arrowLeft  { left: -30px; }
+    #arrowRight { right: -30px; }
     #centerText {
       position: absolute;
-      top: 50%;
-      left: 50%;
+      top: 50%; left: 50%;
       transform: translate(-50%, -50%);
-      padding: 8px 12px;
+      padding: 6px 12px;
       background: gold;
       font-weight: bold;
       opacity: 0;
@@ -50,36 +43,42 @@
 </head>
 <body>
 
-<div id="stage">
-  <div id="arrowLeft" class="arrow"></div>
-  <div id="arrowRight" class="arrow"></div>
-  <div id="centerText">TEAM</div>
-</div>
+  <div id="stage">
+    <div id="arrowLeft"  class="arrow"></div>
+    <div id="arrowRight" class="arrow"></div>
+    <div id="centerText">TEAM</div>
+  </div>
 
-<script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
-<script>
-  window.onload = () => {
-    anime.timeline({ easing: 'easeOutExpo' })
-      .add({
-        targets: '#arrowLeft',
-        translateX: ['0px', '170px'],
-        translateY: ['0px', '130px'],
-        duration: 1200
-      })
-      .add({
-        targets: '#arrowRight',
-        translateX: ['0px', '-170px'],
-        translateY: ['0px', '130px'],
-        duration: 1200
-      }, 0)
-      .add({
-        targets: '#centerText',
-        opacity: [0, 1],
-        scale: [0.8, 1],
-        duration: 700
-      }, '-=600');
-  };
-</script>
+  <!-- Anime.js -->
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+  <script>
+    window.onload = function() {
+      anime.timeline({ easing: 'easeOutExpo' })
+        // 1) Left arrow: from off-top-left → center
+        .add({
+          targets: '#arrowLeft',
+          translateX: [0, 180],    // moves from -30px → 150px (≈ center)
+          translateY: [0, 130],    // moves from -30px → 100px (≈ center)
+          rotate:     [   0,  45],  // points down-right
+          duration:   1200,
+        })
+        // 2) Right arrow: mirror, runs at the same time (offset = 0)
+        .add({
+          targets: '#arrowRight',
+          translateX: [0, -180],
+          translateY: [0, 130],
+          rotate:     [ 180, 135], // points down-left
+          duration:   1200,
+        }, 0)
+        // 3) Center text fades & scales in just before the arrows finish
+        .add({
+          targets: '#centerText',
+          opacity: [0, 1],
+          scale:   [0.8, 1],
+          duration: 600,
+        }, '-=500'); // start 500ms before arrows complete
+    };
+  </script>
 
 </body>
 </html>
