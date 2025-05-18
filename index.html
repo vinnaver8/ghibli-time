@@ -3,171 +3,191 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <!-- TailwindCSS via CDN -->
+  <!-- Latest Tailwind via CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <title>3D Scroll-Triggered Card Animation</title>
+  <title>Scroll-Driven Card Animation (With redbox Overlay)</title>
   <style>
-    /* 1. Give plenty of vertical space so scrolling can happen */
-    #scroll-container {
-      height: 200vh; /* Two “card heights” worth of scroll */
-    }
+    /* Enough vertical space for two “card” scroll phases */
+    #scroll-container { height: 200vh; }
 
-    /* 2. Pin the .card-wrapper in mid-viewport with perspective for 3D */
+    /* Pin the card in the vertical center of the viewport */
     #sticky-card {
       position: sticky;
-      top: 50vh; /* sticks at halfway down the screen */
+      top: 50vh;
       transform: translateY(-50%);
-      perspective: 1000px; /* enable 3D transforms on children */
+      perspective: 600px;
     }
 
-    /* 3. Each card shares the same absolute area inside .card-wrapper */
-    .card {
+    /* Both slot‐1 and slot‐2 occupy the same area, stacked */
+    .card-content {
       position: absolute;
-      left: 50%;
-      top: 0;
-      transform: translateX(-50%);
-      width: 18rem;       /* 288px */
-      height: 12rem;      /* 192px */
-      border-radius: 1rem; /* rounded-2xl */
-      background-color: white;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-      transform-style: preserve-3d;
-      transition: transform 0.8s ease, opacity 0.8s ease;
-      opacity: 0;
+      inset: 0;
     }
 
-    /* 4. Card 1 initially visible (opacity=1), Card 2 hidden */
-    .card-1 { opacity: 1; }
-    .card-2 { opacity: 0; }
-
-    /* 5. Arrow styling (initially hidden at center of Card 1) */
-    .arrow {
-      position: absolute;
-      width: 2.5rem; /* 40px */
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      opacity: 0;
-      transition: transform 1s ease, opacity 1s ease;
+    /* Card wrapper: rounded corners + fixed height + background image */
+    #card {
+      overflow: visible;
+      height: 350px;               /* adjust as needed */
+      border-radius: 1rem;         /* matches Tailwind’s rounded-2xl */
+      background-image: url('lbox.png');
+      background-size: cover;
+      background-position: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
     }
 
-    /* 6. Card 2 icon: starts small+transparent at center */
-    .svg-icon {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%) scale(0.5);
-      opacity: 0;
-      transition: transform 0.8s ease, opacity 0.8s ease;
-      width: 3rem;  /* 48px */
-    }
-
-    /* 7. When `.animate-card1` is added to .card-1 */
-    .card-1.animate-card1 {
-      transform: translateX(-50%) translateY(120px) rotateX(20deg);
-      opacity: 1;
-    }
-    /* Make arrows fly out */
-    .card-1.animate-card1 .arrow-left {
-      opacity: 1;
-      transform: translate(-200px, -200px) rotate(-360deg);
-    }
-    .card-1.animate-card1 .arrow-right {
-      opacity: 1;
-      transform: translate(200px, 200px) rotate(360deg);
-    }
-
-    /* 8. When `.animate-card2` is added to .card-2 */
-    .card-2.animate-card2 {
-      transform: translateX(-50%) translateY(0) rotateX(0);
-      opacity: 1;
-    }
-    .card-2.animate-card2 .svg-icon {
-      opacity: 1;
-      transform: translate(-50%, -50%) scale(1);
+    /* Any element that animates on scroll */
+    .animatable {
+      will-change: transform, opacity;
+      transition: none;
     }
   </style>
 </head>
 <body class="bg-gray-100">
 
-  <!-- 1. SCROLL CONTAINER -->
-  <div id="scroll-container">
-    <!-- 2. STICKY WRAPPER (pins cards in view) -->
-    <div id="sticky-card">
-      <!-- CARD 1 -->
-      <div class="card card-1 left-1/2 top-0">
-        <!-- Two centered arrows -->
-        <img src="arrow.svg" class="arrow arrow-left" alt="Arrow Left" />
-        <img src="arrow.svg" class="arrow arrow-right" alt="Arrow Right" />
-        <!-- Card 1 content -->
-        <div class="absolute inset-0 flex flex-col items-center justify-center">
-          <h2 class="text-2xl font-bold">Card 1</h2>
-          <p class="mt-2 text-sm text-gray-600">This is the first card.</p>
-        </div>
-      </div>
+  <div id="scroll-container" class="relative">
+    <!-- Sticky wrapper keeps the card fixed mid-viewport until scroll moves past -->
+    <div id="sticky-card" class="w-full max-w-sm mx-auto">
+      <div id="card" class="relative">
 
-      <!-- CARD 2 -->
-      <div class="card card-2 left-1/2 top-0">
-        <!-- Your custom SVG icon appears from center -->
-        <img src="your-icon.svg" class="svg-icon" alt="Card 2 Icon" />
-        <!-- Card 2 content -->
-        <div class="absolute inset-0 flex flex-col items-center justify-center">
-          <h2 class="text-2xl font-bold">Card 2</h2>
-          <p class="mt-2 text-sm text-gray-600">This is the second card.</p>
+        <!-- ====== SLOT 1: appears first ====== -->
+        <div id="slot-1" class="card-content p-6">
+          <!-- Overlay text/icons on top of the background image -->
+          <h2
+            id="h1"
+            class="animatable text-3xl font-bold text-white drop-shadow-lg absolute top-4 left-4"
+          >
+            Team
+          </h2>
+          <div
+            id="b1"
+            class="animatable absolute top-2 left-2 bg-blue-600 text-white px-2 py-1 rounded-full text-xs drop-shadow"
+          >
+            John S.
+          </div>
+          <div
+            id="b2"
+            class="animatable absolute bottom-2 right-2 bg-red-400 text-white px-2 py-1 rounded-full text-xs drop-shadow"
+          >
+            Lilianna
+          </div>
+          <div
+            id="a1"
+            class="animatable absolute top-12 left-20 w-0 h-0 border-l-6 border-r-6 border-b-6 border-transparent border-b-black rotate-45 drop-shadow"
+          ></div>
+          <div
+            id="a2"
+            class="animatable absolute bottom-12 right-20 w-0 h-0 border-l-6 border-r-6 border-t-6 border-transparent border-t-black rotate-45 drop-shadow"
+          ></div>
+  <!-- “Collaborate” text: static (visible during slot 1, no translate) -->
+          <div class="absolute bottom-20 left-6">
+            <h3 id="t1" class="text-lg font-semibold text-white drop-shadow">Collaborate</h3>
+            <p id="p1" class="text-white text-sm drop-shadow">
+              Enhance teamwork with powerful real-time collaboration features.
+            </p>
+          </div>
         </div>
-      </div>
+<!-- SLOT 2: -->
+<div id="slot-2" class="card-content p-6">
+  <!-- Version badge in top-left -->
+  <div class="absolute top-4 left-4">
+    <div
+      id="b3"
+      class="animatable bg-blue-500 text-white px-2 py-1 rounded-full text-xs drop-shadow"
+    >
+      v1.2
     </div>
   </div>
 
-  <!-- 3. SCROLL-TRIGGER LOGIC -->
-  <script>
+  <!-- History icon (as before) -->
+  <div class="absolute left-0 top-1/2 transform -translate-y-1/2">
+    <div
+      id="a3"
+      class="animatable bg-blue-500 w-8 h-8 flex items-center justify-center rounded-full shadow-lg drop-shadow"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" class="w-5 h-5 text-white">
+        <path d="M24,46A22,22,0,1,1,46,24,22,22,0,0,1,24,46Z" fill="#38b1e7"/>
+        <circle cx="24" cy="24" r="16" fill="#b7e3f6"/>
+        <path d="M29.09,29.78a2,2,0,0,1-1.19-.39l-5.09-3.78A2,2,0,0,1,22,24V16a2,2,0,0,1,4,0v7l4.29,3.18A2,2,0,0,1,29.09,29.78Z" fill="#495660"/>
+      </svg>
+    </div>
+  </div>
+ <!-- REDBOX IMAGE: 80% inside card, 20% outside for 3D effect -->
+  <div
+    id="redbox"
+    class="animatable absolute left-1/2 bottom-[-70px] transform -translate-x-1/2"
+  >
+    <img
+      src="redbox.png"
+      alt="Version Stack"
+      class="w-[150%] h-auto rounded-xl shadow-lg"
+    />
+  </div>
+
+  <!-- “Version History” text: appears during slot 2, static -->
+  <div class="absolute bottom-6 left-6">
+    <h3 id="t2" class="text-lg font-semibold text-white drop-shadow">Version History</h3>
+    <p id="p2" class="text-white text-sm drop-shadow">
+      Track every edit effortlessly, and never lose a single change.
+    </p>
+  </div>
+</div>
+</div>
+</div>
+</div>
+ <script>
     (function() {
-      // Grab references
       const container = document.getElementById('scroll-container');
-      const card1 = document.querySelector('.card-1');
-      const card2 = document.querySelector('.card-2');
+      const vh = window.innerHeight;
+      const maxScroll = () => container.offsetHeight - vh;
 
-      let triggeredCard1 = false;
-      let triggeredCard2 = false;
+      // Slot 1 elements (all animate except t1 & p1)
+      const slot1Els = [
+        'h1','b1','b2','a1','a2',
+        // t1 & p1 stay static in slot 1
+      ].map(id => document.getElementById(id));
 
-      // Determine at what scroll position to trigger Card 1’s throw
-      const triggerPoint1 = window.innerHeight * 0.2; // 20% down viewport
-      // Determine at what scroll position to revert to Card 2
-      const triggerPoint2 = window.innerHeight * 0.2; // same threshold for reverse
+      // Slot 2 elements (including redbox)
+      const slot2Els = [
+        'b3','a3','redbox',
+        // t2 & p2 stay static in slot 2
+      ].map(id => document.getElementById(id));
 
-      window.addEventListener('scroll', () => {
+      function update() {
         const scrollY = window.scrollY;
+        const prog = Math.min(Math.max(scrollY / maxScroll(), 0), 1);
+        const half = 0.5;
 
-        // ---- TRIGGER CARD 1 “THROW” when scrolling DOWN past triggerPoint1 ----
-        if (!triggeredCard1 && scrollY > triggerPoint1) {
-          triggeredCard1 = true;
-          // 1) Animate Card 1 falling + arrows splitting
-          card1.classList.add('animate-card1');
-          // 2) Hide Card 2 if visible
-          card2.classList.remove('animate-card2');
-          triggeredCard2 = false; // reset so Card 2 can re-trigger on scroll-up
-        }
+        // p1 ∈ [0..1] for slot 1 animation (0→50% scroll)
+        const p1 = Math.min(Math.max((prog - 0) / half, 0), 1);
+        // p2 ∈ [0..1] for slot 2 animation (50%→100% scroll)
+        const p2 = Math.min(Math.max((prog - half) / half, 0), 1);
 
-        // ---- TRIGGER CARD 2 “POP-IN” when scrolling UP above triggerPoint2 ----
-        if (!triggeredCard2 && scrollY < triggerPoint2) {
-          triggeredCard2 = true;
-          // 1) Show Card 2 pop-in
-          card2.classList.add('animate-card2');
-          // 2) Reset Card 1 to original position (remove the throw)
-          card1.classList.remove('animate-card1');
-          triggeredCard1 = false; // allow re-trigger on next scroll-down
-        }
-      });
+        // Animate Slot 1 icons (fly up & fade out), but keep t1 & p1 static
+        slot1Els.forEach(el => {
+          el.style.transform = `translateY(${-100 * p1}px)`;
+          el.style.opacity   = `${1 - p1}`;
+        });
+        // Show/hide t1 & p1 (no movement)
+        document.getElementById('t1').style.opacity = prog < 0.5 ? '1' : '0';
+        document.getElementById('p1').style.opacity = prog < 0.5 ? '1' : '0';
 
-      // OPTIONAL: Trigger on load if already scrolled
-      window.addEventListener('load', () => {
-        const scrollY = window.scrollY;
-        if (scrollY > triggerPoint1) {
-          card1.classList.add('animate-card1');
-          triggeredCard1 = true;
-        }
-      });
+        // Animate Slot 2 icons (fly in from below & fade in), but keep t2 & p2 static
+        slot2Els.forEach(el => {
+          // el starts at bottom: -80px → final translateY(0) when p2=1
+          const translateY = -80 + 80 * p2; 
+          el.style.transform = `translateY(${translateY}px)`;
+          el.style.opacity   = `${p2}`;
+        });
+        // Show/hide t2 & p2 (no movement)
+        document.getElementById('t2').style.opacity = prog >= 0.5 ? '1' : '0';
+        document.getElementById('p2').style.opacity = prog >= 0.5 ? '1' : '0';
+      }
+
+      window.addEventListener('scroll', update);
+      window.addEventListener('resize', update);
+      update();
     })();
   </script>
+
 </body>
 </html>
