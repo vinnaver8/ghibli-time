@@ -7,29 +7,24 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <title>Scroll-Driven Card Animation (With lbox.png)</title>
   <style>
-    /* Create enough vertical space for two “cards” worth of scrolling */
     #scroll-container {
       height: 200vh;
     }
-    /* Pin the card in vertical center of viewport */
     #sticky-card {
       position: sticky;
       top: 50vh;
       transform: translateY(-50%);
       perspective: 600px;
     }
-    /* Stack both Slot-1 and Slot-2 content in the same spot */
     .card-content {
       position: absolute;
       inset: 0;
     }
-    /* Give the card its rounded shape & fixed height */
-    #card {
+     #card {
       overflow: hidden;
       height: 350px;
     }
-    /* Any element that participates in scroll animation */
-    .animatable {
+     .animatable {
       will-change: transform, opacity;
       transition: none;
     }
