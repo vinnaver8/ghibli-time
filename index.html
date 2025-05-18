@@ -40,96 +40,69 @@
       will-change: transform, opacity;
       transition: none;
     }
-  </style>
+</style>
 </head>
 <body class="bg-gray-100">
-
-  <div id="scroll-container" class="relative">
-    <!-- Sticky wrapper keeps the card fixed mid-viewport until scroll moves past -->
-    <div id="sticky-card" class="w-full max-w-sm mx-auto">
-      <div id="card" class="relative">
-
-        <!-- ====== SLOT 1: appears first ====== -->
-        <div id="slot-1" class="card-content p-6">
-          <!-- Overlay text/icons on top of the background image -->
-          <h2
-            id="h1"
-            class="animatable text-3xl font-bold text-white drop-shadow-lg absolute top-4 left-4"
-          >
-            Team
-          </h2>
-          <div
-            id="b1"
-            class="animatable absolute top-2 left-2 bg-blue-600 text-white px-2 py-1 rounded-full text-xs drop-shadow"
-          >
-            John S.
-          </div>
-          <div
-            id="b2"
-            class="animatable absolute bottom-2 right-2 bg-red-400 text-white px-2 py-1 rounded-full text-xs drop-shadow"
-          >
-            Lilianna
-          </div>
-          <div
-            id="a1"
-            class="animatable absolute top-12 left-20 w-0 h-0 border-l-6 border-r-6 border-b-6 border-transparent border-b-black rotate-45 drop-shadow"
-          ></div>
-          <div
-            id="a2"
-            class="animatable absolute bottom-12 right-20 w-0 h-0 border-l-6 border-r-6 border-t-6 border-transparent border-t-black rotate-45 drop-shadow"
-          ></div>
+<div id="scroll-container" class="relative">
+<!-- Sticky wrapper keeps the card fixed mid-viewport until scroll moves past -->
+<div id="sticky-card" class="w-full max-w-sm mx-auto">
+<div id="card" class="relative">
+<!-- ====== SLOT 1: appears first ====== -->
+<div id="slot-1" class="card-content p-6">
+<!-- Overlay text/icons on top of the background image -->
+<h2 id="h1"
+class="animatable text-3xl font-bold text-white drop-shadow-lg absolute top-4 left-4">
+Team </h2>
+<div id="b1"
+class="animatable absolute top-2 left-2 bg-blue-600 text-white px-2 py-1 rounded-full text-xs drop-shadow">
+John S.</div>
+<div id="b2"
+class="animatable absolute bottom-2 right-2 bg-red-400 text-white px-2 py-1 rounded-full text-xs drop-shadow">
+ Lilianna</div>
+ <div id="a1"
+class="animatable absolute top-12 left-20 w-0 h-0 border-l-6 border-r-6 border-b-6 border-transparent border-b-black rotate-45 drop-shadow"></div>
+<div id="a2"
+class="animatable absolute bottom-12 right-20 w-0 h-0 border-l-6 border-r-6 border-t-6 border-transparent border-t-black rotate-45 drop-shadow">
+</div>
   <!-- “Collaborate” text: static (visible during slot 1, no translate) -->
-          <div class="absolute bottom-20 left-6">
-            <h3 id="t1" class="text-lg font-semibold text-white drop-shadow">Collaborate</h3>
-            <p id="p1" class="text-white text-sm drop-shadow">
-              Enhance teamwork with powerful real-time collaboration features.
-            </p>
-          </div>
-        </div>
+<div class="absolute bottom-20 left-6">
+<h3 id="t1" class="text-lg font-semibold text-white drop-shadow">Collaborate</h3>
+<p id="p1" class="text-white text-sm drop-shadow">
+Enhance teamwork with powerful real-time collaboration features.
+</p></div></div>
 <!-- SLOT 2: -->
 <div id="slot-2" class="card-content p-6">
-  <!-- Version badge in top-left -->
-  <div class="absolute top-4 left-4">
-    <div
-      id="b3"
-      class="animatable bg-blue-500 text-white px-2 py-1 rounded-full text-xs drop-shadow"
-    >
-      v1.2
-    </div>
-  </div>
-
-  <!-- History icon (as before) -->
-  <div class="absolute left-0 top-1/2 transform -translate-y-1/2">
-    <div
-      id="a3"
-      class="animatable bg-blue-500 w-8 h-8 flex items-center justify-center rounded-full shadow-lg drop-shadow"
-    >
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" class="w-5 h-5 text-white">
-        <path d="M24,46A22,22,0,1,1,46,24,22,22,0,0,1,24,46Z" fill="#38b1e7"/>
-        <circle cx="24" cy="24" r="16" fill="#b7e3f6"/>
-        <path d="M29.09,29.78a2,2,0,0,1-1.19-.39l-5.09-3.78A2,2,0,0,1,22,24V16a2,2,0,0,1,4,0v7l4.29,3.18A2,2,0,0,1,29.09,29.78Z" fill="#495660"/>
-      </svg>
-    </div>
-  </div>
- <!-- REDBOX IMAGE: 80% inside card, 20% outside for 3D effect -->
-  <div
-    id="redbox"
-    class="animatable absolute left-1/2 bottom-[-70px] transform -translate-x-1/2"
-  >
-    <img
-      src="redbox.png"
-      alt="Version Stack"
-      class="w-[150%] h-auto rounded-xl shadow-lg"
-    />
-  </div>
-
-  <!-- “Version History” text: appears during slot 2, static -->
-  <div class="absolute bottom-6 left-6">
-    <h3 id="t2" class="text-lg font-semibold text-white drop-shadow">Version History</h3>
-    <p id="p2" class="text-white text-sm drop-shadow">
-      Track every edit effortlessly, and never lose a single change.
-    </p>
-  </div>
+<!-- Version badge in top-left -->
+<div class="absolute top-4 left-4">
+<div id="b3"
+class="animatable bg-blue-500 text-white px-2 py-1 rounded-full text-xs drop-shadow">
+v1.2
+</div>
+</div>
+<!-- History icon (as before) -->
+<div class="absolute left-0 top-1/2 transform -translate-y-1/2">
+<div id="a3"
+class="animatable bg-blue-500 w-8 h-8 flex items-center justify-center rounded-full shadow-lg drop-shadow">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" class="w-5 h-5 text-white">
+<path d="M24,46A22,22,0,1,1,46,24,22,22,0,0,1,24,46Z" fill="#38b1e7"/>
+<circle cx="24" cy="24" r="16" fill="#b7e3f6"/>
+<path d="M29.09,29.78a2,2,0,0,1-1.19-.39l-5.09-3.78A2,2,0,0,1,22,24V16a2,2,0,0,1,4,0v7l4.29,3.18A2,2,0,0,1,29.09,29.78Z" fill="#495660"/>
+</svg></div></div>
+<!-- REDBOX IMAGE: 80% inside card, 20% outside for 3D effect -->
+<div id="redbox"
+class="animatable absolute left-1/2 bottom-[-70px] transform -translate-x-1/2">
+<img
+src="redbox.png"
+alt="Version Stack"
+class="stack w-[250%] h-[250] rounded-xl shadow-lg"/>
+</div>
+ <!-- “Version History” text: appears during slot 2, static -->
+<div class="absolute bottom-6 left-6">
+<h3 id="t2" class="text-lg font-semibold text-white drop-shadow">Version History</h3>
+<p id="p2" class="text-white text-sm drop-shadow">
+Track every edit effortlessly, and never lose a single change.
+</p>
+</div>
 </div>
 </div>
 </div>
