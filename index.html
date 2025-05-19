@@ -38,7 +38,7 @@
     ──────────────────────────────────────────────────────────────────*/
     #slot-1 .anim1 {
       will-change: transform, opacity;
-      transition: none; /* snap-in/out */
+      transition: none;
     }
 
     /*──────────────────────────────────────────────────────────────────
@@ -46,44 +46,45 @@
     ──────────────────────────────────────────────────────────────────*/
     #slot-2 .anim2 {
       will-change: transform, opacity;
-      transition: none; 
+      transition: none;
     }
 
     /*──────────────────────────────────────────────────────────────────
       4) REDBOX Initial State: positioned off-screen + hidden
          We’ll use two CSS keyframes:
-         • bounceUp (0.8s) → from off-screen to on-screen  
-         • slideDown (0.6s) → from on-screen back to off-screen  
+         • bounceUp (0.6s) → from off-screen to on-screen
+         • bounceDown (0.6s) → from on-screen back to off-screen
     ──────────────────────────────────────────────────────────────────*/
     #redbox {
       position: absolute;
       left: 50%;
       transform: translateX(-50%) translateY(80px);
       opacity: 0;
+      will-change: transform, opacity;
     }
 
-  @keyframes bounceUp {
-  0% { transform: translateY(100%); opacity: 0; }
-  50% { transform: translateY(-10%); opacity: 1; }
-  100% { transform: translateY(0); }
-}
+    @keyframes bounceUp {
+      0% {
+        transform: translateX(-50%) translateY(80px);
+        opacity: 0;
+      }
+      50% {
+        transform: translateX(-50%) translateY(-10px);
+        opacity: 1;
+      }
+      100% {
+        transform: translateX(-50%) translateY(0);
+        opacity: 1;
+      }
+    }
 
-@keyframes bounceDown {
-  0% { transform: translateY(0); opacity: 1; }
-  50% { transform: translateY(-10%); }
-  100% { transform: translateY(100%); opacity: 0; }
-}
-
-.bounce-up {
-  animation: bounceUp 0.6s ease forwards;
-}
-
-.bounce-down {
-  animation: bounceDown 0.6s ease forwards;
-}
-    @keyframes slideDown {
+    @keyframes bounceDown {
       0% {
         transform: translateX(-50%) translateY(0);
+        opacity: 1;
+      }
+      50% {
+        transform: translateX(-50%) translateY(-10px);
         opacity: 1;
       }
       100% {
@@ -92,14 +93,12 @@
       }
     }
 
-    /* When .bounce-enter is added, run bounceUp once (0.8s) and keep final frame */
     #redbox.bounce-enter {
-      animation: bounceUp 0.8s ease-out forwards;
+      animation: bounceUp 0.6s ease-out forwards;
     }
 
-    /* When .bounce-exit is added, run slideDown once (0.6s) and keep final frame */
     #redbox.bounce-exit {
-      animation: slideDown 0.6s ease-in forwards;
+      animation: bounceDown 0.6s ease-in forwards;
     }
   </style>
 </head>
@@ -151,10 +150,11 @@
           </div>
 
           <!-- REDBOX PNG: initially hidden; will bounce up once on entering Slot 2 -->
-          <div id="slot1" class="slot">Slot 1</div>
-<div id="slot2" class="slot">
-  <div id="redbox" class="redbox"></div>
-</div>
+          <div id="redbox">
+            <img src="redbox.png"
+                 alt="Version Stack"
+                 class="w-[250%] h-[250] rounded-xl shadow-lg"/>
+          </div>
 
           <!-- “Version History” text -->
           <div class="absolute bottom-6 left-6">
@@ -173,7 +173,6 @@
     (function() {
       const container = document.getElementById('scroll-container');
       const vh = window.innerHeight;
-      // total scrollable distance = container height – viewport height
       const maxScroll = () => container.offsetHeight - vh;
 
       // Slot 1 elements (fly up & fade out; snap back instantly when p₁=0)
@@ -193,89 +192,66 @@
         const prog = Math.min(Math.max(scrollY / maxScroll(), 0), 1);
         const half = 0.5;
 
-        // p₁: 0→1 over 0%–50% of page scroll
+        // p₁: 0→1 over 0%–50%
         const p1 = Math.min(Math.max((prog - 0) / half, 0), 1);
-        // p₂: 0→1 over 50%–100% of page scroll
+        // p₂: 0→1 over 50%–100%
         const p2 = Math.min(Math.max((prog - half) / half, 0), 1);
 
         /*────────── SLOT 1 ──────────*/
         slot1Els.forEach(el => {
           if (p1 === 0) {
-            // Snap instantly into place
+            // Snap instantly
             el.style.transform = 'translateY(0)';
             el.style.opacity   = '1';
           } else {
-            // Fly up by –100px and fade out
+            // Fly up –100px & fade out
             el.style.transform = `translateY(${-100 * p1}px)`;
             el.style.opacity   = `${1 - p1}`;
           }
         });
-        // “Collaborate” text: show if prog < 0.5, hide if ≥ 0.5
+        // “Collaborate” text
         document.getElementById('t1').style.opacity = (prog < 0.5 ? '1' : '0');
         document.getElementById('p1').style.opacity = (prog < 0.5 ? '1' : '0');
 
         /*────────── SLOT 2 ──────────*/
-        // (a) Other Slot 2 items (b3, a3)
-        let isInSlot2 = false;
-
-function moveToSlot2() {
-  const box = document.getElementById("redbox");
-  box.classList.remove("bounce-down");
-  box.classList.add("bounce-up");
-  isInSlot2 = true;
-}
-
-function moveToSlot1() {
-  const box = document.getElementById("redbox");
-  box.classList.remove("bounce-up");
-  box.classList.add("bounce-down");
-  isInSlot2 = false;
-}
-        // “Version History” text: show if prog ≥ 0.5, hide if < 0.5
+        // (a) Other Slot 2 items
+        slot2Els.forEach(el => {
+          if (p2 === 0) {
+            el.style.transform = 'translateY(-80px)';
+            el.style.opacity   = '0';
+          } else {
+            const translateY = -80 + 80 * p2;
+            el.style.transform = `translateY(${translateY}px)`;
+            el.style.opacity   = `${p2}`;
+          }
+        });
+        // “Version History” text
         document.getElementById('t2').style.opacity = (prog >= 0.5 ? '1' : '0');
         document.getElementById('p2').style.opacity = (prog >= 0.5 ? '1' : '0');
 
-        // (b) REDBOX logic: bounceUp when entering, slideDown when exiting
+        // (b) REDBOX logic: bounceUp when entering, bounceDown when exiting
         if (p2 > 0) {
-          // Just crossed into Slot 2?
           if (!inSlot2) {
             inSlot2 = true;
-            // Remove any “exit” class if present
             redbox.classList.remove('bounce-exit');
-
-            // Reset to off-screen start state
+            // Reset to off-screen & hidden
             redbox.style.transform = 'translateX(-50%) translateY(80px)';
             redbox.style.opacity = '0';
-
-            // Force reflow so that adding bounce-enter always retriggers
+            // Force reflow
             void redbox.offsetWidth;
-
-            // Play bounce-up once (0.8s) → ends with on-screen & opacity:1
+            // Play bounce-up once
             redbox.classList.add('bounce-enter');
           }
         } else {
-          // We’ve scrolled back above 50% → exit Slot 2
           if (inSlot2) {
             inSlot2 = false;
-            // Remove the “bounce-enter” class if it’s still there
             redbox.classList.remove('bounce-enter');
-
-            // Reset to on-screen state so exit anim plays from visible
+            // Ensure on-screen & visible before bouncing down
             redbox.style.transform = 'translateX(-50%) translateY(0)';
             redbox.style.opacity = '1';
-
-            // Force reflow before starting the exit animation
             void redbox.offsetWidth;
-
-            // Play slideDown once (0.6s), then we’ll clear out in setTimeout
+            // Play bounce-down once
             redbox.classList.add('bounce-exit');
-
-            // After 0.6s, reset to fully hidden off-screen
-            setTimeout(() => {
-              redbox.classList.remove('bounce-exit');
-              redbox.style.transform = 'translateX(-50%) translateY(80px)';
-              redbox.style.opacity = '0';
-            }, 600);
           }
         }
       }
