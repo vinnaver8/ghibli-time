@@ -1,7 +1,6 @@
 #scroll-container {
-  /* old: height: 200vh; */
-  height: 4350px;    /* 950 + 2600 + (approx) viewport height */
-}
+      height: 4350px;
+    }
     #sticky-card {
       position: sticky;
       top: 50vh;
@@ -11,6 +10,15 @@
     .card-content {
       position: absolute;
       inset: 0;
+    }
+    #card {
+      height: 300px;
+      border-radius: 1rem;
+      background-image: url('lbox.png');
+      background-size: cover;
+      background-position: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      overflow: visible;
     }
      #card::before {
       content: "";
@@ -99,4 +107,4 @@ animation: bounceUp 0.6s ease-out forwards;
 #redbox.bounce-exit,
 #clock-icon.bounce-exit {
       animation: bounceDown 0.6s ease-in forwards;
-    }
+}
