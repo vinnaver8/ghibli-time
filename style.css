@@ -1,81 +1,12 @@
-.card-wrapper {
-  position: relative;
-  height: 4000px; /* Just for scrollable space */
-}
-
-.card {
-  position: relative;
-  width: 300px;
-  margin: 0 auto;
-  padding: 20px;
-  background: #f2f2f2;
-  border-radius: 10px;
+#scroll-card {
+  position: relative;        /* keep in normal flow */
+  transform: translateY(0);  /* initial position */
+  will-change: transform;    /* hint for performance */
+  /* Optional: smooth snap transition when weird jitter */
   transition: transform 0.1s ease-out;
-  will-change: transform;
 }
-@keyframes glowShift {
-      0% {
-        background-position: 0% 50%;
-      }
-      100% {
-        background-position: 400% 50%;
-      }
-    }
-#card.glow::before {
-      opacity: 1;
-      animation: glowShift 8s linear infinite;
-    }
-#slot-1 .anim1 {
-      will-change: transform, opacity;
-      transition: none;
-    }
-#slot-2 .anim2 {
-      will-change: transform, opacity;
-      transition: none;
-    }
-#redbox,
-    #clock-icon {
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%) translateY(80px);
-      opacity: 0;
-      will-change: transform, opacity;
-    }
 
-    @keyframes bounceUp {
-      0% {
-        transform: translateX(-50%) translateY(80px);
-        opacity: 0;
-      }
-      50% {
-        transform: translateX(-50%) translateY(-10px);
-        opacity: 1;
-      }
-      100% {
-        transform: translateX(-50%) translateY(0);
-        opacity: 1;
-      }
-    }
-
-    @keyframes bounceDown {
-      0% {
-        transform: translateX(-50%) translateY(0);
-        opacity: 1;
-      }
-      50% {
-        transform: translateX(-50%) translateY(-10px);
-        opacity: 1;
-      }
-      100% {
-        transform: translateX(-50%) translateY(80px);
-        opacity: 0;
-      }
-} 
-#redbox.bounce-enter,
-#clock-icon.bounce-enter {
-animation: bounceUp 0.6s ease-out forwards;
-}
-#redbox.bounce-exit,
-#clock-icon.bounce-exit {
-      animation: bounceDown 0.6s ease-in forwards;
+/* Ensure page is tall enough to scroll 0 → 4000px */
+body {
+  min-height: 4000px;
 }
