@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // ── CONFIGURE THESE to match your design ───────────────────────────
   const slot1EndOffset = 1830; // scrollY at which slot-1 ends (px)
   const slot2EndOffset = 2600; // scrollY at which the card stops (px)
-  // ────────────────────────────────────────────────────────────────────
+  // ─────────────────────────────────────────────────────────────────
 
   // grab elements
   const wrapper    = document.getElementById('team-wrapper');
@@ -19,26 +19,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function update() {
     const y = window.scrollY;
-    const vh = window.innerHeight;
-    const wrapperTop = wrapper.offsetTop;
-    const cardH = stickyCard.offsetHeight;
 
-    // ── 1) CENTER-TRACKING MARCHING ───────────────────────────────────
-    let topPos;
-    if (y < wrapperTop) {
-      topPos = 0;
+    // ── 1) MARCHING ─────────────────────────────────────────────────
+    let marchY;
+    const wrapperTop = wrapper.offsetTop;
+    const cardH      = stickyCard.offsetHeight;
+
+    if (y <  wrapperTop) {
+      marchY = 0;
     } else if (y > slot2EndOffset - cardH) {
-      topPos = (slot2EndOffset - cardH) - wrapperTop;
+      marchY = (slot2EndOffset - cardH) - wrapperTop;
     } else {
-      topPos = (y - wrapperTop) + (vh / 2 - cardH / 2);
+      marchY = y - wrapperTop;
     }
 
+    // Center horizontally
     stickyCard.style.position = 'absolute';
     stickyCard.style.left = '50%';
-    stickyCard.style.top = '0';
-    stickyCard.style.transform = `translate(-50%, ${topPos}px)`;
+    stickyCard.style.transform = `translate(-50%, ${marchY}px)`;
 
-    // ── 2) SLOT PROGRESS ──────────────────────────────────────────────
+    // ── 2) SLOT PROGRESS ─────────────────────────────────────────────
     const p1 = clamp((y - wrapperTop) / (slot1EndOffset - wrapperTop), 0, 1);
     const p2 = clamp((y - slot1EndOffset) / (slot2EndOffset - slot1EndOffset), 0, 1);
 
@@ -95,12 +95,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // hook events
+  // hook events (scroll + resize)
   window.addEventListener('scroll', update);
   window.addEventListener('resize', update); // update on resize to keep center
   update();
 
-  // ── 3) GLOW INTERSECTION (unchanged) ───────────────────────────────
+  // ── 3) GLOW INTERSECTION (unchanged) ──────────────────────────────
   const card = document.getElementById('card');
   const observer = new IntersectionObserver(entries => {
     entries.forEach(e => card.classList.toggle('glow', e.isIntersecting));
