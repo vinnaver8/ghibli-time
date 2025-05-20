@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Compute the “ideal” top so that card’s center aligns with viewport center:
     // 1) how far into the scroll window: y - wrapperTop
     // 2) offset to center it: vh/2 - cardH/2
-    let topPos = (y - wrapperTop) + (vh / 2 - cardH / 2) - 30;
+    let topPos = (y - wrapperTop) + (vh / 2 - cardH / 2) - 1;
 
     // Before the window: hide or pin off-screen
     if (y < wrapperTop) {
