@@ -1,48 +1,4 @@
-#scroll-container {
-      height: 300vh;
-    }
-    #sticky-card {
-      position: sticky;
-      top: 50vh;
-      transform: translateY(-50%);
-      perspective: 600px;
-    }
-    .card-content {
-      position: absolute;
-      inset: 0;
-    }
-    #card {
-      height: 300px;
-      border-radius: 1rem;
-      background-image: url('lbox.png');
-      background-size: cover;
-      background-position: center;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-      overflow: visible;
-    }
-     #card::before {
-      content: "";
-      position: absolute;
-      top: -5px;    
-      left: -5px;   
-      right: -5px;  
-      bottom: -5px; 
-      border-radius: calc(1rem + 5px);
-background: linear-gradient(
-  90deg,
-  rgba(200,200,200,0.4),
-  rgba(255,255,255,0.2),
-  rgba(200,200,200,0.4)
-);
-  
-      background-size: 400%;
-      filter: blur(10px);
-      opacity: 0;              
-       
-      transition: opacity 1s ease-in-out;
-      z-index: -1;            
-    }
- @keyframes glowShift {
+@keyframes glowShift {
       0% {
         background-position: 0% 50%;
       }
