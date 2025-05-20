@@ -298,7 +298,7 @@ navigator.clipboard
 </div></div>
 <!-- line 1 -->
 <div
-class="hidden md:block absolute top-[100px] left-[50px] w-[100px] h-[2400px] rounded-[20px] -z--2"
+class="hidden md:block absolute top-[100px] left-[50px] w-[100px] h-[2400px] rounded-[20px] z-[-2px]"
 style="background-image: url('line1.webp'); background-size: cover; background-position: center; background-repeat: no-repeat;">
 </div>
 <!--line box ------------------------------------->
@@ -306,12 +306,10 @@ style="background-image: url('line1.webp'); background-size: cover; background-p
 class="hidden md:block absolute top-[1000px] left-[50px] w-[250px] h-[300px] rounded-[20px] z-0">
 
 <div id="scroll-container" class="h-[200vh] relative">
-
-    <!-- Sticky card wrapper -->
+ <!-- Sticky card wrapper -->
     <div id="sticky-card"
          class="sticky top-1/2 -translate-y-1/2 w-full max-w-sm mx-auto [perspective:600px]">
-
-      <!-- Slot-1 content -->
+  <!-- Slot-1 content -->
       <div id="card"
            class="relative w-full h-[300px] p-6 rounded-2xl
                   bg-[url('lbox.png')] bg-cover bg-center
@@ -328,37 +326,31 @@ class="hidden md:block absolute top-[1000px] left-[50px] w-[250px] h-[300px] rou
                   before:opacity-0
                   before:transition-opacity before:duration-[1000ms] before:ease-in-out
                   before:-z-10">
-
-        <!-- “Team” heading -->
+ <!-- “Team” heading -->
         <h2 id="h1"
             class="anim1 text-5xl font-bold drop-shadow-lg
                    absolute top-[145px] left-1/2 -translate-x-1/2">
           Team
         </h2>
-
-        <!-- John S. pill -->
+<!-- John S. pill -->
         <div id="b1"
              class="anim1 absolute top-10 -left-10 bg-blue-600 text-white
                     px-6 py-4 rounded-full text-2xl drop-shadow">
           John S.
         </div>
-
-        <!-- Lilianna pill -->
+ <!-- Lilianna pill -->
         <div id="b2"
              class="anim1 absolute top-60 -right-10 bg-red-400 text-white
                     px-6 py-4 rounded-full text-2xl drop-shadow">
           Lilianna
         </div>
-
-        <!-- down arrow -->
+   <!-- down arrow -->
         <img id="a1" src="down.webp" alt="Arrow Down"
              class="anim1 absolute top-[7rem] left-[5rem] w-8 rotate-[30deg] drop-shadow-lg" />
-
-        <!-- up arrow -->
+  <!-- up arrow -->
         <img id="a2" src="up.webp" alt="Arrow Up"
              class="anim1 absolute top-[12.5rem] right-[5rem] w-8 -rotate-[40deg] drop-shadow-lg" />
-
-        <!-- Collaborate text -->
+   <!-- Collaborate text -->
         <div class="absolute bottom-6 left-6">
           <h3 id="t1" class="text-lg font-semibold drop-shadow">Collaborate</h3>
           <p id="p1" class="text-sm drop-shadow">
@@ -396,14 +388,6 @@ class="hidden md:block absolute top-[1000px] left-[50px] w-[250px] h-[300px] rou
         <div id="redbox" class="relative w-full h-screen">
           <img src="redbox.png" alt=""
                class="absolute -top-[60px] -right-[50px] rounded-xl object-fill" />
-        </div>
-
-        <!-- Version History text -->
-        <div class="absolute bottom-6 left-6">
-          <h3 id="t2" class="text-lg font-semibold drop-shadow">Version History</h3>
-          <p id="p2" class="text-sm drop-shadow">
-            Track every edit effortlessly, and never lose a single change.
-          </p>
         </div>
 
       </div> <!-- end slot-2 -->
