@@ -20,85 +20,71 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // clamp helper
   const clamp = (v, min, max) => v < min ? min : v > max ? max : v;
+function update() {
+  const y = window.scrollY;
+  const scrollToFix = wrapperTop + (cardH / 2); // where card center aligns with screen center
+  const lockBottomY = slot2EndOffset - cardH;
 
-  function update() {
-    const y = window.scrollY;
-    const centerY = (vh - cardH) / 2; // px from top of viewport
+  const centerY = (vh - cardH) / 2;
 
-    // — 1) MARCHING WITH CENTERING ——————————————
-    if (y < wrapperTop) {
-      // before wrapper: keep it at the top of its wrapper
-      stickyCard.style.position = 'absolute';
-      stickyCard.style.top      = `0px`;
-
-    } else if (y >= wrapperTop && y <= slot2EndOffset - cardH - wrapperTop) {
-      // in the march window: fix to viewport center
-      stickyCard.style.position = 'fixed';
-      stickyCard.style.top      = `${centerY}px`;
-
-    } else {
-      // after march: pin to bottom of wrapper
-      const bottomPos = (slot2EndOffset - cardH) - wrapperTop;
-      stickyCard.style.position = 'absolute';
-      stickyCard.style.top      = `${bottomPos}px`;
-    }
-
-
-    // — 2) SLOT PROGRESS ——————————————
-    const p1 = clamp((y - wrapperTop) / (slot1EndOffset - wrapperTop), 0, 1);
-    const p2 = clamp((y - slot1EndOffset) / (slot2EndOffset - slot1EndOffset), 0, 1);
-
-    // slot-1
-    slot1Els.forEach(el => {
-      if (p1 === 0) {
-        el.style.transform = 'translateY(0)';
-        el.style.opacity   = '1';
-      } else {
-        el.style.transform = `translateY(${-100 * p1}px)`;
-        el.style.opacity   = `${1 - p1}`;
-      }
-    });
-    document.getElementById('t1').style.opacity = p1 < 1 ? '1' : '0';
-    document.getElementById('p1').style.opacity = p1 < 1 ? '1' : '0';
-
-    // slot-2
-    slot2Els.forEach(el => {
-      if (p2 === 0) {
-        el.style.transform = 'translateY(-80px)';
-        el.style.opacity   = '0';
-      } else {
-        const ty = -80 + 80 * p2;
-        el.style.transform = `translateY(${ty}px)`;
-        el.style.opacity   = `${p2}`;
-      }
-    });
-    document.getElementById('t2').style.opacity = p2 > 0 ? '1' : '0';
-    document.getElementById('p2').style.opacity = p2 > 0 ? '1' : '0';
-
-    // bounce
-    if (p2 > 0 && !inSlot2) {
-      inSlot2 = true;
-      redbox.classList.remove('bounce-exit');
-      clock .classList.remove('bounce-exit');
-      redbox.style.transform = 'translateX(-50%) translateY(80px)';
-      clock .style.transform = 'translateX(-50%) translateY(80px)';
-      redbox.style.opacity   = clock.style.opacity = '0';
-      void redbox.offsetWidth; void clock.offsetWidth;
-      redbox.classList.add('bounce-enter');
-      clock .classList.add('bounce-enter');
-
-    } else if (p2 === 0 && inSlot2) {
-      inSlot2 = false;
-      redbox.classList.remove('bounce-enter');
-      clock .classList.remove('bounce-enter');
-      redbox.style.transform = 'translateX(-50%) translateY(0)';
-      clock .style.transform = 'translateX(-50%) translateY(0)';
-      redbox.style.opacity   = clock.style.opacity = '1';
-      void redbox.offsetWidth; void clock.offsetWidth;
-      redbox.classList.add('bounce-exit');
-      clock .classList.add('bounce-exit');
-    }
+  if (y < scrollToFix - centerY) {
+    // Before center align point: pin to wrapper top
+    stickyCard.style.position = 'absolute';
+    stickyCard.style.top = `0px`;
+  } else if (y >= scrollToFix - centerY && y < lockBottomY - wrapperTop) {
+    // While centered in viewport
+    stickyCard.style.position = 'fixed';
+    stickyCard.style.top = `${centerY}px`;
+  } else {
+    // After scroll limit: stick to bottom of wrapper
+    const bottomPos = lockBottomY - wrapperTop;
+    stickyCard.style.position = 'absolute';
+    stickyCard.style.top = `${bottomPos}px`;
   }
+
+  // SLOT 1 & 2 animations (unchanged)
+  const p1 = clamp((y - wrapperTop) / (slot1EndOffset - wrapperTop), 0, 1);
+  const p2 = clamp((y - slot1EndOffset) / (slot2EndOffset - slot1EndOffset), 0, 1);
+
+  slot1Els.forEach(el => {
+    el.style.transform = `translateY(${-100 * p1}px)`;
+    el.style.opacity = `${1 - p1}`;
+  });
+  document.getElementById('t1').style.opacity = p1 < 1 ? '1' : '0';
+  document.getElementById('p1').style.opacity = p1 < 1 ? '1' : '0';
+
+  slot2Els.forEach(el => {
+    const ty = -80 + 80 * p2;
+    el.style.transform = `translateY(${ty}px)`;
+    el.style.opacity = `${p2}`;
+  });
+  document.getElementById('t2').style.opacity = p2 > 0 ? '1' : '0';
+  document.getElementById('p2').style.opacity = p2 > 0 ? '1' : '0';
+
+  if (p2 > 0 && !inSlot2) {
+    inSlot2 = true;
+    redbox.classList.remove('bounce-exit');
+    clock.classList.remove('bounce-exit');
+    redbox.style.transform = 'translateX(-50%) translateY(80px)';
+    clock.style.transform = 'translateX(-50%) translateY(80px)';
+    redbox.style.opacity = clock.style.opacity = '0';
+    void redbox.offsetWidth; void clock.offsetWidth;
+    redbox.classList.add('bounce-enter');
+    clock.classList.add('bounce-enter');
+
+  } else if (p2 === 0 && inSlot2) {
+    inSlot2 = false;
+    redbox.classList.remove('bounce-enter');
+    clock.classList.remove('bounce-enter');
+    redbox.style.transform = 'translateX(-50%) translateY(0)';
+    clock.style.transform = 'translateX(-50%) translateY(0)';
+    redbox.style.opacity = clock.style.opacity = '1';
+    void redbox.offsetWidth; void clock.offsetWidth;
+    redbox.classList.add('bounce-exit');
+    clock.classList.add('bounce-exit');
+  }
+      }
+  
 
   // recalc on resize
   window.addEventListener('resize', () => {
