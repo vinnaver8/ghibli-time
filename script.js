@@ -1,31 +1,35 @@
-// JavaScript: Scroll listener to move the card
+
 (function() {
-  const card = document.getElementById('scroll-card');
-  const minScroll = 950;
-  const maxScroll = 2600;
-  const maxOffset = maxScroll - minScroll;
-  let lastKnownScrollY = 0;
+  const card      = document.getElementById('scroll-card');
+  const startY    = 950;              // scrollY where movement begins
+  const endY      = 2600;             // scrollY where movement ends
+  const maxOffset = endY - startY;    // total pixels of travel
+
+  let lastY   = 0;
   let ticking = false;
 
-  function updateCard(scrollY) {
-    // Calculate offset only if above the start threshold
-    let offset = 0;
-    if (scrollY > minScroll) {
-      offset = Math.min(scrollY - minScroll, maxOffset);
+  function update() {
+    const y = lastY;
+    let offset;
+
+    if (y < startY) {
+      offset = 0;
+    } else if (y > endY) {
+      offset = maxOffset;
+    } else {
+      offset = y - startY;
     }
-    // Move the card by translating vertically (negative = move up)
+
+    // Negative translateY = move card up as user scrolls down
     card.style.transform = `translateY(${-offset}px)`;
+    ticking = false;
   }
 
-  window.addEventListener('scroll', function() {
-    lastKnownScrollY = window.scrollY;
-    // Throttle updates using requestAnimationFrame for smooth animation910
+  window.addEventListener('scroll', () => {
+    lastY = window.scrollY;
     if (!ticking) {
-      window.requestAnimationFrame(function() {
-        updateCard(lastKnownScrollY);
-        ticking = false;
-      });
+      window.requestAnimationFrame(update);
       ticking = true;
     }
-  });
+  }, { passive: true });
 })();
