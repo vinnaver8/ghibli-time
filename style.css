@@ -1,14 +1,17 @@
-/* CSS Styles */
+.card-wrapper {
+  position: relative;
+  height: 4000px; /* Just for scrollable space */
+}
+
 .card {
-  /* Set up initial transform and hint for performance */
-  transform: translateY(0);
-  will-change: transform;
-  /* (Other styling as needed, e.g. size, background, margins, etc.) */
-  /* e.g.: */ 
+  position: relative;
   width: 300px;
+  margin: 0 auto;
   padding: 20px;
-  background: #f0f0f0;
-  margin: 100px auto;
+  background: #f2f2f2;
+  border-radius: 10px;
+  transition: transform 0.1s ease-out;
+  will-change: transform;
 }
 @keyframes glowShift {
       0% {
