@@ -1,12 +1,12 @@
-#scroll-card {
-  position: relative;        /* keep in normal flow */
-  transform: translateY(0);  /* initial position */
-  will-change: transform;    /* hint for performance */
-  /* Optional: smooth snap transition when weird jitter */
-  transition: transform 0.1s ease-out;
+#card-container {
+  /* Position relative so the card can move within */
+  position: relative;
+  overflow: hidden; /* hide overflow */
 }
 
-/* Ensure page is tall enough to scroll 0 → 4000px */
-body {
-  min-height: 4000px;
+#scroll-card {
+  position: absolute;
+  top: 0;
+  left: 0;
+  will-change: transform;
 }
