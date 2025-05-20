@@ -63,7 +63,7 @@ lg:pt-16">
 <!--2nd section-->
 <section id="card-container"
   class="metabrain relative
-         min-h-[3000px] md:min-h-[3000px]
+         min-h-[2600px] md:min-h-[2600px]
          overflow-hidden
          pt-32">
 <div class="relative md:absolute md:top-[100px] md:left-[360px] md:text-left text-80 text-center w-full md:w-auto">
@@ -302,76 +302,51 @@ class="card-wrapper hidden md:block absolute top-[100px] left-[50px] w-[100px] h
 style="background-image: url('line1.webp'); background-size: cover; background-position: center; background-repeat: no-repeat;">
 </div>
 <!--line box ------------------------------------->
-<div class="hidden md:block absolute top-[1000px] left-[50px] w-[250px] h-[600px]">
-<div class="relative w-full h-full overflow-hidden">
-<!-- Sticky card wrapper -->
-<div id="scroll-card"
-class="sticky card absolute top-0 left-0 w-full max-w-sm mx-auto [perspective:600px]">
-<!-- Slot-1 content (unchanged) -->
-<div id="floatCard"
-           class="floating relative w-full h-[300px] p-6 rounded-2xl
-                  bg-[url('lbox.png')] bg-cover bg-center
-                  shadow-[0_10px_30px_rgba(0,0,0,0.1)] overflow-visible
-                  before:absolute before:-inset-[5px] before:rounded-[calc(1rem+5px)]
-                  before:bg-gradient-to-r before:from-[rgba(200,200,200,0.4)] before:via-[rgba(255,255,255,0.2)]
-                  before:to-[rgba(200,200,200,0.4)] before:bg-[length:400%] before:filter
-                  before:blur-[10px] before:opacity-0 before:transition-opacity
-                  before:duration-[1000ms] before:ease-in-out before:-z-10">
+ <div
+    id="card-wrapper"
+    class="absolute top-[1000px] left-[50px] w-[250px]"
+  >
+    <!-- 3) Background image (lbox.png) -->
+    <div class="relative w-full h-[300px]">
+      <img
+        src="lbox.png"
+        alt="Card background"
+        class="absolute inset-0 w-full h-full object-cover rounded-2xl shadow-lg"
+      />
+    </div>
 
-        <h2 id="h1"
-            class="anim1 text-5xl font-bold drop-shadow-lg
-                   absolute top-[145px] left-1/2 -translate-x-1/2">
-          Team
-        </h2>
-        <div id="b1"
-             class="anim1 absolute top-10 -left-10 bg-blue-600 text-white
-                    px-6 py-4 rounded-full text-2xl drop-shadow">
-          John S.
-        </div>
-        <div id="b2"
-             class="anim1 absolute top-60 -right-10 bg-red-400 text-white
-                    px-6 py-4 rounded-full text-2xl drop-shadow">
-          Lillanna
-        </div>
-        <img id="a1" src="down.webp" alt="Arrow Down"
-             class="anim1 absolute top-[7rem] left-[5rem] w-8 rotate-[30deg] drop-shadow-lg" />
-        <img id="a2" src="up.webp" alt="Arrow Up"
-             class="anim1 absolute top-[12.5rem] right-[5rem] w-8 -rotate-[40deg] drop-shadow-lg" />
-        <div class="absolute bottom-6 left-6">
-          <h3 id="t1" class="text-lg font-semibold drop-shadow">Collaborate</h3>
-          <p id="p1" class="text-sm drop-shadow">
-            Enhance teamwork with powerful real-time collaboration features.
-          </p>
-        </div>
-      </div> <!-- end #card -->
-<!-- Slot-2 content -->
-<div id="slot-2" class="card-content absolute inset-0 p-6">
-<!-- version pill -->
-<div class="absolute top-4 left-4">
-<div id="b3"
-class="anim2 bg-blue-500 text-white px-2 py-1 rounded-full
-text-xs drop-shadow">
-v1.2
+    <!-- 4) Sticky card content (centers in viewport) -->
+    <div
+      id="scroll-card"
+      class="sticky top-1/2 -translate-y-1/2 bg-white p-4 rounded-xl shadow-xl"
+    >
+      <!-- Your Slot-1 + Slot-2 content goes here -->
+      <h2 class="text-xl font-bold mb-2">Team</h2>
+      <p class="text-sm mb-4">John S. & Lillianna</p>
+      <p class="text-xs text-gray-500">Collaborate with real-time features</p>
+    </div>
+  </div>
 </div>
-</div>
-<!-- clock icon -->
-<div class="absolute left-0 top-1/2 -translate-y-1/2">
-<div id="a3" class="anim2">
-<svg id="clock-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"
-class="w-20 h-20 text-white">
-<path d="M24,46A22,22,0,1,1,46,24,22,22,0,0,1,24,46Z" fill="#38b1e7"/>
-<circle cx="24" cy="24" r="16" fill="#b7e3f6"/>
-<path d="M29.09,29.78a2,2,0,0,1-1.19-.39l-5.09-3.78A2,2,0,0,1,22,24V16a2,2,0,0,1,4,0v7l4.29,3.18A2,2,0,0,1,29.09,29.78Z" fill="#495660"/>
-</svg>
-</div></div>
-<!-- redbox image -->
-<div id="redbox" class="relative w-full h-screen">
-<img src="redbox.png" alt=""
-class="absolute -top-[60px] -right-[50px] rounded-xl object-fill" />
-</div>
-</div> <!-- end slot-2 -->
-</div> <!-- end sticky-card -->
-</div></div> 
+
+<!-- 5) JS: clamp card-wrapper top between 1000px and 2600px -->
+<script>
+  (function() {
+    const wrapper = document.getElementById('card-wrapper');
+    const startY = 1000;
+    const endY   = 2600;
+
+    function onScroll() {
+      const scrollY = window.scrollY;
+      // clamp desired top
+      const clamped = Math.max(startY, Math.min(endY, scrollY));
+      wrapper.style.top = clamped + 'px';
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    // initialize
+    onScroll();
+  })();
+</script>
 </section>
 <!--section 3 end-->
 <section class="py-16 sm:py-32">
