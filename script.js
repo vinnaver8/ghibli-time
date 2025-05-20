@@ -3,8 +3,8 @@
   const card = document.getElementById('scroll-card');
 
   window.addEventListener('load', () => {
-    const startY = 950;
-    const endY = 2600;
+    const startY = 1100;
+    const endY = 3000;
     const maxTranslate = endY - startY;
 
     let ticking = false;
