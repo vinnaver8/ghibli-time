@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // measurements
   const wrapperTop = wrapper.offsetTop;             // where the scroll window starts
   const cardH      = stickyCard.offsetHeight;      // ~300px
-
+  const centerOffset = 40; // positive = lower, negative = higher
   // clamp helper
   const clamp = (v, min, max) => v < min ? min : v > max ? max : v;
 
