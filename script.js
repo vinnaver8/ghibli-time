@@ -1,3 +1,4 @@
+// script.js
 document.addEventListener('DOMContentLoaded', () => {
   // ── CONFIGURE THESE to match your design ───────────────────────────
   const slot1EndOffset = 1830; // scrollY at which slot-1 ends (px)
@@ -14,57 +15,58 @@ document.addEventListener('DOMContentLoaded', () => {
   let inSlot2      = false;
 
   // measurements
-  const wrapperTop = wrapper.offsetTop;             // where the scroll window starts
+  const wrapperTop = wrapper.offsetTop;             // e.g. 950 or 1300px
   const cardH      = stickyCard.offsetHeight;      // ~300px
-  const centerOffset = 40; // positive = lower, negative = higher
+
   // clamp helper
   const clamp = (v, min, max) => v < min ? min : v > max ? max : v;
+
   function update() {
-  const y  = window.scrollY;
-  const vh = window.innerHeight;
-  const centerOffset = 40; // positive = lower, negative = higher
+    const y = window.scrollY;
 
-  // ── 1) CENTER-TRACKING MARCHING ───────────────────────────────────
-  let topPos = (y - wrapperTop) + (vh / 2 - cardH / 2) + centerOffset;
-  // then apply:
-  stickyCard.style.position = 'absolute';
-  stickyCard.style.top = topPos + 'px';
-}
-  
-    // Before the window: hide or pin off-screen
-    if (y < wrapperTop) {
-      stickyCard.style.visibility = 'hidden';
-      topPos = 0;
+    // ── 1) MARCHING ────────────────────────────────────────────────────
+    let marchY;
+    if (y <  wrapperTop) {
+      marchY = 0;                                         // not yet in view
+    } else if (y > slot2EndOffset - cardH) {
+      marchY = (slot2EndOffset - cardH) - wrapperTop;     // lock at bottom
     } else {
-      stickyCard.style.visibility = 'visible';
+      marchY = y - wrapperTop;                            // march with scroll
     }
-
-    // Clamp so it never moves above start or below end:
-    const maxPos = (slot2EndOffset - wrapperTop) - cardH;
-    topPos = clamp(topPos, 0, maxPos);
-
-    // Apply absolute positioning:
     stickyCard.style.position = 'absolute';
-    stickyCard.style.top      = `${topPos}px`;
+    stickyCard.style.top      = marchY + 'px';
 
 
     // ── 2) SLOT PROGRESS ──────────────────────────────────────────────
+    // Two scroll ranges:
+    //   [ wrapperTop → slot1EndOffset ] controls slot-1 (0→1)
+    //   [ slot1EndOffset → slot2EndOffset ] controls slot-2 (0→1)
     const p1 = clamp((y - wrapperTop) / (slot1EndOffset - wrapperTop), 0, 1);
     const p2 = clamp((y - slot1EndOffset) / (slot2EndOffset - slot1EndOffset), 0, 1);
 
     // SLOT 1 animations
     slot1Els.forEach(el => {
-      el.style.transform = `translateY(${-100 * p1}px)`;
-      el.style.opacity   = `${1 - p1}`;
+      if (p1 === 0) {
+        el.style.transform = 'translateY(0)';
+        el.style.opacity   = '1';
+      } else {
+        el.style.transform = `translateY(${-100 * p1}px)`;
+        el.style.opacity   = `${1 - p1}`;
+      }
     });
     document.getElementById('t1').style.opacity = p1 < 1 ? '1' : '0';
     document.getElementById('p1').style.opacity = p1 < 1 ? '1' : '0';
 
     // SLOT 2 animations
     slot2Els.forEach(el => {
-      const ty = -80 + 80 * p2;
-      el.style.transform = `translateY(${ty}px)`;
-      el.style.opacity   = `${p2}`;
+      if (p2 === 0) {
+        el.style.transform = 'translateY(-80px)';
+        el.style.opacity   = '0';
+      } else {
+        const ty = -80 + 80 * p2;
+        el.style.transform = `translateY(${ty}px)`;
+        el.style.opacity   = `${p2}`;
+      }
     });
     document.getElementById('t2').style.opacity = p2 > 0 ? '1' : '0';
     document.getElementById('p2').style.opacity = p2 > 0 ? '1' : '0';
@@ -74,6 +76,10 @@ document.addEventListener('DOMContentLoaded', () => {
       inSlot2 = true;
       redbox.classList.remove('bounce-exit');
       clock.classList.remove('bounce-exit');
+      redbox.style.transform = 'translateX(-50%) translateY(80px)';
+      redbox.style.opacity   = '0';
+      clock.style.transform  = 'translateX(-50%) translateY(80px)';
+      clock.style.opacity    = '0';
       void redbox.offsetWidth; void clock.offsetWidth;
       redbox.classList.add('bounce-enter');
       clock.classList.add('bounce-enter');
@@ -82,6 +88,10 @@ document.addEventListener('DOMContentLoaded', () => {
       inSlot2 = false;
       redbox.classList.remove('bounce-enter');
       clock.classList.remove('bounce-enter');
+      redbox.style.transform = 'translateX(-50%) translateY(0)';
+      redbox.style.opacity   = '1';
+      clock.style.transform  = 'translateX(-50%) translateY(0)';
+      clock.style.opacity    = '1';
       void redbox.offsetWidth; void clock.offsetWidth;
       redbox.classList.add('bounce-exit');
       clock.classList.add('bounce-exit');
@@ -90,7 +100,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // hook events
   window.addEventListener('scroll', update);
-  window.addEventListener('resize', update);
   update();
 
 
