@@ -1,11 +1,11 @@
+// script.js
 document.addEventListener('DOMContentLoaded', () => {
   // ── CONFIGURE THESE to match your design ───────────────────────────
   const slot1EndOffset = 1830; // scrollY at which slot-1 ends (px)
   const slot2EndOffset = 2600; // scrollY at which the card stops (px)
-  const centerOffset = 0;      // Adjust this value to fine-tune vertical centering
   // ────────────────────────────────────────────────────────────────────
 
-  // Grab elements
+  // grab elements
   const wrapper    = document.getElementById('team-wrapper');
   const stickyCard = document.getElementById('sticky-card');
   const slot1Els   = ['h1','b1','b2','a1','a2'].map(id => document.getElementById(id));
@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const clock      = document.getElementById('clock-icon');
   let inSlot2      = false;
 
-  // Clamp helper
+  // clamp helper
   const clamp = (v, min, max) => v < min ? min : v > max ? max : v;
 
   function update() {
@@ -23,18 +23,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const wrapperTop = wrapper.offsetTop;
     const cardH = stickyCard.offsetHeight;
 
-    // ── 1) CENTERED MARCHING ──────────────────────────────────────────
+    // ── 1) CENTER-TRACKING MARCHING ───────────────────────────────────
     let topPos;
     if (y < wrapperTop) {
       topPos = 0;
     } else if (y > slot2EndOffset - cardH) {
       topPos = (slot2EndOffset - cardH) - wrapperTop;
     } else {
-      topPos = (y - wrapperTop) + (vh / 2 - cardH / 2) + centerOffset;
+      topPos = (y - wrapperTop) + (vh / 2 - cardH / 2);
     }
 
     stickyCard.style.position = 'absolute';
     stickyCard.style.left = '50%';
+    stickyCard.style.top = '0';
     stickyCard.style.transform = `translate(-50%, ${topPos}px)`;
 
     // ── 2) SLOT PROGRESS ──────────────────────────────────────────────
@@ -68,7 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('t2').style.opacity = p2 > 0 ? '1' : '0';
     document.getElementById('p2').style.opacity = p2 > 0 ? '1' : '0';
 
-    // Bounce-in / bounce-out
+    // bounce-in / bounce-out
     if (p2 > 0 && !inSlot2) {
       inSlot2 = true;
       redbox.classList.remove('bounce-exit');
@@ -94,9 +95,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Hook events
+  // hook events
   window.addEventListener('scroll', update);
-  window.addEventListener('resize', update);
+  window.addEventListener('resize', update); // update on resize to keep center
   update();
 
   // ── 3) GLOW INTERSECTION (unchanged) ───────────────────────────────
