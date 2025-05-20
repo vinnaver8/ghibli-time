@@ -110,3 +110,31 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   observer.observe(card);
 });
+// script.js
+document.addEventListener('DOMContentLoaded', () => {
+  const wrapper       = document.getElementById('team-wrapper');    // your absolute container at top-[1300px]
+  const card          = document.getElementById('sticky-card');     // the moving element
+  const wrapperTop    = wrapper.offsetTop;                          // 1300px (relative to the section)
+  const wrapperHeight = wrapper.offsetHeight;                       // e.g. 2600px or whatever you set
+  const cardHeight    = card.offsetHeight;
+
+  window.addEventListener('scroll', () => {
+    const scrollY = window.scrollY;
+    let newTop;
+
+    if (scrollY < wrapperTop) {
+      // haven’t scrolled into the wrapper yet
+      newTop = 0;
+    } else if (scrollY > wrapperTop + wrapperHeight - cardHeight) {
+      // scrolled past the wrapper’s bottom
+      newTop = wrapperHeight - cardHeight;
+    } else {
+      // “march” the card down in sync with scroll
+      newTop = scrollY - wrapperTop;
+    }
+
+    // apply that position
+    card.style.position = 'absolute';
+    card.style.top      = `${newTop}px`;
+  });
+});
