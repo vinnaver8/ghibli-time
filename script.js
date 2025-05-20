@@ -1,38 +1,52 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const trigger      = document.getElementById('knowledge');     // RIGHT-HAND SECTION
-  const wrapper      = document.getElementById('team-wrapper');  // your tall 2600px box
-  const stickyCard   = document.getElementById('sticky-card');
-  const slot1Els     = ['h1','b1','b2','a1','a2'].map(id => document.getElementById(id));
-  const slot2Els     = ['b3','a3'].map(id => document.getElementById(id));
-  const redbox       = document.getElementById('redbox');
-  const clock        = document.getElementById('clock-icon');
-  let inSlot2        = false;
+  // —— CONFIG —— (tweak these)
+  const slot1EndOffset = 1830; // scrollY where slot-1 ends
+  const slot2EndOffset = 2600; // scrollY where slot-2/card stops
+  // ——————
 
-  // PIXEL OFFSETS
-  const slot1EndY    = 1830;  // where slot-1 ends (window.scrollY)
-  const slot2EndY    = 2600;  // where slot-2/card stops
-  const startOffset  = trigger.offsetTop;  // start when #knowledge hits top
+  // grab elements
+  const wrapper    = document.getElementById('team-wrapper');
+  const stickyCard = document.getElementById('sticky-card');
+  const slot1Els   = ['h1','b1','b2','a1','a2'].map(id => document.getElementById(id));
+  const slot2Els   = ['b3','a3'].map(id => document.getElementById(id));
+  const redbox     = document.getElementById('redbox');
+  const clock      = document.getElementById('clock-icon');
+  let inSlot2      = false;
 
-  const cardHeight   = stickyCard.offsetHeight;
-  const clamp        = (v,min,max) => v<min?min:v>max?max:v;
+  // measurements
+  const wrapperTop = wrapper.offsetTop;
+  let vh           = window.innerHeight;
+  let cardH        = stickyCard.offsetHeight;
+
+  // clamp helper
+  const clamp = (v, min, max) => v < min ? min : v > max ? max : v;
 
   function update() {
     const y = window.scrollY;
+    const centerY = (vh - cardH) / 2; // px from top of viewport
 
-    // ── 1) LOCK until #knowledge hits top ───────────────────────
-    // marchY is zero until we hit startOffset
-    let marchY = 0;
-    if (y >= startOffset) {
-      // then march until slot2EndY
-      marchY = clamp(y - startOffset, 0, slot2EndY - startOffset - cardHeight);
+    // — 1) MARCHING WITH CENTERING ——————————————
+    if (y < wrapperTop) {
+      // before wrapper: keep it at the top of its wrapper
+      stickyCard.style.position = 'absolute';
+      stickyCard.style.top      = `0px`;
+
+    } else if (y >= wrapperTop && y <= slot2EndOffset - cardH - wrapperTop) {
+      // in the march window: fix to viewport center
+      stickyCard.style.position = 'fixed';
+      stickyCard.style.top      = `${centerY}px`;
+
+    } else {
+      // after march: pin to bottom of wrapper
+      const bottomPos = (slot2EndOffset - cardH) - wrapperTop;
+      stickyCard.style.position = 'absolute';
+      stickyCard.style.top      = `${bottomPos}px`;
     }
-    stickyCard.style.position = 'absolute';
-    stickyCard.style.top      = marchY + 'px';
 
 
-    // ── 2) SLOT PROGRESS ──────────────────────────────────────
-    const p1 = clamp((y - startOffset) / (slot1EndY - startOffset), 0, 1);
-    const p2 = clamp((y - slot1EndY) / (slot2EndY - slot1EndY),   0, 1);
+    // — 2) SLOT PROGRESS ——————————————
+    const p1 = clamp((y - wrapperTop) / (slot1EndOffset - wrapperTop), 0, 1);
+    const p2 = clamp((y - slot1EndOffset) / (slot2EndOffset - slot1EndOffset), 0, 1);
 
     // slot-1
     slot1Els.forEach(el => {
@@ -53,7 +67,8 @@ document.addEventListener('DOMContentLoaded', () => {
         el.style.transform = 'translateY(-80px)';
         el.style.opacity   = '0';
       } else {
-        el.style.transform = `translateY(${-80 + 80 * p2}px)`;
+        const ty = -80 + 80 * p2;
+        el.style.transform = `translateY(${ty}px)`;
         el.style.opacity   = `${p2}`;
       }
     });
@@ -85,12 +100,20 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  // recalc on resize
+  window.addEventListener('resize', () => {
+    vh    = window.innerHeight;
+    cardH = stickyCard.offsetHeight;
+    update();
+  });
+
   window.addEventListener('scroll', update);
   update();
 
-  // ── 3) KEEP YOUR GLOW LOGIC ───────────────────────────────
+  // — 3) GLOW INTERSECTION ——————————————
   const card = document.getElementById('card');
-  new IntersectionObserver(entries => {
+  const observer = new IntersectionObserver(entries => {
     entries.forEach(e => card.classList.toggle('glow', e.isIntersecting));
-  }, { threshold: 0.5 }).observe(card);
+  }, { threshold: 0.5 });
+  observer.observe(card);
 });
