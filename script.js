@@ -5,12 +5,8 @@
   window.addEventListener('load', init);
 
   function init() {
-    const sectionHeight = 2600; // Or: container.offsetHeight;
-    const startPercent = 950 / sectionHeight;
-    const endPercent = 1; // 100% scroll
-
-    const startY = sectionHeight * startPercent;
-    const endY = sectionHeight * endPercent;
+    const startY = 1000;
+    const endY = 3000;
     const maxTranslate = endY - startY;
 
     let lastY = 0;
