@@ -2,29 +2,33 @@
   const container = document.getElementById('card-container');
   const card = document.getElementById('scroll-card');
 
-  window.addEventListener('load', init);
-
-  function init() {
-    const startY = 1000;
-    const endY = 3000;
+  window.addEventListener('load', () => {
+    const startY = 950;
+    const endY = 2600;
     const maxTranslate = endY - startY;
 
-    let lastY = 0;
     let ticking = false;
 
     function update() {
-      const scrolled = lastY - startY;
-      const offset = Math.max(0, Math.min(scrolled, maxTranslate));
-      card.style.transform = `translateY(calc(-50% + ${offset}px))`;
+      const scrollY = window.scrollY;
+
+      if (scrollY < startY) {
+        card.style.transform = 'translateY(0px)';
+      } else if (scrollY > endY) {
+        card.style.transform = `translateY(${maxTranslate}px)`;
+      } else {
+        const offset = scrollY - startY;
+        card.style.transform = `translateY(${offset}px)`;
+      }
+
       ticking = false;
     }
 
     window.addEventListener('scroll', () => {
-      lastY = window.scrollY;
       if (!ticking) {
         requestAnimationFrame(update);
         ticking = true;
       }
     }, { passive: true });
-  }
+  });
 })();
