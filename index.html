@@ -7,11 +7,8 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <title>Slot 2 Redbox + Clock Bounce</title>
   <style>
-    /*──────────────────────────────────────────────────────────────────
-      1) Container & Sticky Card: “pin” the card mid-viewport
-    ──────────────────────────────────────────────────────────────────*/
-    #scroll-container {
-      height: 200vh; /* Enough vertical space to scroll all the way */
+     #scroll-container {
+      height: 200vh;
     }
     #sticky-card {
       position: sticky;
@@ -39,7 +36,7 @@
       left: -5px;   
       right: -5px;  
       bottom: -5px; 
-      border-radius: calc(1rem + 5px); /* match 16px + 5px */
+      border-radius: calc(1rem + 5px);
 background: linear-gradient(
   90deg,
   #6ab7d6,
@@ -48,17 +45,14 @@ background: linear-gradient(
   #6ab7d6
 );
   
-      background-size: 400%;   /* required for shifting effect */
+      background-size: 400%;
       filter: blur(10px);
-      opacity: 0;              /* hidden until .glow is added */
+      opacity: 0;              
+       
       transition: opacity 1s ease-in-out;
-      z-index: -1;             /* behind card content */
+      z-index: -1;            
     }
-
-    /* —————————————————————————————— */
-    /* 3) Keyframes for shifting gradient */
-    /* —————————————————————————————— */
-    @keyframes glowShift {
+ @keyframes glowShift {
       0% {
         background-position: 0% 50%;
       }
@@ -66,40 +60,19 @@ background: linear-gradient(
         background-position: 400% 50%;
       }
     }
-
-    /* —————————————————————————————— */
-    /* 4) When .glow is present on #card,  */
-    /*    we fade in and start animating   */
-    /* —————————————————————————————— */
-    #card.glow::before {
+#card.glow::before {
       opacity: 1;
       animation: glowShift 8s linear infinite;
     }
-
-    /*──────────────────────────────────────────────────────────────────
-      2) Slot 1 Elements: no transition (snap instantly when p₁ = 0)
-    ──────────────────────────────────────────────────────────────────*/
-    #slot-1 .anim1 {
+#slot-1 .anim1 {
       will-change: transform, opacity;
       transition: none;
     }
-
-    /*──────────────────────────────────────────────────────────────────
-      3) Slot 2 Elements (“anim2” excluding #redbox & #clock-icon):
-         JS-driven fly-in; no CSS transition
-    ──────────────────────────────────────────────────────────────────*/
-    #slot-2 .anim2 {
+#slot-2 .anim2 {
       will-change: transform, opacity;
       transition: none;
     }
-
-    /*──────────────────────────────────────────────────────────────────
-      4) REDBOX + CLOCK Initial State: off-screen + hidden
-         We’ll use two CSS keyframes:
-         • bounceUp (0.6s)   → from off-screen → on-screen
-         • bounceDown (0.6s) → from on-screen → off-screen
-    ──────────────────────────────────────────────────────────────────*/
-    #redbox,
+#redbox,
     #clock-icon {
       position: absolute;
       left: 50%;
@@ -151,22 +124,15 @@ animation: bounceUp 0.6s ease-out forwards;
 <div id="scroll-container" class="relative">
 <div id="sticky-card" class="w-full max-w-sm mx-auto">
 <div id="card" class="relative w-full h-[300px] p-6">
-
-  <!-- “Team” heading, badges, etc. -->
-  <h2 id="h1" class="anim1 text-5xl font-bold text-white drop-shadow-lg absolute top-[145px] left-[35%] transform -translate-x-1/2">
+<h2 id="h1" class="anim1 text-5xl font-bold text-white drop-shadow-lg absolute top-[145px] left-[35%] transform -translate-x-1/2">
     Team
   </h2>
   <div id="b1" class="anim1 absolute top-10 -left-10 bg-blue-600 text-white px-6 py-4 rounded-full text-2xl drop-shadow">John S.</div>
   <div id="b2" class="anim1 absolute top-60 -right-10 bg-red-400 text-white px-6 py-4 rounded-full text-2xl drop-shadow">Lilianna</div>
-
-  <!-- Arrow from John S. → “Team” -->
-  <img id="a1" src="down.webp" alt="Arrow Up"
+ <img id="a1" src="down.webp" alt="Arrow Up"
        class="anim1 absolute top-[7rem] left-[5rem] w-8 rotate-[30deg] drop-shadow-lg" />
-
-  <!-- Arrow from Lilianna → “Team” -->
   <img id="a2" src="up.webp" alt="Arrow Down"
        class="anim1 absolute top-[12.5rem] right-[5rem] w-8 -rotate-[40deg] drop-shadow-lg" />
-<!-- “Collaborate” block now part of #card itself: -->
   <div class="absolute bottom-6 left-6">
     <h3 id="t1" class="text-lg font-semibold text-white drop-shadow">Collaborate</h3>
     <p id="p1" class="text-white text-sm drop-shadow">
@@ -174,10 +140,8 @@ animation: bounceUp 0.6s ease-out forwards;
     </p>
   </div>
 </div>
- <!-- ====== SLOT 2 ====== -->
-        <div id="slot-2" class="card-content p-6">
-          <!-- (a) Other Slot 2 items: fly in/fade in via JS -->
-          <div class="absolute top-4 left-4">
+       <div id="slot-2" class="card-content p-6">
+           <div class="absolute top-4 left-4">
             <div id="b3"
                  class="anim2 bg-blue-500 text-white px-2 py-1 rounded-full text-xs drop-shadow">
               v1.2
@@ -192,16 +156,14 @@ animation: bounceUp 0.6s ease-out forwards;
     </svg>
   </div>
   </div>
-<!-- (c) REDBOX PNG: same bounce animation -->
-  <div id="redbox"class="relative w-full h-screen">
+ <div id="redbox"class="relative w-full h-screen">
   <img alt="" 
     width="1000"
     height="400"
     src="redbox.png"
     class="absolute -top-[60px] -right-[50px] rounded-xl object-fill" />
           </div>
- <!-- (d) “Version History” text -->
-        <div class="absolute bottom-6 left-6">
+         <div class="absolute bottom-6 left-6">
             <h3 id="t2" class="text-lg font-semibold text-white drop-shadow">Version History</h3>
             <p id="p2" class="text-white text-sm drop-shadow">
               Track every edit effortlessly, and never lose a single change.
@@ -216,15 +178,12 @@ animation: bounceUp 0.6s ease-out forwards;
       const vh = window.innerHeight;
       const maxScroll = () => container.offsetHeight - vh;
 
-      // Slot 1 elements (fly up & fade out; snap back instantly when p₁ = 0)
-      const slot1Els = ['h1','b1','b2','a1','a2']
+        const slot1Els = ['h1','b1','b2','a1','a2']
         .map(id => document.getElementById(id));
 
-      // Slot 2 non-redbox elements (fly in from –80px & fade in)
       const slot2Els = ['b3','a3']
         .map(id => document.getElementById(id));
 
-      // Redbox & Clock icon plus flag to track if we’re currently in Slot 2
       const redbox = document.getElementById('redbox');
       const clock  = document.getElementById('clock-icon');
       let inSlot2  = false;
@@ -234,30 +193,20 @@ animation: bounceUp 0.6s ease-out forwards;
         const prog    = Math.min(Math.max(scrollY / maxScroll(), 0), 1);
         const half    = 0.5;
 
-        // p₁: 0→1 over 0%–50%
         const p1 = Math.min(Math.max((prog - 0) / half, 0), 1);
-        // p₂: 0→1 over 50%–100%
-        const p2 = Math.min(Math.max((prog - half) / half, 0), 1);
-
-        /*────────── SLOT 1 ──────────*/
-        slot1Els.forEach(el => {
+         const p2 = Math.min(Math.max((prog - half) / half, 0), 1);
+slot1Els.forEach(el => {
           if (p1 === 0) {
-            // Snap instantly
             el.style.transform = 'translateY(0)';
             el.style.opacity   = '1';
           } else {
-            // Fly up (–100px) & fade out
             el.style.transform = `translateY(${-100 * p1}px)`;
             el.style.opacity   = `${1 - p1}`;
           }
         });
-        // “Collaborate” text toggles at the 50% mark
         document.getElementById('t1').style.opacity = (prog < 0.5 ? '1' : '0');
         document.getElementById('p1').style.opacity = (prog < 0.5 ? '1' : '0');
-
-        /*────────── SLOT 2 ──────────*/
-        // (a) Other Slot 2 items: fly in / fade in
-        slot2Els.forEach(el => {
+ slot2Els.forEach(el => {
           if (p2 === 0) {
             el.style.transform = 'translateY(-80px)';
             el.style.opacity   = '0';
@@ -267,53 +216,37 @@ animation: bounceUp 0.6s ease-out forwards;
             el.style.opacity   = `${p2}`;
           }
         });
-        // “Version History” text toggles at the 50% mark
         document.getElementById('t2').style.opacity = (prog >= 0.5 ? '1' : '0');
         document.getElementById('p2').style.opacity = (prog >= 0.5 ? '1' : '0');
 
-        /*────────── REDBOX & CLOCK ICON BOUNCE ──────────*/
         if (p2 > 0 && !inSlot2) {
-          // Just crossed into Slot 2
           inSlot2 = true;
 
-          // Remove bounce-exit from both
           redbox.classList.remove('bounce-exit');
           clock.classList.remove('bounce-exit');
-
-          // Reset to off-screen + hidden
-          redbox.style.transform = 'translateX(-50%) translateY(80px)';
+redbox.style.transform = 'translateX(-50%) translateY(80px)';
           redbox.style.opacity   = '0';
           clock.style.transform  = 'translateX(-50%) translateY(80px)';
           clock.style.opacity    = '0';
-
-          // Force reflow so .bounce-enter always restarts
-          void redbox.offsetWidth;
+void redbox.offsetWidth;
           void clock.offsetWidth;
 
-          // Play bounce-up once (ends visible on-screen)
           redbox.classList.add('bounce-enter');
           clock.classList.add('bounce-enter');
 
         } else if (p2 === 0 && inSlot2) {
-          // Just scrolled back above 50% → exit Slot 2
-          inSlot2 = false;
+           inSlot2 = false;
 
-          // Remove any bounce-enter still present
-          redbox.classList.remove('bounce-enter');
+           redbox.classList.remove('bounce-enter');
           clock.classList.remove('bounce-enter');
 
-          // Ensure both are on-screen + visible before sliding down
-          redbox.style.transform = 'translateX(-50%) translateY(0)';
+           redbox.style.transform = 'translateX(-50%) translateY(0)';
           redbox.style.opacity   = '1';
           clock.style.transform  = 'translateX(-50%) translateY(0)';
           clock.style.opacity    = '1';
-
-          // Force reflow
-          void redbox.offsetWidth;
+void redbox.offsetWidth;
           void clock.offsetWidth;
-
-          // Play bounce-down once (ends off-screen + hidden)
-          redbox.classList.add('bounce-exit');
+redbox.classList.add('bounce-exit');
           clock.classList.add('bounce-exit');
         }
       }
@@ -324,9 +257,7 @@ animation: bounceUp 0.6s ease-out forwards;
     })();
     document.addEventListener("DOMContentLoaded", function() {
       const card = document.getElementById("card");
-
-      // Create the Intersection Observer
-      const observer = new IntersectionObserver(
+const observer = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
             if (entry.isIntersecting) {
@@ -341,9 +272,7 @@ animation: bounceUp 0.6s ease-out forwards;
           threshold: 0.5 // 50% of card visible
         }
       );
-
-      // Start observing
-      observer.observe(card);
+observer.observe(card);
     });
   </script>
 </body>
