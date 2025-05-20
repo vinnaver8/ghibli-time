@@ -12,7 +12,7 @@
       inset: 0;
     }
     #card {
-      height: 420px;
+      height: 300px;
       border-radius: 1rem;
       background-image: url('lbox.png');
       background-size: cover;
