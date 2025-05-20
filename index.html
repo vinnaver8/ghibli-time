@@ -302,15 +302,13 @@ class="card-wrapper hidden md:block absolute top-[100px] left-[50px] w-[100px] h
 style="background-image: url('line1.webp'); background-size: cover; background-position: center; background-repeat: no-repeat;">
 </div>
 <!--line box ------------------------------------->
-<div class="hidden md:block absolute top-[1000px] left-[50px] w-[250px] h-[300px] rounded-[20px] z-0">
-  <div id="card-container" class="card relative">
-
-    <!-- Sticky card wrapper -->
-    <div id="scroll-card"
-         class="card sticky top-1/2 -translate-y-1/2 w-full max-w-sm mx-auto [perspective:600px]">
-
-      <!-- Slot-1 content (unchanged) -->
-      <div id="floatCard"
+<div class="hidden md:block absolute top-[1000px] left-[50px] w-[250px] h-[600px]">
+<div id="card-container" class="relative w-full h-full overflow-hidden">
+<!-- Sticky card wrapper -->
+<div id="scroll-card"
+class="card absolute top-0 left-0 w-full max-w-sm mx-auto [perspective:600px]">
+<!-- Slot-1 content (unchanged) -->
+<div id="floatCard"
            class="floating relative w-full h-[300px] p-6 rounded-2xl
                   bg-[url('lbox.png')] bg-cover bg-center
                   shadow-[0_10px_30px_rgba(0,0,0,0.1)] overflow-visible
