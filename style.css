@@ -1,6 +1,7 @@
 #scroll-container {
-      height: 200vh;
-    }
+  /* old: height: 200vh; */
+  height: 4350px;    /* 950 + 2600 + (approx) viewport height */
+}
     #sticky-card {
       position: sticky;
       top: 50vh;
