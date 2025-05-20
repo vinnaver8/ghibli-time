@@ -1,40 +1,112 @@
+// script.js
 document.addEventListener('DOMContentLoaded', () => {
-  const card1    = document.getElementById('card-1');
-  const card2    = document.getElementById('card-2');
-  const trigger  = document.getElementById('swap-trigger');
+  // ── CONFIGURE THESE to match your design ───────────────────────────
+  const slot1EndOffset = 1830; // scrollY at which slot-1 ends (px)
+  const slot2EndOffset = 2600; // scrollY at which the card stops (px)
+  // ────────────────────────────────────────────────────────────────────
 
-  // (Optional) initialize Rive
-  let riveInput = null;
-  if (window.Rive) {
-    const rive = new Rive({
-      src: 'cards.riv',
-      canvas: document.getElementById('rive-canvas'),
-      stateMachines: 'SM',
-      autoplay: true
-    });
-    riveInput = rive.stateMachineInputs('SM')
-                    .find(i => i.name === 'change');
-  }
+  // grab elements
+  const wrapper    = document.getElementById('team-wrapper');
+  const stickyCard = document.getElementById('sticky-card');
+  const slot1Els   = ['h1','b1','b2','a1','a2'].map(id => document.getElementById(id));
+  const slot2Els   = ['b3','a3'].map(id => document.getElementById(id));
+  const redbox     = document.getElementById('redbox');
+  const clock      = document.getElementById('clock-icon');
+  let inSlot2      = false;
 
-  const obs = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        // show card-1
-        card1.classList.add('active');
-        card2.classList.remove('active');
-        if (riveInput) riveInput.value = false;
+  // measurements
+  const wrapperTop = wrapper.offsetTop;             // e.g. 950 or 1300px
+  const cardH      = stickyCard.offsetHeight;      // ~300px
+
+  // clamp helper
+  const clamp = (v, min, max) => v < min ? min : v > max ? max : v;
+
+  function update() {
+    const y = window.scrollY;
+
+    // ── 1) MARCHING ────────────────────────────────────────────────────
+    let marchY;
+    if (y <  wrapperTop) {
+      marchY = 0;                                         // not yet in view
+    } else if (y > slot2EndOffset - cardH) {
+      marchY = (slot2EndOffset - cardH) - wrapperTop;     // lock at bottom
+    } else {
+      marchY = y - wrapperTop;                            // march with scroll
+    }
+    stickyCard.style.position = 'absolute';
+    stickyCard.style.top      = marchY + 'px';
+
+
+    // ── 2) SLOT PROGRESS ──────────────────────────────────────────────
+    // Two scroll ranges:
+    //   [ wrapperTop → slot1EndOffset ] controls slot-1 (0→1)
+    //   [ slot1EndOffset → slot2EndOffset ] controls slot-2 (0→1)
+    const p1 = clamp((y - wrapperTop) / (slot1EndOffset - wrapperTop), 0, 1);
+    const p2 = clamp((y - slot1EndOffset) / (slot2EndOffset - slot1EndOffset), 0, 1);
+
+    // SLOT 1 animations
+    slot1Els.forEach(el => {
+      if (p1 === 0) {
+        el.style.transform = 'translateY(0)';
+        el.style.opacity   = '1';
       } else {
-        // show card-2
-        card1.classList.remove('active');
-        card2.classList.add('active');
-        if (riveInput) riveInput.value = true;
+        el.style.transform = `translateY(${-100 * p1}px)`;
+        el.style.opacity   = `${1 - p1}`;
       }
     });
-  }, {
-    root: null,
-    rootMargin: '0px 0px -50% 0px',  // fire when trigger crosses mid-viewport
-    threshold: 0
-  });
+    document.getElementById('t1').style.opacity = p1 < 1 ? '1' : '0';
+    document.getElementById('p1').style.opacity = p1 < 1 ? '1' : '0';
 
-  obs.observe(trigger);
+    // SLOT 2 animations
+    slot2Els.forEach(el => {
+      if (p2 === 0) {
+        el.style.transform = 'translateY(-80px)';
+        el.style.opacity   = '0';
+      } else {
+        const ty = -80 + 80 * p2;
+        el.style.transform = `translateY(${ty}px)`;
+        el.style.opacity   = `${p2}`;
+      }
+    });
+    document.getElementById('t2').style.opacity = p2 > 0 ? '1' : '0';
+    document.getElementById('p2').style.opacity = p2 > 0 ? '1' : '0';
+
+    // bounce-in / bounce-out
+    if (p2 > 0 && !inSlot2) {
+      inSlot2 = true;
+      redbox.classList.remove('bounce-exit');
+      clock.classList.remove('bounce-exit');
+      redbox.style.transform = 'translateX(-50%) translateY(80px)';
+      redbox.style.opacity   = '0';
+      clock.style.transform  = 'translateX(-50%) translateY(80px)';
+      clock.style.opacity    = '0';
+      void redbox.offsetWidth; void clock.offsetWidth;
+      redbox.classList.add('bounce-enter');
+      clock.classList.add('bounce-enter');
+
+    } else if (p2 === 0 && inSlot2) {
+      inSlot2 = false;
+      redbox.classList.remove('bounce-enter');
+      clock.classList.remove('bounce-enter');
+      redbox.style.transform = 'translateX(-50%) translateY(0)';
+      redbox.style.opacity   = '1';
+      clock.style.transform  = 'translateX(-50%) translateY(0)';
+      clock.style.opacity    = '1';
+      void redbox.offsetWidth; void clock.offsetWidth;
+      redbox.classList.add('bounce-exit');
+      clock.classList.add('bounce-exit');
+    }
+  }
+
+  // hook events
+  window.addEventListener('scroll', update);
+  update();
+
+
+  // ── 3) GLOW INTERSECTION (unchanged) ───────────────────────────────
+  const card = document.getElementById('card');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => card.classList.toggle('glow', e.isIntersecting));
+  }, { threshold: 0.5 });
+  observer.observe(card);
 });
