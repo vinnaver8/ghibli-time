@@ -19,17 +19,18 @@ document.addEventListener('DOMContentLoaded', () => {
   const centerOffset = 40; // positive = lower, negative = higher
   // clamp helper
   const clamp = (v, min, max) => v < min ? min : v > max ? max : v;
-
   function update() {
-    const y  = window.scrollY;
-    const vh = window.innerHeight;
+  const y  = window.scrollY;
+  const vh = window.innerHeight;
+  const centerOffset = 40; // positive = lower, negative = higher
 
-    // ── 1) CENTER-TRACKING MARCHING ───────────────────────────────────
-    // Compute the “ideal” top so that card’s center aligns with viewport center:
-    // 1) how far into the scroll window: y - wrapperTop
-    // 2) offset to center it: vh/2 - cardH/2
-    let topPos = (y - wrapperTop) + (vh / 2 - cardH / 2)+centeroffset;
-
+  // ── 1) CENTER-TRACKING MARCHING ───────────────────────────────────
+  let topPos = (y - wrapperTop) + (vh / 2 - cardH / 2) + centerOffset;
+  // then apply:
+  stickyCard.style.position = 'absolute';
+  stickyCard.style.top = topPos + 'px';
+}
+  
     // Before the window: hide or pin off-screen
     if (y < wrapperTop) {
       stickyCard.style.visibility = 'hidden';
