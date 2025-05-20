@@ -1,7 +1,14 @@
-.floating {
-      position: sticky;
-      top: 120px;
-      transition: transform 1.5s ease-in-out;
+/* CSS Styles */
+.card {
+  /* Set up initial transform and hint for performance */
+  transform: translateY(0);
+  will-change: transform;
+  /* (Other styling as needed, e.g. size, background, margins, etc.) */
+  /* e.g.: */ 
+  width: 300px;
+  padding: 20px;
+  background: #f0f0f0;
+  margin: 100px auto;
 }
 @keyframes glowShift {
       0% {
