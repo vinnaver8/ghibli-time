@@ -1,35 +1,36 @@
 
 (function() {
+  const container = document.getElementById('card-container');
   const card      = document.getElementById('scroll-card');
-  const startY    = 950;              // scrollY where movement begins
-  const endY      = 2600;             // scrollY where movement ends
-  const maxOffset = endY - startY;    // total pixels of travel
 
-  let lastY   = 0;
-  let ticking = false;
+  // Once the page is fully loaded, measure heights
+  window.addEventListener('load', init);
+  function init() {
+    const containerRect = container.getBoundingClientRect();
+    // Container’s top relative to document
+    const startY = containerRect.top + window.scrollY;
+    // How far the card can move before its bottom hits container bottom
+    const maxTranslate = container.offsetHeight - card.offsetHeight;
 
-  function update() {
-    const y = lastY;
-    let offset;
+    let lastY   = 0;
+    let ticking = false;
 
-    if (y < startY) {
-      offset = 0;
-    } else if (y > endY) {
-      offset = maxOffset;
-    } else {
-      offset = y - startY;
+    function update() {
+      // How far we've scrolled past the container top
+      const scrolled = lastY - startY;
+      // Clamp between 0 (no move) and maxTranslate
+      const offset = Math.max(0, Math.min(scrolled, maxTranslate));
+      // Move the card **down** as you scroll **down**, up when you scroll up
+      card.style.transform = `translateY(${offset}px)`;
+      ticking = false;
     }
 
-    // Negative translateY = move card up as user scrolls down
-    card.style.transform = `translateY(${-offset}px)`;
-    ticking = false;
+    window.addEventListener('scroll', () => {
+      lastY = window.scrollY;
+      if (!ticking) {
+        window.requestAnimationFrame(update);
+        ticking = true;
+      }
+    }, { passive: true });
   }
-
-  window.addEventListener('scroll', () => {
-    lastY = window.scrollY;
-    if (!ticking) {
-      window.requestAnimationFrame(update);
-      ticking = true;
-    }
-  }, { passive: true });
 })();
