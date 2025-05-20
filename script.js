@@ -1,51 +1,50 @@
 // script.js
 document.addEventListener('DOMContentLoaded', () => {
-  // ① grab your wrapper and the sticky card
-  const wrapper     = document.getElementById('team-wrapper');     // the 2600px-tall container
-  const stickyCard  = document.getElementById('sticky-card');     // the element you want to march
-  const container   = document.getElementById('scroll-container'); // where your animations live
+  // ── CONFIGURE THESE to match your design ───────────────────────────
+  const slot1EndOffset = 1830; // scrollY at which slot-1 ends (px)
+  const slot2EndOffset = 2600; // scrollY at which the card stops (px)
+  // ────────────────────────────────────────────────────────────────────
 
-  // ② grab all anim elements
-  const slot1Els = ['h1','b1','b2','a1','a2'].map(id => document.getElementById(id));
-  const slot2Els = ['b3','a3'].map(id => document.getElementById(id));
-  const redbox   = document.getElementById('redbox');
-  const clock    = document.getElementById('clock-icon');
-  let inSlot2    = false;
+  // grab elements
+  const wrapper    = document.getElementById('team-wrapper');
+  const stickyCard = document.getElementById('sticky-card');
+  const slot1Els   = ['h1','b1','b2','a1','a2'].map(id => document.getElementById(id));
+  const slot2Els   = ['b3','a3'].map(id => document.getElementById(id));
+  const redbox     = document.getElementById('redbox');
+  const clock      = document.getElementById('clock-icon');
+  let inSlot2      = false;
 
-  // ③ measurements that change on resize
-  let vh           = window.innerHeight;
-  const wrapperTop = wrapper.offsetTop;
-  const wrapperH   = wrapper.offsetHeight;
-  const cardH      = stickyCard.offsetHeight;
-  const maxMarch   = wrapperH - cardH;              // how far the card can march
-  const maxProg    = container.offsetHeight - vh;   // how far to scroll for prog=1
+  // measurements
+  const wrapperTop = wrapper.offsetTop;             // e.g. 950 or 1300px
+  const cardH      = stickyCard.offsetHeight;      // ~300px
 
   // clamp helper
   const clamp = (v, min, max) => v < min ? min : v > max ? max : v;
 
   function update() {
-    const scrollY = window.scrollY;
+    const y = window.scrollY;
 
-    // ─── marching logic ────────────────────────────────────────────
+    // ── 1) MARCHING ────────────────────────────────────────────────────
     let marchY;
-    if (scrollY < wrapperTop) {
-      marchY = 0;
-    } else if (scrollY > wrapperTop + maxMarch) {
-      marchY = maxMarch;
+    if (y <  wrapperTop) {
+      marchY = 0;                                         // not yet in view
+    } else if (y > slot2EndOffset - cardH) {
+      marchY = (slot2EndOffset - cardH) - wrapperTop;     // lock at bottom
     } else {
-      marchY = scrollY - wrapperTop;
+      marchY = y - wrapperTop;                            // march with scroll
     }
     stickyCard.style.position = 'absolute';
     stickyCard.style.top      = marchY + 'px';
 
-    // ─── slot animations logic ────────────────────────────────────
-    // prog goes 0→1 over the container’s scrollable height
-    const localScroll = scrollY - wrapperTop;
-    const prog = clamp(localScroll / maxProg, 0, 1);
-    const half = 0.5;
 
-    // slot1 (first half)
-    const p1 = clamp((prog - 0) / half, 0, 1);
+    // ── 2) SLOT PROGRESS ──────────────────────────────────────────────
+    // Two scroll ranges:
+    //   [ wrapperTop → slot1EndOffset ] controls slot-1 (0→1)
+    //   [ slot1EndOffset → slot2EndOffset ] controls slot-2 (0→1)
+    const p1 = clamp((y - wrapperTop) / (slot1EndOffset - wrapperTop), 0, 1);
+    const p2 = clamp((y - slot1EndOffset) / (slot2EndOffset - slot1EndOffset), 0, 1);
+
+    // SLOT 1 animations
     slot1Els.forEach(el => {
       if (p1 === 0) {
         el.style.transform = 'translateY(0)';
@@ -55,11 +54,10 @@ document.addEventListener('DOMContentLoaded', () => {
         el.style.opacity   = `${1 - p1}`;
       }
     });
-    document.getElementById('t1').style.opacity = prog < half ? '1' : '0';
-    document.getElementById('p1').style.opacity = prog < half ? '1' : '0';
+    document.getElementById('t1').style.opacity = p1 < 1 ? '1' : '0';
+    document.getElementById('p1').style.opacity = p1 < 1 ? '1' : '0';
 
-    // slot2 (second half)
-    const p2 = clamp((prog - half) / half, 0, 1);
+    // SLOT 2 animations
     slot2Els.forEach(el => {
       if (p2 === 0) {
         el.style.transform = 'translateY(-80px)';
@@ -70,10 +68,10 @@ document.addEventListener('DOMContentLoaded', () => {
         el.style.opacity   = `${p2}`;
       }
     });
-    document.getElementById('t2').style.opacity = prog >= half ? '1' : '0';
-    document.getElementById('p2').style.opacity = prog >= half ? '1' : '0';
+    document.getElementById('t2').style.opacity = p2 > 0 ? '1' : '0';
+    document.getElementById('p2').style.opacity = p2 > 0 ? '1' : '0';
 
-    // bounce enter/exit
+    // bounce-in / bounce-out
     if (p2 > 0 && !inSlot2) {
       inSlot2 = true;
       redbox.classList.remove('bounce-exit');
@@ -82,8 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
       redbox.style.opacity   = '0';
       clock.style.transform  = 'translateX(-50%) translateY(80px)';
       clock.style.opacity    = '0';
-      void redbox.offsetWidth;
-      void clock.offsetWidth;
+      void redbox.offsetWidth; void clock.offsetWidth;
       redbox.classList.add('bounce-enter');
       clock.classList.add('bounce-enter');
 
@@ -95,24 +92,21 @@ document.addEventListener('DOMContentLoaded', () => {
       redbox.style.opacity   = '1';
       clock.style.transform  = 'translateX(-50%) translateY(0)';
       clock.style.opacity    = '1';
-      void redbox.offsetWidth;
-      void clock.offsetWidth;
+      void redbox.offsetWidth; void clock.offsetWidth;
       redbox.classList.add('bounce-exit');
       clock.classList.add('bounce-exit');
     }
   }
 
-  // recalc vh on resize, re-run update
-  window.addEventListener('resize', () => { vh = window.innerHeight; update(); });
+  // hook events
   window.addEventListener('scroll', update);
-  update(); // initial
+  update();
 
-  // ─── glow-on-intersection (unchanged) ───────────────────────────
-  const card = document.getElementById("card");
+
+  // ── 3) GLOW INTERSECTION (unchanged) ───────────────────────────────
+  const card = document.getElementById('card');
   const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      card.classList.toggle("glow", entry.isIntersecting);
-    });
-  }, { root: null, threshold: 0.5 });
+    entries.forEach(e => card.classList.toggle('glow', e.isIntersecting));
+  }, { threshold: 0.5 });
   observer.observe(card);
 });
