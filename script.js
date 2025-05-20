@@ -1,8 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // —— CONFIG —— (tweak these)
-  const slot1EndOffset = 1830; // scrollY where slot-1 ends
-  const slot2EndOffset = 2600; // scrollY where slot-2/card stops
-  // ——————
+  // ── CONFIGURE THESE to match your design ───────────────────────────
+  const slot1EndOffset = 1830; // scrollY at which slot-1 ends (px)
+  const slot2EndOffset = 2600; // scrollY at which the card stops (px)
+  // ────────────────────────────────────────────────────────────────────
 
   // grab elements
   const wrapper    = document.getElementById('team-wrapper');
@@ -13,93 +13,81 @@ document.addEventListener('DOMContentLoaded', () => {
   const clock      = document.getElementById('clock-icon');
   let inSlot2      = false;
 
-  // measurements
-  const wrapperTop = wrapper.offsetTop;
-  let vh           = window.innerHeight;
-  let cardH        = stickyCard.offsetHeight;
-
-  // clamp helper
+  // helper
   const clamp = (v, min, max) => v < min ? min : v > max ? max : v;
+
   function update() {
-  const y       = window.scrollY;
-  const vh      = window.innerHeight;
-  const wrapper = document.getElementById('team-wrapper');
-  const card    = document.getElementById('sticky-card');
-  const wrapperTop    = 950;    // start of the scroll window
-  const wrapperHeight = 2600;   // total scroll window size
-  const slot1End      = 1775;   // halfway → end of slot1
-  const slot2End      = 2600;   // end of slot2 = wrapperTop + wrapperHeight
-  const cardH         = card.offsetHeight;
+    const y  = window.scrollY;
+    const vh = window.innerHeight;
+    const cardH = stickyCard.offsetHeight;
 
-  // Hide until we reach wrapperTop
-  if (y < wrapperTop) {
-    card.style.visibility = 'hidden';
-    return;
-  } else {
-    card.style.visibility = 'visible';
+    // wrapperTop and wrapperHeight
+    const wrapperTop    = wrapper.offsetTop;
+    const wrapperH      = 2600; // total scroll window size (or wrapper.offsetHeight)
+    // Compute card’s “ideal” top so its center lines up with viewport center:
+    //   (y - wrapperTop) → how far into the window
+    //   + (vh/2 - cardH/2) → offset to center it
+    let topPos = (y - wrapperTop) + (vh / 2 - cardH / 2);
+
+    // Hide before start
+    if (y < wrapperTop) {
+      stickyCard.style.visibility = 'hidden';
+    } else {
+      stickyCard.style.visibility = 'visible';
+    }
+
+    // clamp so it never leaves [0, wrapperH - cardH]
+    topPos = clamp(topPos, 0, wrapperH - cardH);
+
+    // apply
+    stickyCard.style.position = 'absolute';
+    stickyCard.style.top      = `${topPos}px`;
+
+    // — Slot‐1/Slot‐2 progress based on absolute scrollY ————————
+    const p1 = clamp((y - wrapperTop) / (slot1EndOffset - wrapperTop), 0, 1);
+    const p2 = clamp((y - slot1EndOffset) / (slot2EndOffset - slot1EndOffset), 0, 1);
+
+    // SLOT 1
+    slot1Els.forEach(el => {
+      el.style.transform = `translateY(${-100 * p1}px)`;
+      el.style.opacity   = `${1 - p1}`;
+    });
+    document.getElementById('t1').style.opacity = p1 < 1 ? '1' : '0';
+    document.getElementById('p1').style.opacity = p1 < 1 ? '1' : '0';
+
+    // SLOT 2
+    slot2Els.forEach(el => {
+      const ty = -80 + 80 * p2;
+      el.style.transform = `translateY(${ty}px)`;
+      el.style.opacity   = `${p2}`;
+    });
+    document.getElementById('t2').style.opacity = p2 > 0 ? '1' : '0';
+    document.getElementById('p2').style.opacity = p2 > 0 ? '1' : '0';
+
+    // bounce enter/exit
+    if (p2 > 0 && !inSlot2) {
+      inSlot2 = true;
+      redbox .classList.remove('bounce-exit');
+      clock  .classList.remove('bounce-exit');
+      redbox .offsetWidth; clock.offsetWidth;
+      redbox .classList.add('bounce-enter');
+      clock  .classList.add('bounce-enter');
+    } else if (p2 === 0 && inSlot2) {
+      inSlot2 = false;
+      redbox .classList.remove('bounce-enter');
+      clock  .classList.remove('bounce-enter');
+      redbox .offsetWidth; clock.offsetWidth;
+      redbox .classList.add('bounce-exit');
+      clock  .classList.add('bounce-exit');
+    }
   }
 
-  // Compute “ideal” top within wrapper so that card's center == viewport center:
-  //   topPos = (scrollY - wrapperTop) + (vh/2 - cardH/2)
-  let topPos = (y - wrapperTop) + (vh/2 - cardH/2);
+  // hook events
+  window.addEventListener('scroll', update);
+  window.addEventListener('resize', update);
+  update();
 
-  // Clamp so the card never moves above wrapper nor below its bottom:
-  topPos = Math.max(0, Math.min(topPos, wrapperHeight - cardH));
-
-  // Apply positioning:
-  card.style.position = 'absolute';
-  card.style.top      = `${topPos}px`;
-
-  // — Slot animations —
-
-  // slot-1 progress: 950 → 1775 maps 0→1
-  const p1 = Math.min(Math.max((y - wrapperTop) / (slot1End - wrapperTop), 0), 1);
-  // slot-2 progress: 1775 → 2600 maps 0→1
-  const p2 = Math.min(Math.max((y - slot1End) / (slot2End - slot1End), 0), 1);
-
-  // slot1 elements
-  const slot1Els = ['h1','b1','b2','a1','a2'].map(id => document.getElementById(id));
-  slot1Els.forEach(el => {
-    el.style.transform = `translateY(${-100 * p1}px)`;
-    el.style.opacity   = `${1 - p1}`;
-  });
-  document.getElementById('t1').style.opacity = p1 < 1 ? '1' : '0';
-  document.getElementById('p1').style.opacity = p1 < 1 ? '1' : '0';
-
-  // slot2 elements
-  const slot2Els = ['b3','a3'].map(id => document.getElementById(id));
-  slot2Els.forEach(el => {
-    const ty = -80 + 80 * p2;
-    el.style.transform = `translateY(${ty}px)`;
-    el.style.opacity   = `${p2}`;
-  });
-  document.getElementById('t2').style.opacity = p2 > 0 ? '1' : '0';
-  document.getElementById('p2').style.opacity = p2 > 0 ? '1' : '0';
-
-  // bounce logic (if you have it)
-  const redbox = document.getElementById('redbox');
-  const clock  = document.getElementById('clock-icon');
-  if (p2 > 0 && !redbox.classList.contains('bounce-enter')) {
-    redbox.classList.remove('bounce-exit');
-    clock.classList.remove('bounce-exit');
-    redbox.offsetWidth; clock.offsetWidth;
-    redbox.classList.add('bounce-enter');
-    clock .classList.add('bounce-enter');
-  } else if (p2 === 0 && redbox.classList.contains('bounce-enter')) {
-    redbox.classList.remove('bounce-enter');
-    clock.classList.remove('bounce-enter');
-    redbox.offsetWidth; clock.offsetWidth;
-    redbox.classList.add('bounce-exit');
-    clock .classList.add('bounce-exit');
-  }
-}
-
-// Hook it up:
-window.addEventListener('scroll', update);
-window.addEventListener('resize', update);
-update();
-
-  // — 3) GLOW INTERSECTION ——————————————
+  // ── GLOW INTERSECTION (unchanged) ───────────────────────────────
   const card = document.getElementById('card');
   const observer = new IntersectionObserver(entries => {
     entries.forEach(e => card.classList.toggle('glow', e.isIntersecting));
