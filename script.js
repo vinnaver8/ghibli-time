@@ -1,6 +1,6 @@
 // script.js
 document.addEventListener('DOMContentLoaded', () => {
-  const card    = document.getElementById('sticky-card');
+  const card    = document.getElementById('card');
   const startY  = 950;
   const endY    = startY + 2600; // = 3550
   let ticking   = false;
