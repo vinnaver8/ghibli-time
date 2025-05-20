@@ -1,23 +1,31 @@
-const card = document.getElementById('floatCard');
-    let direction = 1;
-    let posY = 0;
+// JavaScript: Scroll listener to move the card
+(function() {
+  const card = document.getElementById('scroll-card');
+  const minScroll = 950;
+  const maxScroll = 2600;
+  const maxOffset = maxScroll - minScroll;
+  let lastKnownScrollY = 0;
+  let ticking = false;
 
-    function animateCard() {
-      const scrollY = window.scrollY;
-      if (scrollY >= 950 && scrollY <= 2600) {
-        posY += 0.5 * direction;
-        if (posY >= 30 || posY <= -30) direction *= -1;
-        card.style.transform = `translateY(${posY}px)`;
-        requestAnimationFrame(animateCard);
-      } else {
-        card.style.transform = 'translateY(0px)';
-        posY = 0;
-      }
+  function updateCard(scrollY) {
+    // Calculate offset only if above the start threshold
+    let offset = 0;
+    if (scrollY > minScroll) {
+      offset = Math.min(scrollY - minScroll, maxOffset);
     }
+    // Move the card by translating vertically (negative = move up)
+    card.style.transform = `translateY(${-offset}px)`;
+  }
 
-    window.addEventListener('scroll', () => {
-      if (window.scrollY >= 950 && window.scrollY <= 2600) {
-        animateCard();
-      }
-    });
- 
+  window.addEventListener('scroll', function() {
+    lastKnownScrollY = window.scrollY;
+    // Throttle updates using requestAnimationFrame for smooth animation910
+    if (!ticking) {
+      window.requestAnimationFrame(function() {
+        updateCard(lastKnownScrollY);
+        ticking = false;
+      });
+      ticking = true;
+    }
+  });
+})();
