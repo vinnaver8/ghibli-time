@@ -2,7 +2,7 @@
   let direction = 1;
   let position = 100; // start at 150px
   const minY = 100;
-  const maxY = 1500;
+  const maxY = 1200;
   const speed = 0.8; // adjust for slower/faster
 
   function animate() {
