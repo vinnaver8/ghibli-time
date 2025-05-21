@@ -143,22 +143,20 @@ class="relative rounded-full bg-red border-4 border-red shadow-lg w-full h-full 
 <svg xmlns="http://www.w3.org/2000/svg"width="200" height="50" class="h-5 w-5 stroke-grey-60 transition-colors md:h-[15px] md:w-[15px]">
 <rect width="70" height="32" rx="5" ry="5" fill="#0D0D0D" />
 <text x="18%" y="35%" dominant-baseline="middle" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" fill="white" style="filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.3));">
-    + Link</text>
++ Link</text>
 </svg>
-    </button>
-    <!-- Bold -->
-    <button id="btn-bold" class="ml-1 transition-all duration-200">
-      <!-- your Bold SVG -->
-     <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 28 28" class="h-7 w-7 transition-colors hover:fill-white md:h-[21px] md:w-[21px] fill-grey-60"><path d="M9.197 19.5V7.621h4.756q1.31 0 2.186.389t1.317 1.079q.44.684.44 1.577 0 .696-.278 1.224-.277.522-.765.859-.482.33-1.102.47v.115q.678.03 1.27.383.597.354.969.992.37.633.37 1.508 0 .945-.469 1.688-.465.737-1.375 1.166t-2.244.429zm2.511-2.053h2.047q1.05 0 1.532-.4.48-.406.481-1.08 0-.492-.238-.87a1.6 1.6 0 0 0-.678-.591q-.435-.215-1.039-.215h-2.105zm0-4.855h1.862q.517 0 .916-.18.406-.186.638-.522.238-.336.238-.806 0-.644-.458-1.038-.452-.395-1.288-.395h-1.908z"></path></svg>
-     
-      <span class="sr-only">Bold</span>
-    </button>
-    <!-- Italic -->
-    <button id="btn-italic" class="ml-1 transition-all duration-200">
-      <!-- your Italic SVG -->
-     <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 28 28" class="h-7 w-7 transition-colors hover:fill-white md:h-[21px] md:w-[21px] fill-grey-60"><path d="M21 8.556V7H10.889v1.556h3.998l-3.4 10.888H7V21h10.111v-1.556h-3.998l3.4-10.888z"></path></svg>
-    <span class="sr-only">Italic</span>
-    </button>
+</button>
+<!-- Bold -->
+<button id="btn-bold" class="ml-1 transition-all duration-200">
+<svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 28 28" class="h-7 w-7 transition-colors hover:fill-white md:h-[21px] md:w-[21px] fill-grey-60"><path d="M9.197 19.5V7.621h4.756q1.31 0 2.186.389t1.317 1.079q.44.684.44 1.577 0 .696-.278 1.224-.277.522-.765.859-.482.33-1.102.47v.115q.678.03 1.27.383.597.354.969.992.37.633.37 1.508 0 .945-.469 1.688-.465.737-1.375 1.166t-2.244.429zm2.511-2.053h2.047q1.05 0 1.532-.4.48-.406.481-1.08 0-.492-.238-.87a1.6 1.6 0 0 0-.678-.591q-.435-.215-1.039-.215h-2.105zm0-4.855h1.862q.517 0 .916-.18.406-.186.638-.522.238-.336.238-.806 0-.644-.458-1.038-.452-.395-1.288-.395h-1.908z"></path></svg>
+<span class="sr-only">Bold</span>
+</button>
+<!-- Italic -->
+<button id="btn-italic" class="ml-1 transition-all duration-200">
+<!-- your Italic SVG -->
+<svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 28 28" class="h-7 w-7 transition-colors hover:fill-white md:h-[21px] md:w-[21px] fill-grey-60"><path d="M21 8.556V7H10.889v1.556h3.998l-3.4 10.888H7V21h10.111v-1.556h-3.998l3.4-10.888z"></path></svg>
+<span class="sr-only">Italic</span>
+</button>
     <!-- Underline -->
     <button id="btn-underline" class="ml-1 transition-all duration-200">
       <!-- your Underline SVG -->
@@ -316,13 +314,6 @@ style="background-image: url('line1.webp'); background-size: cover; background-p
         alt="Card background"
         class="absolute inset-0 w-full h-full object-cover rounded-2xl shadow-lg"
       />
-    </div>
-
-    <!-- 4) Sticky card content (centers in viewport) -->
-    <div
-      id="scroll-card"
-      class="sticky top-1/2 -translate-y-1/2 bg-white p-4 rounded-xl shadow-xl"
-    >
       <!-- Your Slot-1 + Slot-2 content goes here -->
       <h2 class="text-xl font-bold mb-2">Team</h2>
       <p class="text-sm mb-4">John S. & Lillianna</p>
