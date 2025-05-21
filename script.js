@@ -1,44 +1,20 @@
-(function () {
-  const section = document.querySelector('.metabrain');
-  const card = document.getElementById('card-wrapper');
-  if (!section || !card) return;
+ const card = document.getElementById('card-wrapper');
+  let direction = 1;
+  let position = 150; // start at 150px
+  const minY = 150;
+  const maxY = 700;
+  const speed = 0.8; // adjust for slower/faster
 
-  let sectionTop = 0;
-  let sectionHeight = 0;
-  let cardHeight = 0;
+  function animate() {
+    position += direction * speed;
 
-  function recalc() {
-    const rect = section.getBoundingClientRect();
-    sectionTop = rect.top + window.scrollY;
-    sectionHeight = section.offsetHeight;
-    cardHeight = card.offsetHeight;
-    update(); 
-  }
-
-  function update() {
-    const scrollY = window.scrollY;
-    const viewportCenter = scrollY + window.innerHeight / 2;
-
-    const startLimit = sectionTop;
-    const endLimit = sectionTop + sectionHeight;
-
-    let topValue;
-
-    if (viewportCenter <= startLimit + cardHeight / 2) {
-      // Before section: lock to top
-      topValue = 0;
-    } else if (viewportCenter >= endLimit - cardHeight / 2) {
-      // After section: lock to bottom
-      topValue = sectionHeight - cardHeight;
-    } else {
-      // In-section: center card with viewport
-      topValue = viewportCenter - sectionTop - cardHeight / 2;
+    if (position >= maxY || position <= minY) {
+      direction *= -1; // reverse direction
     }
 
-    card.style.top = `${topValue}px`;
+    card.style.top = position + "px";
+    requestAnimationFrame(animate);
   }
 
-  window.addEventListener('load', recalc);
-  window.addEventListener('resize', recalc);
-  window.addEventListener('scroll', update, { passive: true });
-})();
+  // Start animation when DOM is ready
+  window.addEventListener('DOMContentLoaded', animate);
