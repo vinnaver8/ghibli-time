@@ -1,37 +1,36 @@
 (function() {
   const section = document.querySelector('.metabrain');
   const card    = document.getElementById('card-wrapper');
+
   if (!section || !card) return;
 
-  let sectionTop, sectionHeight, startY, endY;
+  let sectionTop, sectionHeight, cardHeight;
 
-  // Recompute on load & resize
   function recalc() {
-    const rect = section.getBoundingClientRect();
-    sectionTop    = rect.top + window.scrollY;
+    const r = section.getBoundingClientRect();
+    sectionTop    = r.top + window.scrollY;
     sectionHeight = section.offsetHeight;
-    // we want the card to move its center from the top of the section...
-    startY = sectionTop;
-    // ...down until the bottom of the section
-    endY   = sectionTop + sectionHeight;
+    cardHeight    = card.offsetHeight;
+    // Immediately update position in case of resize/late load
+    update();
   }
 
-  function onScroll() {
-    const scrollY = window.scrollY + window.innerHeight / 2; // use viewport center
-    // clamp between startY and endY
-    const clamped = Math.max(startY, Math.min(scrollY, endY));
-    // set the card's top relative to the section
-    // subtract sectionTop so top:0 aligns card-center to sectionTop
-    card.style.top = (clamped - sectionTop) + 'px';
+  function update() {
+    // Center of the viewport in document coords
+    const viewportCenter = window.scrollY + window.innerHeight / 2;
+
+    // Clamp to the section bounds
+    const clampedCenter = Math.min(
+      Math.max(viewportCenter, sectionTop),
+      sectionTop + sectionHeight
+    );
+
+    // Compute card.top so the card's center = clampedCenter
+    const top = clampedCenter - sectionTop - (cardHeight / 2);
+    card.style.top = `${top}px`;
   }
 
-  window.addEventListener('load', () => {
-    recalc();
-    onScroll();
-  });
-  window.addEventListener('resize', () => {
-    recalc();
-    onScroll();
-  });
-  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('load', recalc);
+  window.addEventListener('resize', recalc);
+  window.addEventListener('scroll', update, { passive: true });
 })();
