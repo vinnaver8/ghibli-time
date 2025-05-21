@@ -16,3 +16,7 @@
     text-align: center;
     line-height: 200px;
 }
+#scroll-card.visible {
+  opacity: 1;
+  transition: opacity 0.3s ease-out;
+}
