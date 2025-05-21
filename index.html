@@ -327,50 +327,6 @@ style="background-image: url('line1.webp'); background-size: cover; background-p
     </div>
   </div>
 </div>
-
-<!-- 5) JS: clamp card-wrapper top between 1000px and 2600px -->
-<script>
-<script>
-(function() {
-  const wrapper   = document.getElementById('card-wrapper');
-  const card      = document.getElementById('scroll-card');
-  const startY    = 1000;   // when the wrapper sits at top of viewport
-  const endY      = 2600;   // when wrapper should stop moving
-  const maxOffset = endY - startY;
-
-  let ticking = false;
-
-  function onScroll() {
-    const scrollY = window.scrollY;
-
-    // 1) Toggle visibility once the wrapper enters the viewport
-    // We show the card when the top of the page has scrolled past startY - (viewport/2)
-    const showThreshold = startY - (window.innerHeight / 2);
-    if (scrollY >= showThreshold && scrollY <= endY) {
-      card.classList.add('visible');
-    } else {
-      card.classList.remove('visible');
-    }
-
-    // 2) Clamp the wrapper’s top between startY and endY
-    const clampedTop = Math.min(Math.max(scrollY, startY), endY);
-    wrapper.style.top = clampedTop + 'px';
-
-    // 3) Schedule next rAF
-    ticking = false;
-  }
-
-  window.addEventListener('scroll', () => {
-    if (!ticking) {
-      window.requestAnimationFrame(onScroll);
-      ticking = true;
-    }
-  }, { passive: true });
-
-  // Run once on load in case you refresh mid-scroll
-  onScroll();
-})();
-</script>
 </section>
 <!--section 3 end-->
 <section class="py-16 sm:py-32">
@@ -496,27 +452,5 @@ style="fill:white"/><path d="M1443 1080.1c-34 3.7-54.7 8.1-82.1 17.4-47.8 16.2-9
 <div class="flex items-center justify-center"><button type="button" class="relative isolate inline-flex items-center justify-center border text-base/6 uppercase font-mono tracking-widest shrink-0 focus:outline-none data-[focus]:outline data-[focus]:outline-2 data-[focus]:outline-offset-2 data-[focus]:outline-blue-500 data-[disabled]:opacity-50 [&amp;>[data-slot=icon]]:-mx-0.5 [&amp;>[data-slot=icon]]:my-0.5 [&amp;>[data-slot=icon]]:shrink-0 [&amp;>[data-slot=icon]]:sm:my-1 px-3.5 py-1.5 sm:text-sm [&amp;>[data-slot=icon]]:size-4 [&amp;>[data-slot=icon]]:sm:size-3 gap-x-2 bg-[--btn-bg] text-[--btn-text] border-[--btn-border] hover:bg-[--btn-hover] rounded-full [--btn-bg:transparent] [--btn-border:theme(colors.primary/25%)] [--btn-text:theme(colors.primary)] [--btn-hover:theme(colors.secondary/20%)] group-hover:bg-[--btn-hover] pointer-events-none"><span class="absolute left-1/2 top-1/2 size-[max(100%,2.75rem)] -translate-x-1/2 -translate-y-1/2 [@media(pointer:fine)]:hidden" aria-hidden="true">
 </span>Learn more<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"></path></svg></button></div></div></div></div></div></section>
 <script src="script.js"></script>
-
-<script>
-// Scroll-triggered animation: fade in and slide up when in view
-document.addEventListener('DOMContentLoaded', function() {
-  const teamBox = document.getElementById('team-box');
-  const observer = new IntersectionObserver(function(entries) {
-    entries.forEach(function(entry) {
-      if (entry.isIntersecting) {
-        teamBox.classList.remove('opacity-0','-translate-y-10');
-        teamBox.classList.add('opacity-100','translate-y-0');
-      }
-    });
-  }, { threshold: 0.5 });
-  observer.observe(teamBox);
-
-  // Click/touch effect: change color to blue and scale up
-  const teamText = document.getElementById('team-text');
-  teamText.addEventListener('click', function() {
-    this.classList.add('text-blue-500','scale-125');
-  });
-});
-</script>
 </body>
-  </html>
+</html>
