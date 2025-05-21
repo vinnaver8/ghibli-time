@@ -1,33 +1,39 @@
 (function() {
   const section = document.querySelector('.metabrain');
   const card    = document.getElementById('card-wrapper');
-
   if (!section || !card) return;
 
   let sectionTop, sectionHeight, cardHeight;
 
   function recalc() {
-    const r = section.getBoundingClientRect();
-    sectionTop    = r.top + window.scrollY;
+    const rect = section.getBoundingClientRect();
+    sectionTop    = rect.top + window.scrollY;
     sectionHeight = section.offsetHeight;
     cardHeight    = card.offsetHeight;
-    // Immediately update position in case of resize/late load
-    update();
+    update(); 
   }
 
   function update() {
-    // Center of the viewport in document coords
-    const viewportCenter = window.scrollY + window.innerHeight / 2;
+    const scrollY = window.scrollY;
+    const vpCenter = scrollY + window.innerHeight / 2;
 
-    // Clamp to the section bounds
-    const clampedCenter = Math.min(
-      Math.max(viewportCenter, sectionTop),
-      sectionTop + sectionHeight
-    );
+    const startLimit = sectionTop + cardHeight / 2;
+    const endLimit   = sectionTop + sectionHeight - cardHeight / 2;
 
-    // Compute card.top so the card's center = clampedCenter
-    const top = clampedCenter - sectionTop - (cardHeight / 2);
-    card.style.top = `${top}px`;
+    let topValue;
+
+    if (vpCenter < startLimit) {
+      // Before section: stick to top of section
+      topValue = 0;
+    } else if (vpCenter > endLimit) {
+      // After section: stick to bottom of section
+      topValue = sectionHeight - cardHeight;
+    } else {
+      // In range: center card in viewport
+      topValue = vpCenter - sectionTop - (cardHeight / 2);
+    }
+
+    card.style.top = `${topValue}px`;
   }
 
   window.addEventListener('load', recalc);
