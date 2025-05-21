@@ -191,7 +191,7 @@ class="relative rounded-full bg-red border-4 border-red shadow-lg w-full h-full 
 <div class="relative mt-12" id="editor-container">
 <!-- 1. Actual visible text (topmost) -->
 <div id="editor" contenteditable="true" 
-class="relative z-10 whitespace-pre-wrap leading-relaxed text-white font-normal p-2 focus:outline-none md:absolute md:top-[350px] md:left-[350px]">
+class="relative z-10 whitespace-pre-wrap leading-relaxed text-white font-normal p-2 focus:outline-none md:absolute md:top-[100px] md:left-[350px]">
 <span class="font-semibold">Documents in Huly</span> can be used for sharing reference materials among team members, collaborating on plans and roadmaps, storing meeting notes and assigning action items.
 </div>
 <!-- 2. Yellow highlight layer (middle) -->
@@ -205,7 +205,7 @@ background-position:calc((1 - var(--highlight-position)) * 100%) 1">
 </span></div>
 <!-- 3. Cursor pin overlay (bottom) -->
 <div id="cursor-overlay"
-class="relative absolute w-full scale-[1] opacity-0 transition-opacity duration-300 pointer-events-none md:absolute md:top-[350px] md:left-[350px]"
+class="relative absolute w-full scale-[1] opacity-0 transition-opacity duration-300 pointer-events-none md:absolute md:top-[100px] md:left-[350px]"
 style="--cursor-position: 0;">
 <span class="pointer-events-none md:h-[10px] !bg-[length:10px_36px] bg-no-repeat text-transparent md:!bg-[length:8px_26px] whitespace-pre-wrap leading-relaxed block p-2 md:pr-2 sm:!bg-[length:7px_25px]"
 style="background: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9Im5vbmUiIHZpZXdCb3g9IjAgMCAxMCAzNiI+PHBhdGggZmlsbD0iIzMwMzIzNiIgZmlsbC1ydWxlPSJldmVub2RkIiBkPSJNNCAyNi4xQTUuMDAyIDUuMDAyIDAgMCAwIDUgMzZhNSA1IDAgMCAwIDEtOS45VjBINHoiIGNsaXAtcnVsZT0iZXZlbm9kZCIvPjwvc3ZnPg==)100%0 no-repeat;background-position:calc(var(--cursor-position)*100%) 8px" aria-hidden="true">
@@ -288,7 +288,7 @@ navigator.clipboard
 </div>
 </div>
 <div class="relative">
-<div class="mt-3 flex w-fit gap-x-1 rounded-full bg-[#333333] p-[5px] shadow-[0px_4px_10px_0px_rgba(0,0,0,0.15)] sm:mt-2 sm:gap-x-0.5 sm:p-1 md:mt-1.5 mx-auto md:absolute md:top-[900px] md:left-[375px]">
+<div class="mt-3 flex w-fit gap-x-1 rounded-full bg-[#333333] p-[5px] shadow-[0px_4px_10px_0px_rgba(0,0,0,0.15)] sm:mt-2 sm:gap-x-0.5 sm:p-1 md:mt-1.5 mx-auto md:absolute md:top-[1500px] md:left-[375px]">
 <div class="flex h-10 w-10 items-center justify-center rounded-full bg-black sm:h-[27px] sm:w-[27px] md:h-[30px] md:w-[30px]"> 
 <svg xmlns="[invalid url, do not cite]" fill="#000000" viewBox="0 0 12 12" class="m-auto h-auto w-3.5 stroke-white sm:w-3"><path d="M6 1v10M1 6h10"></path></svg>
 </div>
