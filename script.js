@@ -16,7 +16,7 @@
     }
 
     const MIN_TOP = 80;
-    const MAX_TOP = 1500;
+    const MAX_TOP = 1000;
     const OFFSET = window.innerHeight / 2 - card.offsetHeight / 2;
 
     function updateCardPosition() {
