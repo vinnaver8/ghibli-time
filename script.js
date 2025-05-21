@@ -1,49 +1,37 @@
-(function () {
-  const MAX_RETRIES = 10;
-  let retryCount = 0;
+(function() {
+  const section = document.querySelector('.metabrain');
+  const card    = document.getElementById('card-wrapper');
+  if (!section || !card) return;
 
-  function initScrollAnimation() {
-    const card = document.getElementById('card-wrapper');
+  let sectionTop, sectionHeight, startY, endY;
 
-    // Retry if element not found
-    if (!card) {
-      if (retryCount < MAX_RETRIES) {
-        retryCount++;
-        return setTimeout(initScrollAnimation, 300);
-      }
-      console.error('Card wrapper not found.');
-      return;
-    }
-
-    const MIN_TOP = 80;
-    const MAX_TOP = 1000;
-    const OFFSET = window.innerHeight / 2 - card.offsetHeight / 2;
-
-    function updateCardPosition() {
-      let scrollY = window.scrollY;
-      let newTop = scrollY + OFFSET;
-
-      // Clamp the top value within limits
-      newTop = Math.max(MIN_TOP, Math.min(newTop, MAX_TOP));
-
-      // Apply the new top position
-      card.style.top = newTop + 'px';
-    }
-
-    // Initial run
-    updateCardPosition();
-
-    // Listen to scroll
-    window.addEventListener('scroll', updateCardPosition, { passive: true });
-
-    // Handle window resize
-    window.addEventListener('resize', updateCardPosition);
+  // Recompute on load & resize
+  function recalc() {
+    const rect = section.getBoundingClientRect();
+    sectionTop    = rect.top + window.scrollY;
+    sectionHeight = section.offsetHeight;
+    // we want the card to move its center from the top of the section...
+    startY = sectionTop;
+    // ...down until the bottom of the section
+    endY   = sectionTop + sectionHeight;
   }
 
-  // Wait for DOM content and images to be ready
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initScrollAnimation);
-  } else {
-    initScrollAnimation();
+  function onScroll() {
+    const scrollY = window.scrollY + window.innerHeight / 2; // use viewport center
+    // clamp between startY and endY
+    const clamped = Math.max(startY, Math.min(scrollY, endY));
+    // set the card's top relative to the section
+    // subtract sectionTop so top:0 aligns card-center to sectionTop
+    card.style.top = (clamped - sectionTop) + 'px';
   }
+
+  window.addEventListener('load', () => {
+    recalc();
+    onScroll();
+  });
+  window.addEventListener('resize', () => {
+    recalc();
+    onScroll();
+  });
+  window.addEventListener('scroll', onScroll, { passive: true });
 })();
