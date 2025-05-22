@@ -439,23 +439,21 @@ style="fill:white"/><path d="M1443 1080.1c-34 3.7-54.7 8.1-82.1 17.4-47.8 16.2-9
          overflow-hidden
          pt-32">
 
-<!-- Single interactive “Keyboard shortcuts” card -->
+<!-- Single interactive “Keyboard shortcuts”-->
 <div class="relative overflow-hidden rounded-2xl bg-black p-6">
-  <!-- 1. Focus-light wrapper -->
+  <!-- Sharper focus light -->
   <div class="absolute inset-0 pointer-events-none">
-    <!-- 2. Blurred radial gradient -->
     <div class="
-      absolute -top-24 left-1/2 
-      w-72 h-72 
-      bg-[radial-gradient(circle_at_center,rgba(255,200,50,0.6)_0%,rgba(255,200,50,0)_70%)]
-      blur-3xl
-      opacity-80
+      absolute -top-12 left-1/2 
+      w-72 h-24 
+      bg-[radial-gradient(circle_at_center,rgba(255,200,50,0.45)_20%,rgba(255,200,50,0)_70%)]
+      opacity-90
       transform -translate-x-1/2
-      animate-focusLight
+      animate-focusLightSharp
     "></div>
   </div>
 
-  <!-- your normal card content here -->
+  <!-- Your card content -->
   <div class="relative z-10 text-white">
     <h3 class="text-xl font-semibold">Keyboard shortcuts.</h3>
     <p class="mt-2 text-gray-300">Work efficiently with instant access to common actions.</p>
@@ -463,18 +461,16 @@ style="fill:white"/><path d="M1443 1080.1c-34 3.7-54.7 8.1-82.1 17.4-47.8 16.2-9
 </div>
 
 <style>
-  @keyframes focusLight {
+  @keyframes focusLightSharp {
     0%, 100% {
-      transform: translateX(-50%) scale(1) translateY(-24px);
-      opacity: .6;
+      transform: translateX(-50%) translateY(-48px);
     }
     50% {
-      transform: translateX(-50%) scale(1.1) translateY(-28px);
-      opacity: .8;
+      transform: translateX(-50%) translateY(-52px);
     }
   }
-  .animate-focusLight {
-    animation: focusLight 3s ease-in-out infinite;
+  .animate-focusLightSharp {
+    animation: focusLightSharp 4s ease-in-out infinite;
   }
 </style>
 </section>
