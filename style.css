@@ -1,1 +1,8 @@
-i
+background: linear-gradient(
+  90deg,
+  rgba(255,200,50,0) 0%, 
+  rgba(255,200,50,0.8) 50%, 
+  rgba(255,200,50,0) 100%
+);
+width: 150%; height: 8px;
+filter: blur(4px);i
