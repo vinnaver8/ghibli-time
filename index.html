@@ -467,6 +467,61 @@ style="fill:white"/><path d="M1443 1080.1c-34 3.7-54.7 8.1-82.1 17.4-47.8 16.2-9
       <!-- BOX 4 -->
       <div class="bg-gray-800 rounded-lg h-64">
         <!-- your content here -->
+       <div class="notif-container">
+      <!-- five CSS ripple rings -->
+      <div class="ring"></div>
+      <div class="ring"></div>
+      <div class="ring"></div>
+      <div class="ring"></div>
+      <div class="ring"></div>
+
+      <!-- inline SVG notification -->
+      <svg width="100%" height="100%" viewBox="0 0 300 300" preserveAspectRatio="xMidYMid meet"
+           xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <pattern id="dots" width="10" height="10" patternUnits="userSpaceOnUse">
+            <circle cx="1" cy="1" r="1" fill="#FFFFFF" opacity="0.3"/>
+          </pattern>
+          <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#1E90FF"/>
+            <stop offset="50%" stop-color="#7B68EE"/>
+            <stop offset="100%" stop-color="#FFA500"/>
+          </linearGradient>
+          <filter id="glowBell" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="2" result="blur"/>
+            <feMerge>
+              <feMergeNode in="blur"/>
+              <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+          </filter>
+          <symbol id="bell" viewBox="0 0 24 24">
+            <path d="M12 2a7 7 0 0 0-7 7v5H4a1 1 0 0 0 0 2h16a1 1 0 0 0 0-2h-1V9a7 7 0 0 0-7-7zm0 22a3 3 0 0 0 3-3H9a3 3 0 0 0 3 3z"
+                  fill="#fff"/>
+          </symbol>
+        </defs>
+
+        <!-- dots background -->
+        <rect width="300" height="300" fill="url(#dots)"/>
+
+        <!-- rotating gradient rings -->
+        <g class="rings">
+          <circle cx="150" cy="150" r="80" fill="none" stroke="url(#ringGrad)" stroke-width="2"/>
+          <circle cx="150" cy="150" r="60" fill="none" stroke="url(#ringGrad)" stroke-width="1.5"/>
+        </g>
+
+        <!-- enlarged bell -->
+        <use href="#bell" x="126" y="126" width="48" height="48" class="bell" filter="url(#glowBell)"/>
+
+        <!-- badge + pulse -->
+        <g class="badge">
+          <circle cx="180" cy="120" r="16" fill="#ff5b5b"/>
+          <text x="180" y="126" text-anchor="middle" font-family="sans-serif"
+                font-size="14" fill="#fff" font-weight="bold">26</text>
+        </g>
+        <circle cx="180" cy="120" r="20" fill="none" stroke="#ff5b5b"
+                stroke-width="2" opacity="0.5" class="pulse"/>
+      </svg>
+       </div>         
       </div>
     </div>
     
