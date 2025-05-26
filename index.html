@@ -416,16 +416,88 @@ Huly is a process, project, time, and knowledge management platform that provide
       </p>
     </div>
 
-    <div class="flex flex-col lg:flex-row items-center justify-center gap-8 mb-16">
-      <div class="hidden lg:block text-gray-500 text-sm space-y-4">
-        <div class="text-right">Meeting Room</div>
-        <div class="text-right">06.30</div>
-        <div class="text-right">Design Week</div>
-      </div>
+<div class="flex flex-col lg:flex-row items-center justify-center gap-8 mb-16">
+<div class="relative w-full lg:w-3/4 bg-gray-800 rounded-xl overflow-hidden shadow-2xl panel-glow aspect-video flex items-center justify-center">
+<!--- my svg tag-->
 
-      <div class="relative w-full lg:w-3/4 bg-gray-800 rounded-xl overflow-hidden shadow-2xl panel-glow aspect-video flex items-center justify-center">
-        <img src="https://placehold.co/1280x720/6366F1/FFFFFF?text=Main+Video" alt="Main video feed" class="w-full h-full object-cover">
-        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex flex-col justify-between p-4">
+<svg width="100%" height="100%" viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      /* Define a style for the lines and rectangles */
+      .wall-line {
+        stroke: #cccccc; /* Light grey color for visibility */
+        stroke-width: 8;
+        stroke-linecap: round;
+      }
+      .main-frame {
+        fill: #333333; /* Darker grey for the main frame fill */
+        stroke: #cccccc; /* Light grey border */
+        stroke-width: 10;
+        rx: 20; /* Rounded corners for the frame */
+        ry: 20;
+      }
+    </style>
+  </defs>
+
+  <rect x="250" y="150" width="500" height="300" class="main-frame" />
+
+  <line x1="0" y1="100" x2="200" y2="100" class="wall-line" />
+  <line x1="0" y1="200" x2="200" y2="200" class="wall-line" />
+  <line x1="0" y1="300" x2="200" y2="300" class="wall-line" />
+  <line x1="0" y1="400" x2="200" y2="400" class="wall-line" />
+  <line x1="0" y1="500" x2="200" y2="500" class="wall-line" />
+
+  <line x1="800" y1="100" x2="1000" y2="100" class="wall-line" />
+  <line x1="800" y1="200" x2="1000" y2="200" class="wall-line" />
+  <line x1="800" y1="300" x2="1000" y2="300" class="wall-line" />
+  <line x1="800" y1="400" x2="1000" y2="400" class="wall-line" />
+  <line x1="800" y1="500" x2="1000" y2="500" class="wall-line" />
+
+  <line x1="100" y1="0" x2="100" y2="100" class="wall-line" />
+  <line x1="100" y1="200" x2="100" y2="300" class="wall-line" />
+  <line x1="100" y1="400" x2="100" y2="500" class="wall-line" />
+
+  <line x1="900" y1="0" x2="900" y2="100" class="wall-line" />
+  <line x1="900" y1="200" x2="900" y2="300" class="wall-line" />
+  <line x1="900" y1="400" x2="900" y2="500" class="wall-line" />
+
+  <line x1="200" y1="100" x2="250" y2="100" class="wall-line" />
+  <line x1="750" y1="100" x2="800" y2="100" class="wall-line" />
+
+  <line x1="200" y1="200" x2="250" y2="200" class="wall-line" />
+  <line x1="750" y1="200" x2="800" y2="200" class="wall-line" />
+
+  <line x1="200" y1="300" x2="250" y2="300" class="wall-line" />
+  <line x1="750" y1="300" x2="800" y2="300" class="wall-line" />
+
+  <line x1="200" y1="400" x2="250" y2="400" class="wall-line" />
+  <line x1="750" y1="400" x2="800" y2="400" class="wall-line" />
+
+  <line x1="200" y1="500" x2="250" y2="500" class="wall-line" />
+  <line x1="750" y1="500" x2="800" y2="500" class="wall-line" />
+
+  <line x1="100" y1="100" x2="100" y2="150" class="wall-line" />
+  <line x1="100" y1="450" x2="100" y2="500" class="wall-line" />
+
+  <line x1="900" y1="100" x2="900" y2="150" class="wall-line" />
+  <line x1="900" y1="450" x2="900" y2="500" class="wall-line" />
+
+  <line x1="100" y1="100" x2="250" y2="100" class="wall-line" />
+  <line x1="100" y1="200" x2="250" y2="200" class="wall-line" />
+  <line x1="100" y1="300" x2="250" y2="300" class="wall-line" />
+  <line x1="100" y1="400" x2="250" y2="400" class="wall-line" />
+  <line x1="100" y1="500" x2="250" y2="500" class="wall-line" />
+
+  <line x1="750" y1="100" x2="900" y2="100" class="wall-line" />
+  <line x1="750" y1="200" x2="900" y2="200" class="wall-line" />
+  <line x1="750" y1="300" x2="900" y2="300" class="wall-line" />
+  <line x1="750" y1="400" x2="900" y2="400" class="wall-line" />
+  <line x1="750" y1="500" x2="900" y2="500" class="wall-line" />
+
+</svg>
+
+
+ <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex flex-col justify-between p-4">
           <div class="flex justify-between items-start">
             <div class="text-white">
               <p class="text-lg font-semibold">Onboarding Meeting</p>
