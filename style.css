@@ -172,22 +172,4 @@ filter: blur(4px);i
       height: 100%;
     }
 
-    /* Specific positions for background grid lines to mimic the image's subtle pattern */
-    .bg-w1 { top: 0; left: 0; }
-    .bg-w2 { top: 20%; left: 0; }
-    .bg-w3 { top: 40%; left: 0; }
-    .bg-w4 { top: 60%; left: 0; }
-    .bg-w5 { top: 80%; left: 0; }
-    .bg-w6 { bottom: 0; left: 0; }
-
-    .bg-v1 { top: 0; left: 0; }
-    .bg-v2 { top: 0; left: 20%; }
-    .bg-v3 { top: 0; left: 40%; }
-    .bg-v4 { top: 0; left: 60%; }
-    .bg-v5 { top: 0; left: 80%; }
-    .bg-v6 { top: 0; right: 0; }
-
-    /* Custom glow effect for the main video panel, as seen in the image */
-    .panel-glow {
-      box-shadow: 0 0 40px rgba(99,102,241,0.4), 0 0 80px rgba(99,102,241,0.2);
-    }
+    
