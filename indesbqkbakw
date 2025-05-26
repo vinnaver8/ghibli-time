@@ -1,0 +1,347 @@
+  <section class="relative min-h-[2000px] overflow-visible pt-32">
+<div class="relative top-20 left-20 md:absolute md:top-[20px] md:left-[20px]">
+     <!-- 1) Headline -->
+<h2 class="text-6xl font-bold text-white">
+      Unmatched productivity
+    </h2>
+    <!-- 2) Intro paragraph -->
+<p class="mt-2 text-gray-300 max-w-2xl">
+Huly is a process, project, time, and knowledge management platform that provides amazing collaboration opportunities for developers and product teams alike.
+</p>
+</div>
+<div class="wrapper relative md:absolute md:top-[530px] md:right-[50px] md:w-[550px] md:h-[300px] overflow-hidden">
+<div class="frame relative w-[680px] h-[500px] bg-black rounded-2xl shadow-xl transform origin-top-left scale-x-[0.8088] scale-y-[0.6]">
+<div class="flex flex-col md:flex-row items-start justify-center absolute top-[60px] right-[30px] gap-6">
+    <!-- your Main Card content -->
+      <div class="main-card bg-white text-gray-900 rounded-xl shadow-2xl p-6 w-80 h-220 cursor-pointer">
+      <div class="flex justify-between items-center mb-2">
+        <h2 class="text-content scale->1.24] text-lg font-semibold">ChatGPT AI Sync</h2>
+        <span class="text-gray-500">...</span>
+      </div>
+      <p class="text-content scale->1.24] text-sm text-gray-500 mb-4">2:00 - 3:00 pm &bull; Weekly on Tuesday</p>
+      <p class="text-gray-800 mb-4">Weekly brainstorming on AI enhancements and user feedback analysis.</p>
+      <button class="bg-blue-600 text-white text-sm px-4 py-2 rounded-lg mb-4 hover:bg-blue-700">Join Meeting</button>
+      <div class="flex items-center text-gray-500 text-sm mb-4">
+        <span class="flex items-center"><span class="mr-1">⏰</span>10 minutes before</span>
+        <span class="flex items-center ml-6"><span class="mr-1">👥</span>8 guests</span>
+      </div>
+      <div class="flex -space-x-2 mt-2">
+        <img class="h-8 w-8 rounded-full ring-2 ring-white" src="https://ui-avatars.com/api/?name=Alice&background=0D8ABC&color=ffffff&size=64" alt="A">
+        <img class="h-8 w-8 rounded-full ring-2 ring-white" src="https://ui-avatars.com/api/?name=Bob&background=F06543&color=ffffff&size=64" alt="B">
+        <img class="h-8 w-8 rounded-full ring-2 ring-white" src="https://ui-avatars.com/api/?name=Carol&background=7F3FBF&color=ffffff&size=64" alt="C">
+        <span class="inline-flex items-center justify-center h-8 w-8 rounded-full bg-gray-200 text-xs font-medium text-gray-700 ring-2 ring-white">+5</span>
+      </div>
+      <div class="mt-4 text-gray-700 text-sm">Going?</div>
+      <div class="flex space-x-2 mt-2">
+        <button class="px-3 py-1 text-xs font-medium text-blue-600 border border-blue-300 rounded-full hover:bg-blue-50">Yes</button>
+        <button class="px-3 py-1 text-xs font-medium text-gray-600 border border-gray-300 rounded-full hover:bg-gray-50">No</button>
+        <button class="px-3 py-1 text-xs font-medium text-gray-600 border border-gray-300 rounded-full hover:bg-gray-50">Maybe</button>
+      </div>
+    </div><!-- Right Side Boxes -->
+<div class="flex flex-col space-y-4 h-220 -mt-5 md:-mt-5">
+  <!-- Box 1 -->
+  <div class="right-box bg-blue-800 text-white rounded-xl p-4 shadow-lg w-64">
+    <h3 class="font-medium mb-1">Prototype Demo</h3>
+    <p class="text-xs text-gray-300 mb-2">9:00 - 10:00 am &bull; Weekly on Thursday</p>
+    <div class="flex items-center text-gray-200 text-xs mb-2">
+      <span class="flex items-center mr-4"><span class="mr-1">👥</span>5 guests</span>
+    </div>
+    <div class="flex -space-x-2 mt-2">
+      <img class="h-6 w-6 rounded-full ring-2 ring-white" src="https://ui-avatars.com/api/?name=Alice&background=0D8ABC&color=ffffff&size=64" alt="A">
+      <img class="h-6 w-6 rounded-full ring-2 ring-white" src="https://ui-avatars.com/api/?name=Bob&background=F06543&color=ffffff&size=64" alt="B">
+      <img class="h-6 w-6 rounded-full ring-2 ring-white" src="https://ui-avatars.com/api/?name=Carol&background=7F3FBF&color=ffffff&size=64" alt="C">
+      <span class="inline-flex items-center justify-center h-6 w-6 rounded-full bg-gray-200 text-xs font-medium text-gray-700 ring-2 ring-white">+2</span>
+    </div>
+  </div>
+  <!-- Box 2 -->
+  <div class="right-box bg-red-800 text-white rounded-xl p-4 shadow-lg w-64">
+    <h3 class="font-medium mb-1">Discuss Project Tasks</h3>
+    <p class="text-xs text-gray-300 mb-2">11:30 - 1:00 pm &bull; Weekly on Monday</p>
+    <div class="flex items-center text-gray-200 text-xs mb-2">
+      <span class="flex items-center"><span class="mr-1">👥</span>2 guests</span>
+    </div>
+    <div class="flex -space-x-2 mt-2">
+      <img class="h-6 w-6 rounded-full ring-2 ring-white" src="https://ui-avatars.com/api/?name=Dave&background=3B82F6&color=ffffff&size=64" alt="D">
+      <img class="h-6 w-6 rounded-full ring-2 ring-white" src="https://ui-avatars.com/api/?name=Eve&background=10B981&color=ffffff&size=64" alt="E">
+    </div>
+  </div>
+  <!-- Box 3 -->
+  <div class="right-box bg-gray-800 text-white rounded-xl p-4 shadow-lg w-64">
+    <h3 class="font-medium mb-1">Design Meeting</h3>
+    <p class="text-xs text-gray-300 mb-2">3:00 - 4:00 pm &bull; Weekly on Friday</p>
+    <div class="flex items-center text-gray-200 text-xs mb-2">
+      <span class="flex items-center"><span class="mr-1">👥</span>6 guests</span>
+    </div>
+    <div class="flex -space-x-2 mt-2">
+      <img class="h-6 w-6 rounded-full ring-2 ring-white" src="https://ui-avatars.com/api/?name=Frank&background=EF4444&color=ffffff&size=64" alt="F">
+      <img class="h-6 w-6 rounded-full ring-2 ring-white" src="https://ui-avatars.com/api/?name=Grace&background=6366F1&color=ffffff&size=64" alt="G">
+      <img class="h-6 w-6 rounded-full ring-2 ring-white" src="https://ui-avatars.com/api/?name=Heidi&background=F472B6&color=ffffff&size=64" alt="H">
+      <span class="inline-flex items-centerjustify-center h-6 w-6 rounded-full bg-gray-200 text-xs font-medium text-gray-700 ring-2 ring-white">+3</span>
+    </div>
+  </div>
+</div></div></div></div>
+<!-------dot ripple Box---->
+<div class="wrapper relative md:absolute md:top-[530px] md:left-[50px] md:w-[150px] md:h-[150px]">
+  
+<div class="frame relative w-[300px] h-[300px] bg-black rounded-2xl overflow-hidden shadow-xl">
+<div class="notif-container">
+<svg width="300" height="300" viewBox="0 0 300 300"
+     xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Denser dots pattern -->
+    <pattern id="dots" width="4" height="4" patternUnits="userSpaceOnUse">
+      <circle cx="1" cy="1" r="1" fill="#fff" opacity="0.4"/>
+    </pattern>
+
+    <!-- Ring gradient -->
+    <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#1E90FF"/>
+      <stop offset="50%" stop-color="#7B68EE"/>
+      <stop offset="100%" stop-color="#FFA500"/>
+    </linearGradient>
+
+    <!-- Mask to softly fade out the dot-field -->
+    <radialGradient id="fadeGrad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#fff" stop-opacity="1"/>
+      <stop offset="100%" stop-color="#fff" stop-opacity="0"/>
+    </radialGradient>
+    <mask id="fadeMask">
+      <rect width="300" height="300" fill="black"/>
+      <!-- circle of white → transparent to reveal pattern -->
+      <circle cx="150" cy="150" r="100" fill="url(#fadeGrad)"/>
+    </mask>
+
+    <!-- Bell symbol -->
+    <symbol id="bell" viewBox="0 0 24 24">
+      <path d="M12 2a7 7 0 0 0-7 7v5H4a1 1 0 0 0 0 2h16a1 1 0 0 0 0-2h-1V9a7 7 0 0 0-7-7zm0 22a3 3 0 0 0 3-3H9a3 3 0 0 0 3 3z"
+            fill="#fff"/>
+    </symbol>
+  </defs>
+
+  <!-- Spinning, pulsing ring -->
+  <circle cx="150" cy="150" r="80"
+          fill="none"
+          stroke="url(#ringGrad)"
+          stroke-width="10">
+    <animateTransform attributeName="transform"
+                      attributeType="XML"
+                      type="rotate"
+                      from="0 150 150"
+                      to="360 150 150"
+                      dur="10s"
+                      repeatCount="indefinite"/>
+    <animate attributeName="stroke-width"
+             values="10;14;10"
+             dur="2s"
+             repeatCount="indefinite"/>
+    <animate attributeName="stroke-opacity"
+             values="0.6;1;0.6"
+             dur="2s"
+             repeatCount="indefinite"/>
+  </circle>
+
+  <!-- Large soft dot-field (200×200) -->
+  <circle cx="150" cy="150" r="200"
+          fill="url(#dots)"
+          mask="url(#fadeMask)"/>
+
+  <!-- Bell icon -->
+  <use href="#bell" x="126" y="126" width="48" height="48"/>
+
+  <!-- Notification badge -->
+  <g class="badge">
+    <circle cx="150" cy="193" r="10" fill="#ff5b5b"/>
+    <text x="150" y="198" text-anchor="middle"
+          font-family="sans-serif" font-size="12"
+          fill="#fff" font-weight="bold">26</text>
+  </g>
+</svg>
+</div></div></div>
+  
+<!---automatically typing-text box-->
+<div class="wrapper relative md:absolute md:top-[200px] md:left-[50px] md:w-[300px] md:h-[300px] overflow-hidden">
+<div class="frame relative w-[600px] h-[700px] bg-black rounded-2xl overflow-hidden shadow-xl md:origin-top-left md:transform md:scale-x-[0.5] md:scale-y-[0.4286]">
+<!-- Left placeholder panel (half visible, hidden on mobile) -->
+<div class="hidden md:block">
+<div class="absolute top-1/2 left-0 transform -translate-y-1/2 -translate-x-[120px]">
+<!-- 3D perspective container -->
+<div class="w-[240px] h-[320px] perspective-[800px]">
+<div id="left-panel" class="transform -rotate-y-12 origin-center w-full h-full">
+<div class="bg-gray-800 p-4 rounded-lg animate-pulse opacity-50 flex flex-col justify-between h-full">
+<div class="space-y-2">
+<div class="h-4 bg-gray-500 rounded w-3/4"></div>
+<div class="h-4 bg-gray-500 rounded"></div>
+<div class="h-4 bg-gray-500 rounded w-1/2"></div>
+</div>
+<div class="flex items-center space-x-2">
+<div class="h-6 w-6 bg-gray-500 rounded-full"></div>
+<div class="h-4 bg-gray-500 rounded w-1/3"></div>
+</div></div></div></div></div></div>
+<!-- Center card container -->
+<div id="center" class="relative w-80 h-[450px] w-[300px] perspective-[800px] transform top-[20px] right-[-150px]">
+<!-- Card 1 -->
+<div class="card absolute inset-0 bg-gradient-to-br from-gray-800 to-gray-700 rounded-2xl shadow-2xl p-4 transform transition-transform duration-700 origin-top backface-hidden flex flex-col">
+<!-- Header -->
+<div class="flex items-center justify-between mb-4 px-4">
+<h3 class="text-gray-300 text-sm font-semibold">Today</h3>
+<button class="text-gray-400 hover:text-white">+</button>
+</div>
+<!-- Inner white box -->
+<div class="bg-white rounded-xl flex-1 p-6 flex flex-col shadow-lg">
+<h2 class="text-2xl font-bold text-gray-800 mb-4 text-center">Resume</h2>
+<div class="flex-grow flex items-center">
+<p class="typing-text text-gray-600 text-center text-lg w-full"></p>
+</div></div></div>
+<!-- Card 2 -->
+<div class="card absolute inset-0 hidden bg-gradient-to-br from-gray-800 to-gray-700 rounded-2xl shadow-2xl p-4 transform transition-transform duration-700 origin-top backface-hidden flex flex-col">
+<div class="flex items-center justify-between mb-4 px-4">
+<h3 class="text-gray-300 text-sm font-semibold">Today</h3>
+<button class="text-gray-400 hover:text-white">+</button>
+</div>
+<div class="bg-white rounded-xl flex-1 p-6 flex flex-col shadow-lg">
+<h2 class="text-2xl font-bold text-gray-800 mb-4 text-center">Website</h2>
+<div class="flex-grow flex items-center">
+<p class="typing-text text-gray-600 text-center text-lg w-full"></p>
+</div></div></div>
+<!-- Card 3 -->
+<div class="card absolute inset-0 hidden bg-gradient-to-br from-gray-800 to-gray-700 rounded-2xl shadow-2xl p-4 transform transition-transform duration-700 origin-top backface-hidden flex flex-col">
+<div class="flex items-center justify-between mb-4 px-4">
+<h3 class="text-gray-300 text-sm font-semibold">Today</h3>
+<button class="text-gray-400 hover:text-white">+</button>
+</div>
+<div class="bg-white rounded-xl flex-1 p-6 flex flex-col shadow-lg">
+<h2 class="text-2xl font-bold text-gray-800 mb-4 text-center">Image Generator</h2>
+<div class="flex-grow flex items-center">
+<p class="typing-text text-gray-600 text-center text-lg w-full"></p>
+</div></div></div>
+<!-- Card 4 -->
+<div class="card absolute inset-0 hidden bg-gradient-to-br from-gray-800 to-gray-700 rounded-2xl shadow-2xl p-4 transform transition-transform duration-700 origin-top backface-hidden flex flex-col">
+<div class="flex items-center justify-between mb-4 px-4">
+<h3 class="text-gray-300 text-sm font-semibold">Today</h3>
+<button class="text-gray-400 hover:text-white">+</button>
+</div>
+<div class="bg-white rounded-xl flex-1 p-6 flex flex-col shadow-lg">
+<h2 class="text-2xl font-bold text-gray-800 mb-4 text-center">Map Generator</h2>
+<div class="flex-grow flex items-center">
+<p class="typing-text text-gray-600 text-center text-lg w-full"></p>
+</div>
+</div>
+</div>
+<!-- Card 5 -->
+<div class="card absolute inset-0 hidden bg-gradient-to-br from-gray-800 to-gray-700 rounded-2xl shadow-2xl p-4 transform transition-transform duration-700 origin-top backface-hidden flex flex-col">
+<div class="flex items-center justify-between mb-4 px-4">
+<h3 class="text-gray-300 text-sm font-semibold">Today</h3>
+<button class="text-gray-400 hover:text-white">+</button>
+</div>
+<div class="bg-white rounded-xl flex-1 p-6 flex flex-col shadow-lg">
+<h2 class="text-2xl font-bold text-gray-800 mb-4 text-center">Invoice Creator</h2>
+<div class="flex-grow flex items-center">
+<p class="typing-text text-gray-600 text-center text-lg w-full"></p>
+</div></div></div></div>
+<!-- Right placeholder panel (50% outside, hidden on small screens) -->
+<div class="hidden md:block">
+<div class="absolute top-1/2 right-0 transform -translate-y-1/2 translate-x-[120px]">
+<div class="w-[240px] h-[320px] perspective-[800px]">
+      <div id="right-panel" class="transform rotate-y-12 origin-center w-full h-full">
+        <div class="bg-gray-800 p-4 rounded-lg animate-pulse opacity-50 flex flex-col justify-between h-full">
+          <div class="space-y-2">
+            <div class="h-4 bg-gray-500 rounded w-3/4"></div>
+            <div class="h-8 bg-gray-600 rounded"></div>
+            <div class="h-4 bg-gray-500 rounded w-1/3"></div>
+          </div>
+          <div class="flex items-center space-x-2">
+            <div class="h-6 w-6 bg-gray-500 rounded-full"></div>
+            <div class="h-4 bg-gray-500 rounded w-2/5"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+<!---- keyboard animation--->
+<div
+  class="wrapper relative 
+         md:absolute md:top-[200px] md:right-[0px]
+         md:w-[600px] md:h-[500px]
+         overflow-hidden"
+>
+  <div
+    class="frame relative w-[600px] h-[500px]
+           bg-black rounded-2xl shadow-xl
+           md:origin-top-left
+           md:transform
+           md:scale-x-[0.9167]
+           md:scale-y-[0.6]"
+  >
+<!-- Floating command box -->
+  <div id="commandBox"class="absolute top-[20px] left-[150px] 
+            bg-black bg-opacity-75 backdrop-blur-md 
+            rounded-xl p-6 w-80 flex flex-col space-y-4 z-20">
+    <div class="flex items-center space-x-2 text-gray-300">
+      <span class="text-xl">🔍</span>
+      <input type="text" placeholder="Run command..." class="flex-grow bg-transparent focus:outline-none text-white placeholder-gray-400 text-content scale->1.24]" />
+      <span id="closeBtn" class="text-gray-400 text-xl cursor-pointer">&times;</span>
+    </div>
+    
+    <div>
+  <p class="text-gray-400 uppercase text-xs mb-2">Actions</p>
+  <div class="space-y-2">
+    <div class="action-item flex justify-between items-center py-2 px-3 rounded hover:bg-gray-700 cursor-pointer" data-key="V">
+      <span class="text-gray-300 scale-[1.24] origin-top-left block">Mark Task as Done</span>
+      <span class="bg-gray-700 text-gray-300 px-2 py-0.5 rounded text-xs">V</span>
+    </div>
+    <div class="action-item flex justify-between items-center py-2 px-3 rounded hover:bg-gray-700 cursor-pointer" data-key="B">
+      <span class="text-gray-300 scale-[1.24] origin-top-left block">Open To Do List</span>
+      <span class="bg-gray-700 text-gray-300 px-2 py-0.5 rounded text-xs">B</span>
+    </div>
+    <div class="action-item flex justify-between items-center py-2 px-3 rounded hover:bg-gray-700 cursor-pointer" data-key="M">
+      <span class="text-white scale-[1.24] origin-top-left block">Switch to Timeline View</span>
+      <span class="bg-gray-700 text-gray-300 px-2 py-0.5 rounded text-xs">M</span>
+    </div>
+  </div>
+    </div></div>
+     <!-- Keyboard container -->
+ <div id="keyboardContainer" class="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center">
+    <div id="keyboardGlow" class="absolute"></div>
+    <div id="keyboard" class="flex flex-col items-center space-y-1 mb-4">
+      <div class="flex space-x-1 ml-2">
+        <div class="key" data-key="Q">Q</div>
+        <div class="key" data-key="W">W</div>
+        <div class="key" data-key="E">E</div>
+        <div class="key" data-key="R">R</div>
+        <div class="key" data-key="T">T</div>
+        <div class="key" data-key="Y">Y</div>
+        <div class="key" data-key="U">U</div>
+        <div class="key" data-key="I">I</div>
+        <div class="key" data-key="O">O</div>
+        <div class="key" data-key="P">P</div>
+      </div>
+      <div class="flex space-x-1 ml-4">
+        <div class="key" data-key="A">A</div>
+        <div class="key" data-key="S">S</div>
+        <div class="key" data-key="D">D</div>
+        <div class="key" data-key="F">F</div>
+        <div class="key" data-key="G">G</div>
+        <div class="key" data-key="H">H</div>
+        <div class="key" data-key="J">J</div>
+        <div class="key" data-key="K">K</div>
+        <div class="key" data-key="L">L</div>
+      </div>
+      <div class="flex space-x-1 ml-8">
+        <div class="key" data-key="Z">Z</div>
+        <div class="key" data-key="X">X</div>
+        <div class="key" data-key="C">C</div>
+        <div class="key" data-key="V">V</div>
+        <div class="key" data-key="B">B</div>
+        <div class="key" data-key="N">N</div>
+        <div class="key" data-key="M">M</div>
+      </div>
+    </div>
+  </div></div></div></div>
+  </section>
+                  
+<script src="script.js"></script>
+</body>
+</html>
