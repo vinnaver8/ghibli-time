@@ -152,24 +152,4 @@ filter: blur(4px);i
       z-index: 0; /* Ensures background is behind content */
     }
 
-    /* Individual grid line styling */
-    .grid-line {
-      position: absolute;
-      background-color: rgba(220, 220, 220, 0.3); /* Very light grey, subtle */
-      box-shadow: 0 0 5px rgba(220, 220, 220, 0.1); /* Slight glow for the lines */
-      border-radius: 1px; /* Slightly rounded ends for lines */
-    }
-
-    /* Horizontal grid lines */
-    .grid-line.hz {
-      height: 1px; /* Very thin line */
-      width: 100%;
-    }
-
-    /* Vertical grid lines */
-    .grid-line.vt {
-      width: 1px; /* Very thin line */
-      height: 100%;
-    }
-
     
