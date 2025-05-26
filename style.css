@@ -139,3 +139,55 @@ filter: blur(4px);i
       50%  { transform: scale(1.4); opacity: 0; }
       100% { transform: scale(1); opacity: 0.5; }
 }
+
+/* wall css */
+    /* Container for the subtle grid background lines */
+    .grid-background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: 0; /* Ensures background is behind content */
+    }
+
+    /* Individual grid line styling */
+    .grid-line {
+      position: absolute;
+      background-color: rgba(220, 220, 220, 0.3); /* Very light grey, subtle */
+      box-shadow: 0 0 5px rgba(220, 220, 220, 0.1); /* Slight glow for the lines */
+      border-radius: 1px; /* Slightly rounded ends for lines */
+    }
+
+    /* Horizontal grid lines */
+    .grid-line.hz {
+      height: 1px; /* Very thin line */
+      width: 100%;
+    }
+
+    /* Vertical grid lines */
+    .grid-line.vt {
+      width: 1px; /* Very thin line */
+      height: 100%;
+    }
+
+    /* Specific positions for background grid lines to mimic the image's subtle pattern */
+    .bg-w1 { top: 0; left: 0; }
+    .bg-w2 { top: 20%; left: 0; }
+    .bg-w3 { top: 40%; left: 0; }
+    .bg-w4 { top: 60%; left: 0; }
+    .bg-w5 { top: 80%; left: 0; }
+    .bg-w6 { bottom: 0; left: 0; }
+
+    .bg-v1 { top: 0; left: 0; }
+    .bg-v2 { top: 0; left: 20%; }
+    .bg-v3 { top: 0; left: 40%; }
+    .bg-v4 { top: 0; left: 60%; }
+    .bg-v5 { top: 0; left: 80%; }
+    .bg-v6 { top: 0; right: 0; }
+
+    /* Custom glow effect for the main video panel, as seen in the image */
+    .panel-glow {
+      box-shadow: 0 0 40px rgba(99,102,241,0.4), 0 0 80px rgba(99,102,241,0.2);
+    }
