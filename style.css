@@ -140,6 +140,9 @@ filter: blur(4px);i
       100% { transform: scale(1); opacity: 0.5; }
 }
 /* wall Box ripple */
+.wallbox {
+z-index:2;
+}
 .ripple {
   position: relative;
   text-decoration: none;
@@ -147,7 +150,7 @@ filter: blur(4px);i
   background-color: #7249AC;
   border-radius: 50%;
   animation: ripple 1s linear infinite;
-  index:1;
+  z-index:1;
 }
 
 @keyframes ripple {
