@@ -147,6 +147,7 @@ filter: blur(4px);i
   background-color: #7249AC;
   border-radius: 50%;
   animation: ripple 1s linear infinite;
+  index:1;
 }
 
 @keyframes ripple {
