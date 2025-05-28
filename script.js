@@ -439,92 +439,71 @@ const mainCard = document.querySelector('.main-card');
     setTimeout(nextStep, 1000);
 
               // pin draggable//
-const pin = document.getElementById("pin");
-const wrapper = document.getElementById("main-wrapper");
+;(function() {
+  const wrapper = document.getElementById('main-wrapper');
+  const pin     = document.getElementById('pin');
 
-let isDragging = false;
-let offsetX = 0;
-let offsetY = 0;
+  let isDragging = false;
+  let offset = { x: 0, y: 0 };
 
-pin.addEventListener("mousedown", startDrag);
-document.addEventListener("mousemove", drag);
-document.addEventListener("mouseup", endDrag);
+  pin.addEventListener('mousedown', startDrag);
+  pin.addEventListener('touchstart', startDrag);
 
-pin.addEventListener("touchstart", startDrag, { passive: false });
-document.addEventListener("touchmove", drag, { passive: false });
-document.addEventListener("touchend", endDrag);
+  document.addEventListener('mousemove', onMove);
+  document.addEventListener('touchmove', onMove, { passive: false });
 
-function startDrag(e) {
-  e.preventDefault();
-  isDragging = true;
-  pin.classList.add("dragging");
+  document.addEventListener('mouseup', endDrag);
+  document.addEventListener('touchend', endDrag);
 
-  const rect = pin.getBoundingClientRect();
-  const clientX = e.type.includes("touch") ? e.touches[0].clientX : e.clientX;
-  const clientY = e.type.includes("touch") ? e.touches[0].clientY : e.clientY;
-
-  offsetX = clientX - rect.left;
-  offsetY = clientY - rect.top;
-}
-
-function drag(e) {
-  if (!isDragging) return;
-
-  const clientX = e.type.includes("touch") ? e.touches[0].clientX : e.clientX;
-  const clientY = e.type.includes("touch") ? e.touches[0].clientY : e.clientY;
-
-  const wrapperRect = wrapper.getBoundingClientRect();
-
-  let x = clientX - wrapperRect.left - offsetX;
-  let y = clientY - wrapperRect.top - offsetY;
-
-  const maxX = wrapper.clientWidth - pin.clientWidth;
-  const maxY = wrapper.clientHeight - pin.clientHeight;
-
-  // Clamp to wrapper
-  x = Math.max(0, Math.min(x, maxX));
-  y = Math.max(0, Math.min(y, maxY));
-
-  pin.style.left = `${x}px`;
-  pin.style.top = `${y}px`;
-}
-
-function endDrag(e) {
+  function endDrag() {
   if (!isDragging) return;
   isDragging = false;
-  pin.classList.remove("dragging");
+  pin.classList.remove('dragging');
 
-  const wrapperRect = wrapper.getBoundingClientRect();
-  const pinRect = pin.getBoundingClientRect();
+  // 1) Re-enable the transition so all style changes animate
+  pin.style.transition = 'all 0.3s ease-in-out';
 
-  let x = pinRect.left - wrapperRect.left;
-  let y = pinRect.top - wrapperRect.top;
+  // 2) Compute wrapper & pin bounds
+  const wrapRect = wrapper.getBoundingClientRect();
+  const pinRect  = pin.getBoundingClientRect();
+  // x,y inside wrapper coords
+  let x = pinRect.left - wrapRect.left;
+  let y = pinRect.top  - wrapRect.top;
 
+  // 3) Clamp to edges (so it never goes outside)
+  x = Math.max(0, Math.min(x, wrapRect.width  - pinRect.width));
+  y = Math.max(0, Math.min(y, wrapRect.height - pinRect.height));
+
+  // 4) Place it at the clamped spot first (so distances make sense)
+  pin.style.left = x + 'px';
+  pin.style.top  = y + 'px';
+
+  // 5) Compute distances to all four edges
   const dist = {
-    left: x,
-    right: wrapper.clientWidth - x - pin.clientWidth,
-    top: y,
-    bottom: wrapper.clientHeight - y - pin.clientHeight,
+    left:   x,
+    right:  wrapRect.width  - x - pinRect.width,
+    top:    y,
+    bottom: wrapRect.height - y - pinRect.height
   };
 
-  const nearest = Object.entries(dist).reduce(
-    (a, b) => (a[1] < b[1] ? a : b)
-  )[0];
+  // 6) Find nearest edge
+  const nearest = Object.entries(dist)
+    .reduce((best,[edge,d]) => d < best[1] ? [edge,d] : best, ['left',Infinity])[0];
 
-  pin.style.transition = "all 0.3s ease-in-out";
-
+  // 7) Snap to that edge
   switch (nearest) {
-    case "left":
-      pin.style.left = "30px";
+    case 'left':
+      pin.style.left = '30px';
       break;
-    case "right":
-      pin.style.left = wrapper.clientWidth - pin.clientWidth - 30 + "px";
+    case 'right':
+      pin.style.left = (wrapRect.width - pinRect.width - 30) + 'px';
       break;
-    case "top":
-      pin.style.top = "30px";
+    case 'top':
+      pin.style.top  = '30px';
       break;
-    case "bottom":
-      pin.style.top = wrapper.clientHeight - pin.clientHeight - 30 + "px";
+    case 'bottom':
+      // *** This line makes bottom-snap work & animate ***
+      pin.style.top  = (wrapRect.height - pinRect.height - 30) + 'px';
       break;
   }
-}
+  }
