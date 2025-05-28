@@ -443,39 +443,56 @@ const mainCard = document.querySelector('.main-card');
 let isDragging = false;
 let offset = { x: 0, y: 0 };
 
+// Save the original position from CSS (we’ll revert to this)
+const originalLeft = pin.style.left;
+const originalTop = pin.style.top;
+
+// Start dragging
 function startDrag(x, y) {
   isDragging = true;
-  // calculate pointer → element offset
-  offset.x = x - pin.getBoundingClientRect().left;
-  offset.y = y - pin.getBoundingClientRect().top;
-  // disable CSS transition while dragging
+  const rect = pin.getBoundingClientRect();
+  offset.x = x - rect.left;
+  offset.y = y - rect.top;
+
+  // Remove transition to make real-time movement immediate
   pin.style.transition = 'none';
   document.body.style.userSelect = 'none';
+  pin.style.zIndex = 9999; // Ensure it stays on top while dragging
 }
 
+// While dragging
 function onDrag(x, y) {
   if (!isDragging) return;
-  pin.style.left = `${x - offset.x}px`;
-  pin.style.top  = `${y - offset.y}px`;
+  const newLeft = x - offset.x;
+  const newTop = y - offset.y;
+  pin.style.left = `${newLeft}px`;
+  pin.style.top = `${newTop}px`;
 }
 
+// When dragging ends
 function endDrag() {
   if (!isDragging) return;
   isDragging = false;
   document.body.style.userSelect = 'auto';
-  // restore CSS transition
-  pin.style.transition = '';
-  // REMOVE inline top/left so Tailwind takes back over
+
+  // Enable smooth transition
+  pin.style.transition = 'all 0.5s ease';
+
+  // Reset back to original CSS position (removes inline overrides)
   pin.style.removeProperty('left');
   pin.style.removeProperty('top');
+  pin.style.zIndex = '';
 }
 
 // Mouse Events
-pin.addEventListener('mousedown', e => startDrag(e.clientX, e.clientY));
+pin.addEventListener('mousedown', e => {
+  e.preventDefault();
+  startDrag(e.clientX, e.clientY);
+});
 document.addEventListener('mousemove', e => onDrag(e.clientX, e.clientY));
 document.addEventListener('mouseup', endDrag);
 
-// Touch Events
+// Touch Events (for mobile)
 pin.addEventListener('touchstart', e => {
   const t = e.touches[0];
   startDrag(t.clientX, t.clientY);
