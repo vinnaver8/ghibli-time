@@ -143,7 +143,7 @@ filter: blur(4px);i
 /* Main Screen Container */
     .screen-container {
       width:500px;
-      height:305px;
+      height:310px;
       background:#0d1117;
       border-radius:12px;
       box-shadow:0 0 20px rgba(0,0,0,0.7);
