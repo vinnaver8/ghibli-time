@@ -428,6 +428,40 @@ height="700"
 class="wallbox shadow-[0_20px_40px_rgba(0,0,0,0.25),_inset_0_0_80px_rgba(0,0,0,0.1)] z-2"
   />
 </div>
+<div class="relative sm:absolute sm:h-[200px] sm:w-[360px] sm:top-[50px] sm:left-[-30px] md:absolute md:h-[600px] md:w-[1000px] md:top-[0px] md:left-[10px] items-center perspective-[800px]">
+<div class="screen-container">
+    <div class="chat-wrapper">
+      <div class="chat-header">Indox AI </div>
+      <div class="messages" id="messages"></div>
+    </div>
+    <div class="right-box">
+      <div class="anim-box" id="animBox">
+        <svg id="animIcon" class="anim-icon" viewBox="0 0 24 24"></svg>
+        <div id="animText" class="anim-text">Welcome!</div>
+        <div class="process-details" id="processDetails">
+          </div>
+        <div class="deep-panel" id="deepPanel">
+          <div class="deep-header">
+            <svg viewBox="0 0 24 24"><path d="M12 4l1.41 1.41L7.83 11H20v2H7.83l5.58 5.59L12 20l-8-8 8-8z"/></svg>
+            DeepSearch 15s
+          </div>
+          <div id="deepSearchSteps" class="deep-search-steps">
+            </div>
+          <div class="source-list" id="sourceList">
+            <div class="source-item">openai.com</div>
+            <div class="source-item">springer.com</div>
+            <div class="source-item">scribbr.com</div>
+            <div class="source-item">ctstate.edu</div>
+          </div>
+          <div class="deep-code">
+            <code>import requests
+response = requests.get('https://api.openai.com/v1/...')
+print(response.json())</code>
+          </div>
+        </div>
+      </div>
+    </div>
+</div></div>
           <div class="flex flex-col gap-4 w-full lg:w-1/4">
           <div class="text-white text-sm space-y-4 lg:hidden">
           <div class="text-left">[ Lounge ]</div>
