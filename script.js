@@ -517,7 +517,7 @@ const mainCard = document.querySelector('.main-card');
         pin.style.top  = '30px';
         break;
       case 'bottom':
-        pin.style.top  = (wrapRect.height - 30 - pinRect.height) + 'px';
+        pin.style.top  = '30px';
         break;
     }
   }
