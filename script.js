@@ -437,3 +437,62 @@ const mainCard = document.querySelector('.main-card');
 
     // Start the animation sequence after a short initial delay
     setTimeout(nextStep, 1000);
+
+              // pin draggable//
+  const pin = document.getElementById('pin-container');
+  const defaultPosition = {
+    top: pin.offsetTop,
+    left: pin.offsetLeft
+  };
+
+  let isDragging = false;
+  let offset = { x: 0, y: 0 };
+
+  pin.addEventListener('mousedown', (e) => {
+    isDragging = true;
+    offset.x = e.clientX - pin.offsetLeft;
+    offset.y = e.clientY - pin.offsetTop;
+    pin.style.transition = 'none';
+    document.body.style.userSelect = 'none';
+  });
+
+  document.addEventListener('mousemove', (e) => {
+    if (!isDragging) return;
+    pin.style.left = `${e.clientX - offset.x}px`;
+    pin.style.top = `${e.clientY - offset.y}px`;
+  });
+
+  document.addEventListener('mouseup', () => {
+    if (isDragging) {
+      isDragging = false;
+      pin.style.transition = 'all 0.5s ease';
+      pin.style.left = `${defaultPosition.left}px`;
+      pin.style.top = `${defaultPosition.top}px`;
+      document.body.style.userSelect = 'auto';
+    }
+  });
+
+  // Optional: Touch support for mobile
+  pin.addEventListener('touchstart', (e) => {
+    isDragging = true;
+    const touch = e.touches[0];
+    offset.x = touch.clientX - pin.offsetLeft;
+    offset.y = touch.clientY - pin.offsetTop;
+    pin.style.transition = 'none';
+  });
+
+  pin.addEventListener('touchmove', (e) => {
+    if (!isDragging) return;
+    const touch = e.touches[0];
+    pin.style.left = `${touch.clientX - offset.x}px`;
+    pin.style.top = `${touch.clientY - offset.y}px`;
+  });
+
+  pin.addEventListener('touchend', () => {
+    if (isDragging) {
+      isDragging = false;
+      pin.style.transition = 'all 0.5s ease';
+      pin.style.left = `${defaultPosition.left}px`;
+      pin.style.top = `${defaultPosition.top}px`;
+    }
+  });
