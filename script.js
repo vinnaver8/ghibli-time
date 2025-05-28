@@ -439,58 +439,87 @@ const mainCard = document.querySelector('.main-card');
     setTimeout(nextStep, 1000);
 
               // pin draggable//
-  const pin = document.getElementById('pin');
-  const startPos = { x: 360, y: 60 };
-  let isDragging = false;
-  let offset = { x: 0, y: 0 };
+  const fabElement = document.getElementById("pin");
+let oldPositionX,
+  oldPositionY;
 
-  pin.addEventListener('mousedown', (e) => {
-    isDragging = true;
-    offset.x = e.clientX - pin.offsetLeft;
-    offset.y = e.clientY - pin.offsetTop;
-    pin.style.transition = 'none';
-    pin.style.cursor = 'grabbing';
-  });
+const move = (e) => {
+  if (!fabElement.classList.contains("fab-active")) {
+    if (e.type === "touchmove") {
+      fabElement.style.top = e.touches[0].clientY + "px";
+      fabElement.style.left = e.touches[0].clientX + "px";
+    } else {
+      fabElement.style.top = e.clientY + "px";
+      fabElement.style.left = e.clientX + "px";
+    }
+  }
+};
 
-  document.addEventListener('mousemove', (e) => {
-    if (!isDragging) return;
-    const x = e.clientX - offset.x;
-    const y = e.clientY - offset.y;
-    pin.style.left = `${x}px`;
-    pin.style.top = `${y}px`;
-  });
+const mouseDown = (e) => {
+  console.log("mouse down ");
+  oldPositionY = fabElement.style.top;
+  oldPositionX = fabElement.style.left;
+  if (e.type === "mousedown") {
+    window.addEventListener("mousemove", move);
+  } else {
+    window.addEventListener("touchmove", move);
+  }
 
-  document.addEventListener('mouseup', () => {
-    if (!isDragging) return;
-    isDragging = false;
-    pin.style.transition = 'all 0.4s ease';
-    pin.style.cursor = 'grab';
-    pin.style.left = `${startPos.x}px`;
-    pin.style.top = `${startPos.y}px`;
-  });
+  fabElement.style.transition = "none";
+};
 
-  // Touch support
-  pin.addEventListener('touchstart', (e) => {
-    isDragging = true;
-    const touch = e.touches[0];
-    offset.x = touch.clientX - pin.offsetLeft;
-    offset.y = touch.clientY - pin.offsetTop;
-    pin.style.transition = 'none';
-  });
+const mouseUp = (e) => {
+  console.log("mouse up");
+  if (e.type === "mouseup") {
+    window.removeEventListener("mousemove", move);
+  } else {
+    window.removeEventListener("touchmove", move);
+  }
+  snapToSide(e);
+  fabElement.style.transition = "0.3s ease-in-out left";
+};
 
-  document.addEventListener('touchmove', (e) => {
-    if (!isDragging) return;
-    const touch = e.touches[0];
-    const x = touch.clientX - offset.x;
-    const y = touch.clientY - offset.y;
-    pin.style.left = `${x}px`;
-    pin.style.top = `${y}px`;
-  });
+const snapToSide = (e) => {
+  const wrapperElement = document.getElementById('main-wrapper');
+  const windowWidth = window.innerWidth;
+  let currPositionX, currPositionY;
+  if (e.type === "touchend") {
+    currPositionX = e.changedTouches[0].clientX;
+    currPositionY = e.changedTouches[0].clientY;
+  } else {
+    currPositionX = e.clientX;
+    currPositionY = e.clientY;
+  }
+  if(currPositionY < 50) {
+   fabElement.style.top = 50 + "px"; 
+  }
+  if(currPositionY > wrapperElement.clientHeight - 50) {
+    fabElement.style.top = (wrapperElement.clientHeight - 50) + "px"; 
+  }
+  if (currPositionX < windowWidth / 2) {
+    fabElement.style.left = 30 + "px";
+    fabElement.classList.remove('right');
+    fabElement.classList.add('left');
+  } else {
+    fabElement.style.left = windowWidth - 30 + "px";
+    fabElement.classList.remove('left');
+    fabElement.classList.add('right');
+  }
+};
 
-  document.addEventListener('touchend', () => {
-    if (!isDragging) return;
-    isDragging = false;
-    pin.style.transition = 'all 0.4s ease';
-    pin.style.left = `${startPos.x}px`;
-    pin.style.top = `${startPos.y}px`;
-  });
+fabElement.addEventListener("mousedown", mouseDown);
+
+fabElement.addEventListener("mouseup", mouseUp);
+
+fabElement.addEventListener("touchstart", mouseDown);
+
+fabElement.addEventListener("touchend", mouseUp);
+
+fabElement.addEventListener("click", (e) => {
+  if (
+    oldPositionY === fabElement.style.top &&
+    oldPositionX === fabElement.style.left
+  ) {
+    fabElement.classList.toggle("fab-active");
+  }
+});
