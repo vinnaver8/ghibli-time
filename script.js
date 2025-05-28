@@ -439,76 +439,58 @@ const mainCard = document.querySelector('.main-card');
     setTimeout(nextStep, 1000);
 
               // pin draggable//
-  const pin = document.getElementById('pin-container');
+  const pin = document.getElementById('pin');
+  const startPos = { x: 360, y: 60 };
+  let isDragging = false;
+  let offset = { x: 0, y: 0 };
 
-let isDragging = false;
-let offset = { x: 0, y: 0 };
-
-// ✅ Define the final snap-back row position (in pixels)
-const snapTarget = {
-  left: 360,  // set this to match the horizontal alignment (same as "H" row)
-  top: 60     // vertical target top value (adjust to match your design)
-};
-
-function startDrag(clientX, clientY) {
-  isDragging = true;
-
-  const rect = pin.getBoundingClientRect();
-  const parentRect = pin.offsetParent.getBoundingClientRect();
-
-  offset.x = clientX - (rect.left - parentRect.left);
-  offset.y = clientY - (rect.top - parentRect.top);
-
-  // Disable animation during drag
-  pin.style.transition = 'none';
-  document.body.style.userSelect = 'none';
-  pin.style.zIndex = '9999';
-}
-
-function onDrag(clientX, clientY) {
-  if (!isDragging) return;
-
-  const left = clientX - offset.x;
-  const top = clientY - offset.y;
-
-  pin.style.left = `${left}px`;
-  pin.style.top = `${top}px`;
-}
-
-function endDrag() {
-  if (!isDragging) return;
-  isDragging = false;
-
-  document.body.style.userSelect = 'auto';
-
-  // Re-enable transition for snap-back
-  pin.style.transition = 'all 0.5s ease-in-out';
-
-  // ✅ Snap back to target position
-  pin.style.left = `${snapTarget.left}px`;
-  pin.style.top = `${snapTarget.top}px`;
-
-  pin.addEventListener('transitionend', function cleanup() {
-    pin.style.zIndex = '';
-    pin.removeEventListener('transitionend', cleanup);
+  pin.addEventListener('mousedown', (e) => {
+    isDragging = true;
+    offset.x = e.clientX - pin.offsetLeft;
+    offset.y = e.clientY - pin.offsetTop;
+    pin.style.transition = 'none';
+    pin.style.cursor = 'grabbing';
   });
-}
 
-// Mouse Events
-pin.addEventListener('mousedown', (e) => {
-  e.preventDefault();
-  startDrag(e.clientX, e.clientY);
-});
-document.addEventListener('mousemove', (e) => onDrag(e.clientX, e.clientY));
-document.addEventListener('mouseup', endDrag);
+  document.addEventListener('mousemove', (e) => {
+    if (!isDragging) return;
+    const x = e.clientX - offset.x;
+    const y = e.clientY - offset.y;
+    pin.style.left = `${x}px`;
+    pin.style.top = `${y}px`;
+  });
 
-// Touch Events
-pin.addEventListener('touchstart', (e) => {
-  const t = e.touches[0];
-  startDrag(t.clientX, t.clientY);
-});
-pin.addEventListener('touchmove', (e) => {
-  const t = e.touches[0];
-  onDrag(t.clientX, t.clientY);
-});
-pin.addEventListener('touchend', endDrag);
+  document.addEventListener('mouseup', () => {
+    if (!isDragging) return;
+    isDragging = false;
+    pin.style.transition = 'all 0.4s ease';
+    pin.style.cursor = 'grab';
+    pin.style.left = `${startPos.x}px`;
+    pin.style.top = `${startPos.y}px`;
+  });
+
+  // Touch support
+  pin.addEventListener('touchstart', (e) => {
+    isDragging = true;
+    const touch = e.touches[0];
+    offset.x = touch.clientX - pin.offsetLeft;
+    offset.y = touch.clientY - pin.offsetTop;
+    pin.style.transition = 'none';
+  });
+
+  document.addEventListener('touchmove', (e) => {
+    if (!isDragging) return;
+    const touch = e.touches[0];
+    const x = touch.clientX - offset.x;
+    const y = touch.clientY - offset.y;
+    pin.style.left = `${x}px`;
+    pin.style.top = `${y}px`;
+  });
+
+  document.addEventListener('touchend', () => {
+    if (!isDragging) return;
+    isDragging = false;
+    pin.style.transition = 'all 0.4s ease';
+    pin.style.left = `${startPos.x}px`;
+    pin.style.top = `${startPos.y}px`;
+  });
