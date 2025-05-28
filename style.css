@@ -485,3 +485,30 @@ filter: blur(4px);i
       from {transform:rotate(0)}
       to {transform:rotate(360deg)}
     }
+/* pin animation */
+/* Container */
+#main-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background: #E1E8FD;
+  overflow: hidden;
+}
+
+/* Draggable pin */
+#pin {
+  position: absolute;
+  top: 60px;
+  left: 360px;
+  width: 66px;
+  height: 66px;
+  cursor: grab;
+  z-index: 40;
+  transition: all 0.3s ease-in-out;
+}
+
+/* While dragging: remove transition & change cursor */
+#pin.dragging {
+  cursor: grabbing;
+  transition: none;
+}
