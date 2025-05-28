@@ -581,17 +581,19 @@ class="w-[360px] h-[240px] md:w-[250px] md:h-[240px] rounded-[20px] shadow-xl bg
 Knowledge at <span style="color: #E5E5E5;">Fingertips</span></h1>
 <p class="max-w-xl mx-auto md:mx-0 mb-12" style="color: #A0A0A0;">Huly offers a wide range of features to create and manage your project documentation. Huly's suite of collaborative editing tools boosts team efficiency.</p>
 <!-- Floating Pin -->
-<div
-class="relative absolute md:top-[5px] md:left-[360px] active:cursor-grabbing select-none float-pin"
-style="left:1px; top:-20px;">
-<div class="relative w-[66px] h-[66px] md:w-[45px] md:h-[55px] sm:w-[50px] sm:h-[50px] ">
-<!-- Pulsing glow -->
-<img
-src="blue-pin.png"
-alt="pin"
-class="shadow-lg w-full h-full pointer-events-none
-md:max-w-[45px] sm:max-w-[36px]"/>
-</div></div></div>
+<div id="pin-container"
+  class="absolute top-[-20px] left-[1px] md:top-[5px] md:left-[360px] cursor-grab active:cursor-grabbing select-none float-pin transition-all duration-500 ease-out"
+  style="touch-action: none;"
+>
+  <div class="relative w-[50px] h-[50px] sm:w-[50px] sm:h-[50px] md:w-[45px] md:h-[55px]">
+    <img
+      src="blue-pin.png"
+      alt="pin"
+      class="shadow-lg w-full h-full pointer-events-none md:max-w-[45px] sm:max-w-[36px]"
+    />
+  </div>
+</div>
+</div>
 <!-- Container -->
 <div class="relative">
 <div id="toolbar"
