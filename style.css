@@ -491,8 +491,7 @@ filter: blur(4px);i
   position: relative;
   width: 100%;
   height: 100vh;
-  background: #E1E8FD;
-  overflow: hidden;
+  overflow: visible
 }
 
 /* Draggable pin */
@@ -504,7 +503,7 @@ filter: blur(4px);i
   height: 66px;
   cursor: grab;
   z-index: 40;
-  transition: all 0.3s ease-in-out;
+  transition: all 0.5s ease-in-out;
 }
 
 /* While dragging: remove transition & change cursor */
