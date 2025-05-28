@@ -581,19 +581,22 @@ class="w-[360px] h-[240px] md:w-[250px] md:h-[240px] rounded-[20px] shadow-xl bg
 Knowledge at <span style="color: #E5E5E5;">Fingertips</span></h1>
 <p class="max-w-xl mx-auto md:mx-0 mb-12" style="color: #A0A0A0;">Huly offers a wide range of features to create and manage your project documentation. Huly's suite of collaborative editing tools boosts team efficiency.</p>
 <!-- Floating Pin -->
-<div id="pin-container"
-  class="absolute top-[-20px] left-[1px] md:top-[5px] md:left-[360px] cursor-grab active:cursor-grabbing select-none float-pin transition-all duration-500 ease-out"
-   style="left: 1px; top: -20px;">
->
-  <div class="relative w-[50px] h-[50px] sm:w-[50px] sm:h-[50px] md:w-[45px] md:h-[55px]">
-    <img
-      src="blue-pin.png"
-      alt="pin"
-      class="shadow-lg w-full h-full pointer-events-none md:max-w-[45px] sm:max-w-[36px]"
-    />
+  <div id="pin-wrapper" style="position: relative;">
+  <div id="pin" style="
+    position: absolute;
+    top: 60px;
+    left: 360px;
+    width: 66px;
+    height: 66px;
+    cursor: grab;
+    z-index: 40;
+    transition: all 0.3s ease;
+  ">
+    <img src="blue-pin.png"
+         alt="pin"
+         style="width: 100%; height: 100%; pointer-events: none;" />
   </div>
-</div>
-</div>
+  </div>
 <!-- Container -->
 <div class="relative">
 <div id="toolbar"
@@ -905,5 +908,62 @@ style="fill:white"/><path d="M1443 1080.1c-34 3.7-54.7 8.1-82.1 17.4-47.8 16.2-9
 </button></div></div></div></div></div></section>
           
 <script src="script.js"></script>
+<script>
+  const pin = document.getElementById('pin');
+  const startPos = { x: 360, y: 60 };
+  let isDragging = false;
+  let offset = { x: 0, y: 0 };
+
+  pin.addEventListener('mousedown', (e) => {
+    isDragging = true;
+    offset.x = e.clientX - pin.offsetLeft;
+    offset.y = e.clientY - pin.offsetTop;
+    pin.style.transition = 'none';
+    pin.style.cursor = 'grabbing';
+  });
+
+  document.addEventListener('mousemove', (e) => {
+    if (!isDragging) return;
+    const x = e.clientX - offset.x;
+    const y = e.clientY - offset.y;
+    pin.style.left = `${x}px`;
+    pin.style.top = `${y}px`;
+  });
+
+  document.addEventListener('mouseup', () => {
+    if (!isDragging) return;
+    isDragging = false;
+    pin.style.transition = 'all 0.4s ease';
+    pin.style.cursor = 'grab';
+    pin.style.left = `${startPos.x}px`;
+    pin.style.top = `${startPos.y}px`;
+  });
+
+  // Touch support
+  pin.addEventListener('touchstart', (e) => {
+    isDragging = true;
+    const touch = e.touches[0];
+    offset.x = touch.clientX - pin.offsetLeft;
+    offset.y = touch.clientY - pin.offsetTop;
+    pin.style.transition = 'none';
+  });
+
+  document.addEventListener('touchmove', (e) => {
+    if (!isDragging) return;
+    const touch = e.touches[0];
+    const x = touch.clientX - offset.x;
+    const y = touch.clientY - offset.y;
+    pin.style.left = `${x}px`;
+    pin.style.top = `${y}px`;
+  });
+
+  document.addEventListener('touchend', () => {
+    if (!isDragging) return;
+    isDragging = false;
+    pin.style.transition = 'all 0.4s ease';
+    pin.style.left = `${startPos.x}px`;
+    pin.style.top = `${startPos.y}px`;
+  });
+</script>
 </body>
 </html>
