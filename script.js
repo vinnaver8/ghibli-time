@@ -439,84 +439,91 @@ const mainCard = document.querySelector('.main-card');
     setTimeout(nextStep, 1000);
 
               // pin draggable//
-;(function() {
-  const wrapper = document.getElementById('main-wrapper');
-  const pin     = document.getElementById('pin');
+const pin = document.getElementById("pin");
+const wrapper = document.getElementById("main-wrapper");
 
-  let isDragging = false;
-  let offset = { x: 0, y: 0 };
+let isDragging = false;
+let offsetX = 0;
+let offsetY = 0;
+const dragLimit = 100; // Maximum drag distance before snapping
 
-  pin.addEventListener('mousedown', startDrag);
-  pin.addEventListener('touchstart', startDrag);
+const getCenter = (rect) => ({
+  x: rect.left + rect.width / 2,
+  y: rect.top + rect.height / 2,
+});
 
-  document.addEventListener('mousemove', onMove);
-  document.addEventListener('touchmove', onMove, { passive: false });
+pin.addEventListener("mousedown", (e) => {
+  isDragging = true;
+  offsetX = e.clientX - pin.offsetLeft;
+  offsetY = e.clientY - pin.offsetTop;
+  pin.style.transition = "none";
+});
 
-  document.addEventListener('mouseup', endDrag);
-  document.addEventListener('touchend', endDrag);
+document.addEventListener("mousemove", (e) => {
+  if (!isDragging) return;
 
-  function startDrag(e) {
-    isDragging = true;
-    pin.classList.add('dragging');
-    pin.style.transition = 'none';
+  let newLeft = e.clientX - offsetX;
+  let newTop = e.clientY - offsetY;
 
-    const clientX = e.type === 'touchstart' ? e.touches[0].clientX : e.clientX;
-    const clientY = e.type === 'touchstart' ? e.touches[0].clientY : e.clientY;
+  const pinCenter = {
+    x: newLeft + pin.offsetWidth / 2,
+    y: newTop + pin.offsetHeight / 2
+  };
 
-    offset.x = clientX - pin.offsetLeft;
-    offset.y = clientY - pin.offsetTop;
-  }
+  const wrapperCenter = {
+    x: wrapper.clientWidth / 2,
+    y: wrapper.clientHeight / 2
+  };
 
-  function onMove(e) {
-    if (!isDragging) return;
-    e.preventDefault();
+  const distance = Math.hypot(pinCenter.x - wrapperCenter.x, pinCenter.y - wrapperCenter.y);
 
-    const clientX = e.type === 'touchmove' ? e.touches[0].clientX : e.clientX;
-    const clientY = e.type === 'touchmove' ? e.touches[0].clientY : e.clientY;
-
-    pin.style.left = (clientX - offset.x) + 'px';
-    pin.style.top  = (clientY - offset.y) + 'px';
-  }
-
-  function endDrag() {
-    if (!isDragging) return;
+  if (distance > dragLimit) {
+    snapToNearest(pinCenter);
     isDragging = false;
-    pin.classList.remove('dragging');
-    pin.style.transition = 'all 0.3s ease-in-out';
-
-    // Clamp inside wrapper bounds
-    const wrapRect = wrapper.getBoundingClientRect();
-    const pinRect  = pin.getBoundingClientRect();
-    let x = pinRect.left - wrapRect.left;
-    let y = pinRect.top  - wrapRect.top;
-
-    x = Math.max(0, Math.min(x, wrapRect.width  - pinRect.width));
-    y = Math.max(0, Math.min(y, wrapRect.height - pinRect.height));
-
-    pin.style.left = x + 'px';
-    pin.style.top  = y + 'px';
-
-    // Snap to nearest edge (left, right, top, bottom)
-    const dist = {
-      left:   x,
-      right:  wrapRect.width  - x - pinRect.width,
-      top:    y,
-      bottom: wrapRect.height - y - pinRect.height
-    };
-    const nearest = Object.entries(dist)
-      .reduce((best,[edge,d]) => d < best[1] ? [edge,d] : best, ['left',Infinity])[0];
-
-    switch (nearest) {
-  case 'left':
-    pin.style.left = '30px';
-    break;
-  case 'right':
-    pin.style.left = (wrapper.clientWidth - pin.clientWidth - 50) + 'px';
-    break;
-  case 'top':
-  case 'bottom': // treat bottom like top
-    pin.style.top = '40px';
-    break;
-    }
+    return;
   }
-})();
+
+  pin.style.left = newLeft + "px";
+  pin.style.top = newTop + "px";
+});
+
+document.addEventListener("mouseup", () => {
+  isDragging = false;
+  pin.style.transition = "all 0.3s ease";
+});
+
+function snapToNearest(center) {
+  const w = wrapper.clientWidth;
+  const h = wrapper.clientHeight;
+  const pinW = pin.offsetWidth;
+  const pinH = pin.offsetHeight;
+
+  const distances = {
+    left: center.x,
+    right: w - center.x,
+    top: center.y,
+    bottom: h - center.y
+  };
+
+  // Remove bottom: treat as top
+  if (distances.bottom < distances.top) {
+    distances.top = distances.bottom;
+  }
+
+  let nearest = Object.keys(distances).reduce((a, b) => distances[a] < distances[b] ? a : b);
+
+  pin.style.transition = "all 0.3s ease";
+
+  switch (nearest) {
+    case "left":
+      pin.style.left = "30px";
+      break;
+    case "right":
+      pin.style.left = (w - pinW - 30) + "px";
+      break;
+    case "top":
+    case "bottom":
+      pin.style.top = "30px";
+      break;
+  }
+}
