@@ -167,3 +167,350 @@ z-index:2;
                 0 0 0 90px rgba(189, 142, 210, 0);
   }
 }
+
+/* wall Box style code animation */
+/* Main Screen Container */
+    .screen-container {
+      width:700px;
+      height:500px;
+      background:#0d1117;
+      border-radius:12px;
+      box-shadow:0 0 20px rgba(0,0,0,0.7);
+      display:flex;
+      overflow:hidden;
+      position:relative;
+    }
+
+    /* Left Side: Chat Wrapper */
+    .chat-wrapper {
+      width:50%;
+      border-right:1px solid #222;
+      display:flex;
+      flex-direction:column;
+    }
+
+    .chat-header {
+      padding:12px;
+      background:#161a1f;
+      text-align:center;
+      font-weight:600;
+      border-bottom: 1px solid #222;
+    }
+
+    .messages {
+      flex:1;
+      padding:12px;
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      overflow-y:auto;
+      scrollbar-width: thin; /* Firefox */
+      scrollbar-color: #5e8aff #1f2933; /* Firefox */
+    }
+
+    /* Custom scrollbar for Webkit browsers */
+    .messages::-webkit-scrollbar {
+      width: 8px;
+    }
+    .messages::-webkit-scrollbar-track {
+      background: #1f2933;
+      border-radius: 10px;
+    }
+    .messages::-webkit-scrollbar-thumb {
+      background-color: #5e8aff;
+      border-radius: 10px;
+      border: 2px solid #1f2933;
+    }
+
+    .message {
+      max-width:85%; /* Adjusted for better appearance */
+      padding:10px 14px; /* Adjusted padding */
+      border-radius:10px;
+      opacity:0;
+      transform:translateY(10px);
+      animation:fadeIn 0.3s forwards;
+      font-size: 0.95rem;
+      line-height: 1.4;
+    }
+
+    .user {
+      align-self:flex-end;
+      background:#2a3942;
+      box-shadow:0 2px 8px rgba(0,0,0,0.2);
+    }
+
+    .ai {
+      align-self:flex-start;
+      background:#1f2933;
+      box-shadow:0 2px 8px rgba(94,138,255,0.2);
+    }
+
+    .ai.typing-message {
+      background: #1f2933; /* Keep background for typing message */
+      box-shadow: none; /* No shadow for typing indicator */
+    }
+
+    /* Typing Indicator */
+    .typing-indicator {
+      display:inline-flex; /* Changed to inline-flex */
+      gap:4px;
+      margin-left:4px;
+      align-items: center;
+    }
+    .typing-indicator span {
+      width:5px;
+      height:5px;
+      background:#5e8aff;
+      border-radius:50%;
+      animation:blink 1s infinite;
+    }
+    .typing-indicator span:nth-child(2){animation-delay:.2s}
+    .typing-indicator span:nth-child(3){animation-delay:.4s}
+
+    /* Right Side: Animation Box */
+    .right-box {
+      width:50%;
+      position:relative;
+      display:flex;
+      flex-direction:column;
+      padding:20px; /* Added padding to the right box itself */
+    }
+
+    .anim-box {
+      flex:1;
+      background:#161a1f;
+      border-radius:10px;
+      position:relative;
+      overflow:hidden;
+      box-shadow:0 0 15px rgba(94,138,255,0.5);
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      padding:20px;
+      transition: box-shadow 0.5s ease-in-out; /* Smooth transition for shadow */
+    }
+
+    /* Shimmer Effect for Image Generation */
+    .anim-box.shimmer {
+        box-shadow:0 0 25px rgba(94,138,255,0.8), 0 0 10px rgba(255,255,255,0.3); /* Enhanced glow */
+    }
+    .anim-box.shimmer::before {
+      content:'';
+      position:absolute;
+      top:-100%;
+      left:-100%;
+      width:200%;
+      height:200%;
+      background:linear-gradient(135deg,rgba(255,255,255,0.04),rgba(255,255,255,0.1),rgba(255,255,255,0.04));
+      transform:rotate(25deg);
+      animation:shimmer 3s infinite;
+    }
+
+    .anim-icon {
+      width:60px;
+      height:60px;
+      fill:#5e8aff;
+      z-index:1;
+    }
+
+    .anim-text {
+      z-index:1;
+      margin-top:10px;
+      font-size:1rem;
+      text-align: center;
+    }
+
+    /* Process Details / Thought Process Section */
+    .process-details {
+      display: none; /* Hidden by default */
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #0f131a;
+      border-radius: 10px;
+      padding: 20px;
+      overflow-y: auto;
+      z-index: 2;
+      animation: fadeIn 0.5s forwards;
+      color: #c0c0c0;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      text-align: left;
+      flex-direction: column; /* Ensure it's a flex container for its children */
+      gap: 10px; /* Spacing between paragraphs/steps */
+      scrollbar-width: thin; /* Firefox */
+      scrollbar-color: #5e8aff #1f2933; /* Firefox */
+    }
+    .process-details::-webkit-scrollbar {
+      width: 8px;
+    }
+    .process-details::-webkit-scrollbar-track {
+      background: #1f2933;
+      border-radius: 10px;
+    }
+    .process-details::-webkit-scrollbar-thumb {
+      background-color: #5e8aff;
+      border-radius: 10px;
+      border: 2px solid #1f2933;
+    }
+
+    .process-details h3 {
+        color: #5e8aff;
+        font-size: 1.1rem;
+        margin-bottom: 10px;
+    }
+    .process-details p {
+        margin-bottom: 8px;
+    }
+    .process-details .process-step {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: #b0b0b0;
+    }
+    .process-details .process-step.completed {
+        color: #4CAF50; /* Green for completed steps */
+    }
+    .process-details .process-step svg {
+        width: 18px;
+        height: 18px;
+        fill: currentColor; /* Use parent's color */
+    }
+
+
+    /* DeepSearch Panel */
+    .deep-panel {
+      display:none; /* Hidden by default */
+      flex-direction:column;
+      background:#0f131a;
+      border-radius:10px;
+      padding:16px;
+      width:100%;
+      height:100%;
+      overflow-y:auto;
+      position:absolute; /* Position over the anim-box content */
+      top:0;
+      left:0;
+      z-index: 2; /* Ensure it's above anim-icon/text */
+      animation: fadeIn 0.5s forwards; /* Fade in when displayed */
+      scrollbar-width: thin; /* Firefox */
+      scrollbar-color: #5e8aff #1f2933; /* Firefox */
+    }
+    .deep-panel::-webkit-scrollbar {
+      width: 8px;
+    }
+    .deep-panel::-webkit-scrollbar-track {
+      background: #1f2933;
+      border-radius: 10px;
+    }
+    .deep-panel::-webkit-scrollbar-thumb {
+      background-color: #5e8aff;
+      border-radius: 10px;
+      border: 2px solid #1f2933;
+    }
+
+
+    .deep-header {
+      font-size:1.1rem;
+      margin-bottom:12px;
+      display:flex;
+      align-items:center;
+      gap:8px;
+      color: #5e8aff; /* Highlight header */
+      font-weight: 600;
+    }
+    .deep-header svg {
+      width:20px;
+      height:20px;
+      fill:#5e8aff;
+      animation:spin 2s linear infinite;
+    }
+
+    .deep-search-steps {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        margin-bottom: 16px;
+    }
+
+    .deep-search-steps div {
+        font-size: 0.9rem;
+        color: #b0b0b0;
+        display: flex;
+        align-items: center;
+    }
+
+    .source-list {
+      display:none; /* Hidden by default, shown dynamically */
+      flex-wrap:wrap;
+      gap:8px;
+      margin-bottom:16px; /* Increased margin */
+      padding-top: 8px; /* Spacing from steps */
+      border-top: 1px solid #1a1f26; /* Separator */
+    }
+
+    .source-item {
+      background:#1f2933;
+      padding:8px 12px; /* Adjusted padding */
+      border-radius:8px; /* More rounded */
+      font-size:.8rem;
+      color: #a0a0a0;
+      cursor: pointer;
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+    .source-item:hover {
+        background: #2a3942;
+        color: #e5e5e5;
+    }
+
+    .deep-code {
+      background:#1a1f26;
+      padding:12px; /* Adjusted padding */
+      border-radius:8px; /* More rounded */
+      font-family:monospace;
+      font-size:.85rem;
+      color: #c0c0c0;
+      white-space: pre-wrap; /* Preserve whitespace and wrap text */
+      word-break: break-all; /* Break long words */
+    }
+
+    /* Image Preview in Chat */
+    .image-preview {
+        width: 100px;
+        height: 100px;
+        background: #333; /* Placeholder background */
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #aaa;
+        font-size: 0.75rem;
+        overflow: hidden;
+        margin-top: 5px;
+    }
+    .image-preview img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 8px;
+    }
+
+    /* Keyframe Animations */
+    @keyframes fadeIn {
+      to { opacity:1; transform:translateY(0); }
+    }
+    @keyframes blink {
+      0%,80%,100% {opacity:0}
+      40% {opacity:1}
+    }
+    @keyframes shimmer {
+      0% {transform:translate(-100%,-100%) rotate(25deg)}
+      100% {transform:translate(100%,100%) rotate(25deg)}
+    }
+    @keyframes spin {
+      from {transform:rotate(0)}
+      to {transform:rotate(360deg)}
+    }
