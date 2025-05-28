@@ -511,11 +511,11 @@ const mainCard = document.querySelector('.main-card');
     pin.style.left = '30px';
     break;
   case 'right':
-    pin.style.left = (wrapper.clientWidth - pin.clientWidth - 30) + 'px';
+    pin.style.left = (wrapper.clientWidth - pin.clientWidth - 50) + 'px';
     break;
   case 'top':
   case 'bottom': // treat bottom like top
-    pin.style.top = '30px';
+    pin.style.top = '40px';
     break;
     }
   }
