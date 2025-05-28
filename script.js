@@ -455,55 +455,70 @@ const mainCard = document.querySelector('.main-card');
   document.addEventListener('mouseup', endDrag);
   document.addEventListener('touchend', endDrag);
 
+  function startDrag(e) {
+    isDragging = true;
+    pin.classList.add('dragging');
+    pin.style.transition = 'none';
+
+    const clientX = e.type === 'touchstart' ? e.touches[0].clientX : e.clientX;
+    const clientY = e.type === 'touchstart' ? e.touches[0].clientY : e.clientY;
+
+    offset.x = clientX - pin.offsetLeft;
+    offset.y = clientY - pin.offsetTop;
+  }
+
+  function onMove(e) {
+    if (!isDragging) return;
+    e.preventDefault();
+
+    const clientX = e.type === 'touchmove' ? e.touches[0].clientX : e.clientX;
+    const clientY = e.type === 'touchmove' ? e.touches[0].clientY : e.clientY;
+
+    pin.style.left = (clientX - offset.x) + 'px';
+    pin.style.top  = (clientY - offset.y) + 'px';
+  }
+
   function endDrag() {
-  if (!isDragging) return;
-  isDragging = false;
-  pin.classList.remove('dragging');
+    if (!isDragging) return;
+    isDragging = false;
+    pin.classList.remove('dragging');
+    pin.style.transition = 'all 0.3s ease-in-out';
 
-  // 1) Re-enable the transition so all style changes animate
-  pin.style.transition = 'all 0.3s ease-in-out';
+    // Clamp inside wrapper bounds
+    const wrapRect = wrapper.getBoundingClientRect();
+    const pinRect  = pin.getBoundingClientRect();
+    let x = pinRect.left - wrapRect.left;
+    let y = pinRect.top  - wrapRect.top;
 
-  // 2) Compute wrapper & pin bounds
-  const wrapRect = wrapper.getBoundingClientRect();
-  const pinRect  = pin.getBoundingClientRect();
-  // x,y inside wrapper coords
-  let x = pinRect.left - wrapRect.left;
-  let y = pinRect.top  - wrapRect.top;
+    x = Math.max(0, Math.min(x, wrapRect.width  - pinRect.width));
+    y = Math.max(0, Math.min(y, wrapRect.height - pinRect.height));
 
-  // 3) Clamp to edges (so it never goes outside)
-  x = Math.max(0, Math.min(x, wrapRect.width  - pinRect.width));
-  y = Math.max(0, Math.min(y, wrapRect.height - pinRect.height));
+    pin.style.left = x + 'px';
+    pin.style.top  = y + 'px';
 
-  // 4) Place it at the clamped spot first (so distances make sense)
-  pin.style.left = x + 'px';
-  pin.style.top  = y + 'px';
+    // Snap to nearest edge (left, right, top, bottom)
+    const dist = {
+      left:   x,
+      right:  wrapRect.width  - x - pinRect.width,
+      top:    y,
+      bottom: wrapRect.height - y - pinRect.height
+    };
+    const nearest = Object.entries(dist)
+      .reduce((best,[edge,d]) => d < best[1] ? [edge,d] : best, ['left',Infinity])[0];
 
-  // 5) Compute distances to all four edges
-  const dist = {
-    left:   x,
-    right:  wrapRect.width  - x - pinRect.width,
-    top:    y,
-    bottom: wrapRect.height - y - pinRect.height
-  };
-
-  // 6) Find nearest edge
-  const nearest = Object.entries(dist)
-    .reduce((best,[edge,d]) => d < best[1] ? [edge,d] : best, ['left',Infinity])[0];
-
-  // 7) Snap to that edge
-  switch (nearest) {
-    case 'left':
-      pin.style.left = '30px';
-      break;
-    case 'right':
-      pin.style.left = (wrapRect.width - pinRect.width - 30) + 'px';
-      break;
-    case 'top':
-      pin.style.top  = '30px';
-      break;
-    case 'bottom':
-      // *** This line makes bottom-snap work & animate ***
-      pin.style.top  = (wrapRect.height - pinRect.height - 30) + 'px';
-      break;
+    switch (nearest) {
+      case 'left':
+        pin.style.left = '30px';
+        break;
+      case 'right':
+        pin.style.left = (wrapRect.width - 30 - pinRect.width) + 'px';
+        break;
+      case 'top':
+        pin.style.top  = '30px';
+        break;
+      case 'bottom':
+        pin.style.top  = (wrapRect.height - 30 - pinRect.height) + 'px';
+        break;
+    }
   }
-  }
+})();
