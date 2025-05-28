@@ -440,32 +440,26 @@ const mainCard = document.querySelector('.main-card');
 
               // pin draggable//
   const pin = document.getElementById('pin-container');
+
 let isDragging = false;
 let offset = { x: 0, y: 0 };
-let home = { left: 0, top: 0 };
 
-// 1. On load (or first drag) capture the “home” x/y in px:
-function captureHomePosition() {
-  const cs = getComputedStyle(pin);
-  // strip “px” and convert to number
-  home.left = parseFloat(cs.left);
-  home.top  = parseFloat(cs.top);
-}
-captureHomePosition();
+// ✅ Define the final snap-back row position (in pixels)
+const snapTarget = {
+  left: 360,  // set this to match the horizontal alignment (same as "H" row)
+  top: 60     // vertical target top value (adjust to match your design)
+};
 
 function startDrag(clientX, clientY) {
   isDragging = true;
-  // recalc home each time in case responsive breakpoint changed
-  captureHomePosition();
 
   const rect = pin.getBoundingClientRect();
   const parentRect = pin.offsetParent.getBoundingClientRect();
 
-  // offset = pointer → pin top-left (relative to offsetParent)
-  offset.x = clientX - (rect.left  - parentRect.left);
-  offset.y = clientY - (rect.top   - parentRect.top);
+  offset.x = clientX - (rect.left - parentRect.left);
+  offset.y = clientY - (rect.top - parentRect.top);
 
-  // kill transition so movement is instantaneous
+  // Disable animation during drag
   pin.style.transition = 'none';
   document.body.style.userSelect = 'none';
   pin.style.zIndex = '9999';
@@ -473,46 +467,47 @@ function startDrag(clientX, clientY) {
 
 function onDrag(clientX, clientY) {
   if (!isDragging) return;
-  // new left/top relative to offsetParent
+
   const left = clientX - offset.x;
-  const top  = clientY - offset.y;
+  const top = clientY - offset.y;
+
   pin.style.left = `${left}px`;
-  pin.style.top  = `${top}px`;
+  pin.style.top = `${top}px`;
 }
 
 function endDrag() {
   if (!isDragging) return;
   isDragging = false;
+
   document.body.style.userSelect = 'auto';
 
-  // restore smooth transition
-  pin.style.transition = 'all 0.5s ease-out';
+  // Re-enable transition for snap-back
+  pin.style.transition = 'all 0.5s ease-in-out';
 
-  // animate to home
-  pin.style.left = `${home.left}px`;
-  pin.style.top  = `${home.top}px`;
+  // ✅ Snap back to target position
+  pin.style.left = `${snapTarget.left}px`;
+  pin.style.top = `${snapTarget.top}px`;
 
-  // optional: once the transition is over, clear z-index
   pin.addEventListener('transitionend', function cleanup() {
     pin.style.zIndex = '';
     pin.removeEventListener('transitionend', cleanup);
   });
 }
 
-// Mouse
-pin.addEventListener('mousedown', e => {
+// Mouse Events
+pin.addEventListener('mousedown', (e) => {
   e.preventDefault();
   startDrag(e.clientX, e.clientY);
 });
-document.addEventListener('mousemove', e => onDrag(e.clientX, e.clientY));
+document.addEventListener('mousemove', (e) => onDrag(e.clientX, e.clientY));
 document.addEventListener('mouseup', endDrag);
 
-// Touch
-pin.addEventListener('touchstart', e => {
+// Touch Events
+pin.addEventListener('touchstart', (e) => {
   const t = e.touches[0];
   startDrag(t.clientX, t.clientY);
 });
-pin.addEventListener('touchmove', e => {
+pin.addEventListener('touchmove', (e) => {
   const t = e.touches[0];
   onDrag(t.clientX, t.clientY);
 });
