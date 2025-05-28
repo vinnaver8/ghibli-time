@@ -507,18 +507,16 @@ const mainCard = document.querySelector('.main-card');
       .reduce((best,[edge,d]) => d < best[1] ? [edge,d] : best, ['left',Infinity])[0];
 
     switch (nearest) {
-      case 'left':
-        pin.style.left = '30px';
-        break;
-      case 'right':
-        pin.style.left = (wrapRect.width - 30 - pinRect.width) + 'px';
-        break;
-      case 'top':
-        pin.style.top  = '30px';
-        break;
-      case 'bottom':
-        pin.style.top  = '30px';
-        break;
+  case 'left':
+    pin.style.left = '30px';
+    break;
+  case 'right':
+    pin.style.left = (wrapper.clientWidth - pin.clientWidth - 30) + 'px';
+    break;
+  case 'top':
+  case 'bottom': // treat bottom like top
+    pin.style.top = '30px';
+    break;
     }
   }
 })();
