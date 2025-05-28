@@ -440,59 +440,48 @@ const mainCard = document.querySelector('.main-card');
 
               // pin draggable//
   const pin = document.getElementById('pin-container');
-  const defaultPosition = {
-    top: pin.offsetTop,
-    left: pin.offsetLeft
-  };
+let isDragging = false;
+let offset = { x: 0, y: 0 };
 
-  let isDragging = false;
-  let offset = { x: 0, y: 0 };
+function startDrag(x, y) {
+  isDragging = true;
+  // calculate pointer → element offset
+  offset.x = x - pin.getBoundingClientRect().left;
+  offset.y = y - pin.getBoundingClientRect().top;
+  // disable CSS transition while dragging
+  pin.style.transition = 'none';
+  document.body.style.userSelect = 'none';
+}
 
-  pin.addEventListener('mousedown', (e) => {
-    isDragging = true;
-    offset.x = e.clientX - pin.offsetLeft;
-    offset.y = e.clientY - pin.offsetTop;
-    pin.style.transition = 'none';
-    document.body.style.userSelect = 'none';
-  });
+function onDrag(x, y) {
+  if (!isDragging) return;
+  pin.style.left = `${x - offset.x}px`;
+  pin.style.top  = `${y - offset.y}px`;
+}
 
-  document.addEventListener('mousemove', (e) => {
-    if (!isDragging) return;
-    pin.style.left = `${e.clientX - offset.x}px`;
-    pin.style.top = `${e.clientY - offset.y}px`;
-  });
+function endDrag() {
+  if (!isDragging) return;
+  isDragging = false;
+  document.body.style.userSelect = 'auto';
+  // restore CSS transition
+  pin.style.transition = '';
+  // REMOVE inline top/left so Tailwind takes back over
+  pin.style.removeProperty('left');
+  pin.style.removeProperty('top');
+}
 
-  document.addEventListener('mouseup', () => {
-    if (isDragging) {
-      isDragging = false;
-      pin.style.transition = 'all 0.5s ease';
-      pin.style.left = `${defaultPosition.left}px`;
-      pin.style.top = `${defaultPosition.top}px`;
-      document.body.style.userSelect = 'auto';
-    }
-  });
+// Mouse Events
+pin.addEventListener('mousedown', e => startDrag(e.clientX, e.clientY));
+document.addEventListener('mousemove', e => onDrag(e.clientX, e.clientY));
+document.addEventListener('mouseup', endDrag);
 
-  // Optional: Touch support for mobile
-  pin.addEventListener('touchstart', (e) => {
-    isDragging = true;
-    const touch = e.touches[0];
-    offset.x = touch.clientX - pin.offsetLeft;
-    offset.y = touch.clientY - pin.offsetTop;
-    pin.style.transition = 'none';
-  });
-
-  pin.addEventListener('touchmove', (e) => {
-    if (!isDragging) return;
-    const touch = e.touches[0];
-    pin.style.left = `${touch.clientX - offset.x}px`;
-    pin.style.top = `${touch.clientY - offset.y}px`;
-  });
-
-  pin.addEventListener('touchend', () => {
-    if (isDragging) {
-      isDragging = false;
-      pin.style.transition = 'all 0.5s ease';
-      pin.style.left = `${defaultPosition.left}px`;
-      pin.style.top = `${defaultPosition.top}px`;
-    }
-  });
+// Touch Events
+pin.addEventListener('touchstart', e => {
+  const t = e.touches[0];
+  startDrag(t.clientX, t.clientY);
+});
+pin.addEventListener('touchmove', e => {
+  const t = e.touches[0];
+  onDrag(t.clientX, t.clientY);
+});
+pin.addEventListener('touchend', endDrag);
