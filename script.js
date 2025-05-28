@@ -442,49 +442,64 @@ const mainCard = document.querySelector('.main-card');
   const pin = document.getElementById('pin-container');
 let isDragging = false;
 let offset = { x: 0, y: 0 };
+let home = { left: 0, top: 0 };
 
-// Save the original position from CSS (we’ll revert to this)
-const originalLeft = pin.style.left;
-const originalTop = pin.style.top;
+// 1. On load (or first drag) capture the “home” x/y in px:
+function captureHomePosition() {
+  const cs = getComputedStyle(pin);
+  // strip “px” and convert to number
+  home.left = parseFloat(cs.left);
+  home.top  = parseFloat(cs.top);
+}
+captureHomePosition();
 
-// Start dragging
-function startDrag(x, y) {
+function startDrag(clientX, clientY) {
   isDragging = true;
-  const rect = pin.getBoundingClientRect();
-  offset.x = x - rect.left;
-  offset.y = y - rect.top;
+  // recalc home each time in case responsive breakpoint changed
+  captureHomePosition();
 
-  // Remove transition to make real-time movement immediate
+  const rect = pin.getBoundingClientRect();
+  const parentRect = pin.offsetParent.getBoundingClientRect();
+
+  // offset = pointer → pin top-left (relative to offsetParent)
+  offset.x = clientX - (rect.left  - parentRect.left);
+  offset.y = clientY - (rect.top   - parentRect.top);
+
+  // kill transition so movement is instantaneous
   pin.style.transition = 'none';
   document.body.style.userSelect = 'none';
-  pin.style.zIndex = 9999; // Ensure it stays on top while dragging
+  pin.style.zIndex = '9999';
 }
 
-// While dragging
-function onDrag(x, y) {
+function onDrag(clientX, clientY) {
   if (!isDragging) return;
-  const newLeft = x - offset.x;
-  const newTop = y - offset.y;
-  pin.style.left = `${newLeft}px`;
-  pin.style.top = `${newTop}px`;
+  // new left/top relative to offsetParent
+  const left = clientX - offset.x;
+  const top  = clientY - offset.y;
+  pin.style.left = `${left}px`;
+  pin.style.top  = `${top}px`;
 }
 
-// When dragging ends
 function endDrag() {
   if (!isDragging) return;
   isDragging = false;
   document.body.style.userSelect = 'auto';
 
-  // Enable smooth transition
-  pin.style.transition = 'all 0.5s ease';
+  // restore smooth transition
+  pin.style.transition = 'all 0.5s ease-out';
 
-  // Reset back to original CSS position (removes inline overrides)
-  pin.style.removeProperty('left');
-  pin.style.removeProperty('top');
-  pin.style.zIndex = '';
+  // animate to home
+  pin.style.left = `${home.left}px`;
+  pin.style.top  = `${home.top}px`;
+
+  // optional: once the transition is over, clear z-index
+  pin.addEventListener('transitionend', function cleanup() {
+    pin.style.zIndex = '';
+    pin.removeEventListener('transitionend', cleanup);
+  });
 }
 
-// Mouse Events
+// Mouse
 pin.addEventListener('mousedown', e => {
   e.preventDefault();
   startDrag(e.clientX, e.clientY);
@@ -492,7 +507,7 @@ pin.addEventListener('mousedown', e => {
 document.addEventListener('mousemove', e => onDrag(e.clientX, e.clientY));
 document.addEventListener('mouseup', endDrag);
 
-// Touch Events (for mobile)
+// Touch
 pin.addEventListener('touchstart', e => {
   const t = e.touches[0];
   startDrag(t.clientX, t.clientY);
