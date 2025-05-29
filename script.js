@@ -439,6 +439,7 @@ const mainCard = document.querySelector('.main-card');
     setTimeout(nextStep, 1000);
 
               // pin draggable//
+
 const pin = document.getElementById("pin");
 const wrapper = document.getElementById("main-wrapper");
 
@@ -446,11 +447,6 @@ let isDragging = false;
 let offsetX = 0;
 let offsetY = 0;
 const dragLimit = 100; // Maximum drag distance before snapping
-
-const getCenter = (rect) => ({
-  x: rect.left + rect.width / 2,
-  y: rect.top + rect.height / 2,
-});
 
 pin.addEventListener("mousedown", (e) => {
   isDragging = true;
@@ -475,7 +471,10 @@ document.addEventListener("mousemove", (e) => {
     y: wrapper.clientHeight / 2
   };
 
-  const distance = Math.hypot(pinCenter.x - wrapperCenter.x, pinCenter.y - wrapperCenter.y);
+  const distance = Math.hypot(
+    pinCenter.x - wrapperCenter.x,
+    pinCenter.y - wrapperCenter.y
+  );
 
   if (distance > dragLimit) {
     snapToNearest(pinCenter);
@@ -484,7 +483,7 @@ document.addEventListener("mousemove", (e) => {
   }
 
   pin.style.left = newLeft + "px";
-  pin.style.top = newTop + "px";
+  pin.style.top  = newTop  + "px";
 });
 
 document.addEventListener("mouseup", () => {
@@ -493,24 +492,26 @@ document.addEventListener("mouseup", () => {
 });
 
 function snapToNearest(center) {
-  const w = wrapper.clientWidth;
-  const h = wrapper.clientHeight;
-  const pinW = pin.offsetWidth;
-  const pinH = pin.offsetHeight;
+  const w  = wrapper.clientWidth;
+  const h  = wrapper.clientHeight;
+  const pw = pin.offsetWidth;
+  const ph = pin.offsetHeight;
 
   const distances = {
-    left: center.x,
-    right: w - center.x,
-    top: center.y,
+    left:   center.x,
+    right:  w - center.x,
+    top:    center.y,
     bottom: h - center.y
   };
 
-  // Remove bottom: treat as top
+  // Never snap to bottom: treat 'bottom' the same as 'top'
   if (distances.bottom < distances.top) {
     distances.top = distances.bottom;
   }
 
-  let nearest = Object.keys(distances).reduce((a, b) => distances[a] < distances[b] ? a : b);
+  const nearest = Object.keys(distances).reduce((a, b) =>
+    distances[a] < distances[b] ? a : b
+  );
 
   pin.style.transition = "all 0.3s ease";
 
@@ -519,10 +520,9 @@ function snapToNearest(center) {
       pin.style.left = "30px";
       break;
     case "right":
-      pin.style.left = (w - pinW - 30) + "px";
+      pin.style.left = (w - pw - 30) + "px";
       break;
-    case "top":
-    case "bottom":
+    case "top":  // also covers 'bottom'
       pin.style.top = "30px";
       break;
   }
