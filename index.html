@@ -517,18 +517,18 @@ print(response.json())</code>
       <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none"
            stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
            class="lucide lucide-user-plus">
-        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
-        <circle cx="9" cy="7" r="4"/>
-        <line x1="19" x2="19" y1="8" y2="14"/>
-        <line x1="22" x2="16" y1="11" y2="11"/>
-      </svg>
-    </div>
-    <h3 class="text-xl font-semibold text-gray-900 mb-2">Invite guests</h3>
-    <p class="text-gray-600">
+<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+<circle cx="9" cy="7" r="4"/>
+<line x1="19" x2="19" y1="8" y2="14"/>
+<line x1="22" x2="16" y1="11" y2="11"/>
+</svg>
+</div>
+<h3 class="text-xl font-semibold text-gray-900 mb-2">Invite guests</h3>
+<p class="text-gray-600">
       Meet with guests without ever needing to leave your workspace.
-    </p>
-  </div>
- </div> 
+</p>
+</div>
+</div> 
 </div></div>
 </section>
 
@@ -587,170 +587,128 @@ class="w-[360px] h-[240px] md:w-[250px] md:h-[240px] rounded-[20px] shadow-xl bg
 <p class="max-w-xl mx-auto md:mx-0 mb-12" style="color: #A0A0A0;">Huly offers a wide range of features to create and manage your project documentation. Huly's suite of collaborative editing tools boosts team efficiency.</p>
 </div>
 <!-- Container -->
+<!--
+  Wrap the entire toolbar in a parent <div class="relative"> so we can absolutely position everything.
+  Inside, each “tool” is a <div class="tool-container"> containing:
+    1) a <button> with the SVG icon
+    2) a <span class="tool-label"> that becomes visible only when its button is active
+-->
 <div class="relative">
   <div
     id="toolbar"
     class="absolute md:top-[115px] md:left-[370px] z-50 mx-auto flex h-10 w-fit min-w-[330px]
-           rounded-md px-3 shadow-[0px_10px_20px_0px_#00000080]
+           rounded-md bg-[#a53e00] px-3 shadow-[0px_10px_20px_0px_#00000080]
            lg:-top-10 lg:left-11
            md:-top-8 md:left-7 md:h-[30px] md:min-w-[218px] md:px-2
            sm:-top-6 sm:left-0 sm:h-[27px] sm:min-w-[190px]"
-    style="background-color: #a53e00;"
   >
-    <!-- + Link Button -->
-    <button
-      id="btn-link"
-      class="transition-all duration-200 flex h-6 cursor-default items-center rounded bg-blue pl-2 pr-2.5 text-14 tracking-snugger text-white
-             md:h-[19px] md:px-1 md:text-11 sm:text-10"
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="200"
-        height="50"
-        class="h-5 w-5 stroke-grey-60 transition-colors md:h-[15px] md:w-[15px]"
+    <!-- ========== TOOL 1: Select (cursor icon) ========== -->
+    <div class="tool-container flex flex-col items-center justify-center relative mx-1">
+      <button
+        data-tool="select"
+        class="tool-btn flex h-7 w-7 items-center justify-center rounded-full transition-all duration-200
+               md:h-[21px] md:w-[21px]"
       >
-        <!-- Rounded rectangle background -->
-        <rect width="70" height="32" rx="5" ry="5" fill="#0D0D0D" />
-        <!-- "+ Link" text, centered -->
-        <text
-          x="50%"
-          y="50%"
-          dominant-baseline="middle"
-          text-anchor="middle"
-          font-family="Arial, sans-serif"
-          font-size="18"
-          fill="white"
-          style="filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.3));"
+        <!-- This is the “Select” arrow SVG -->
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          class="h-5 w-5 fill-black transition-colors"
         >
-          + Link
-        </text>
-      </svg>
-    </button>
-
-    <!-- Bold Button -->
-    <button
-      id="btn-bold"
-      class="ml-1 transition-all duration-200 flex h-7 w-7 items-center justify-center
-             md:h-[21px] md:w-[21px]"
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        fill="white"
-        viewBox="0 0 28 28"
-        class="h-full w-full transition-colors hover:fill-white fill-grey-60"
+          <path
+            d="M3 3l18 9-18 9v-7l12-2-12-2V3z"
+          />
+        </svg>
+      </button>
+      <!-- Label below the icon; hidden by default, shown only when its parent container has .active -->
+      <span
+        class="tool-label absolute -bottom-6 left-1/2 w-max -translate-x-1/2 
+               whitespace-nowrap rounded-full bg-white px-2 py-1 text-center text-sm text-black opacity-0 transition-opacity duration-200"
       >
-        <path
-          d="M9.197 19.5V7.621h4.756q1.31 0 2.186.389t1.317 1.079q.44.684.44 1.577 0 .696-.278 1.224-.277.522-.765.859-.482.33-1.102.47v.115q.678.03 1.27.383.597.354.969.992.37.633.37 1.508 0 .945-.469 1.688-.465.737-1.375 1.166t-2.244.429zm2.511-2.053h2.047q1.05 0 1.532-.4.48-.406.481-1.08 0-.492-.238-.87a1.6 1.6 0 0 0-.678-.591q-.435-.215-1.039-.215h-2.105zm0-4.855h1.862q.517 0 .916-.18.406-.186.638-.522.238-.336.238-.806 0-.644-.458-1.038-.452-.395-1.288-.395h-1.908z"
-        />
-      </svg>
-      <span class="sr-only">Bold</span>
-    </button>
+        Select
+      </span>
+    </div>
 
-    <!-- Italic Button -->
-    <button
-      id="btn-italic"
-      class="ml-1 transition-all duration-200 flex h-7 w-7 items-center justify-center
-             md:h-[21px] md:w-[21px]"
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        fill="white"
-        viewBox="0 0 28 28"
-        class="h-full w-full transition-colors hover:fill-white fill-grey-60"
+    <!-- ========== TOOL 2: Draw (pencil icon) ========== -->
+    <div class="tool-container flex flex-col items-center justify-center relative mx-1">
+      <button
+        data-tool="draw"
+        class="tool-btn flex h-7 w-7 items-center justify-center rounded-full transition-all duration-200
+               md:h-[21px] md:w-[21px]"
       >
-        <path
-          d="M21 8.556V7H10.889v1.556h3.998l-3.4 10.888H7V21h10.111v-1.556h-3.998l3.4-10.888z"
-        />
-      </svg>
-      <span class="sr-only">Italic</span>
-    </button>
-
-    <!-- Underline Button -->
-    <button
-      id="btn-underline"
-      class="ml-1 transition-all duration-200 flex h-7 w-7 items-center justify-center
-             md:h-[21px] md:w-[21px]"
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        fill="white"
-        viewBox="0 0 28 28"
-        class="h-full w-full transition-colors hover:fill-white fill-grey-60"
+        <!-- Pencil SVG -->
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          class="h-5 w-5 fill-black transition-colors"
+        >
+          <path
+            d="M3 21v-3l13.5-13.5 3 3L6 21H3zm18-14.5c.8-.8.8-2 0-2.8l-2.7-2.7c-.8-.8-2-.8-2.8 0l-1.5 1.5 5.5 5.5 1.5-1.5z"
+          />
+        </svg>
+      </button>
+      <span
+        class="tool-label absolute -bottom-6 left-1/2 w-max -translate-x-1/2 
+               whitespace-nowrap rounded-full bg-white px-2 py-1 text-center text-sm text-black opacity-0 transition-opacity duration-200"
       >
-        <path
-          d="M15.944 7.621h1.798v7.813q0 1.247-.586 2.21-.586.957-1.647 1.508-1.062.545-2.488.545-1.421 0-2.483-.545-1.062-.55-1.647-1.508-.585-.963-.586-2.21V7.621h1.792v7.668q0 .806.354 1.433.36.626 1.015.986.655.354 1.555.354.905 0 1.56-.354a2.5 2.5 0 0 0 1.01-.986q.353-.627.353-1.433zM7 22.164h12.833v1.167H7z"
-        />
-      </svg>
-      <span class="sr-only">Underline</span>
-    </button>
+        Draw
+      </span>
+    </div>
 
-    <!-- Strikethrough Button -->
-    <button
-      id="btn-strike"
-      class="ml-1 transition-all duration-200 flex h-7 w-7 items-center justify-center
-             md:h-[21px] md:w-[21px]"
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        fill="white"
-        viewBox="0 0 28 28"
-        class="h-full w-full transition-colors hover:fill-white fill-grey-60"
+    <!-- ========== TOOL 3: Fill (bucket icon) ========== -->
+    <div class="tool-container flex flex-col items-center justify-center relative mx-1">
+      <button
+        data-tool="fill"
+        class="tool-btn flex h-7 w-7 items-center justify-center rounded-full transition-all duration-200
+               md:h-[21px] md:w-[21px]"
       >
-        <path
-          d="M15.944 7.621h1.798v7.813q0 1.247-.586 2.21-.586.957-1.647 1.508-1.062.545-2.488.545-1.421 0-2.483-.545-1.062-.55-1.647-1.508-.585-.963-.586-2.21V7.621h1.792v7.668q0 .806.354 1.433.36.626 1.015.986.655.354 1.555.354.905 0 1.56-.354a2.5 2.5 0 0 0 1.01-.986q.353-.627.353-1.433z"
-        />
-        <path d="M7 14h12.833v1.167H7z" />
-      </svg>
-      <span class="sr-only">Strikethrough</span>
-    </button>
-
-    <!-- Vertical Divider -->
-    <span class="ml-1 h-full w-px bg-white-30"></span>
-
-    <!-- Mention Button (no action) -->
-    <button
-      id="btn-mention"
-      class="ml-2.5 md:ml-1.5 sm:ml-1 cursor-default transition-all duration-200 flex h-5 w-5 items-center justify-center
-             md:h-[15px] md:w-[15px]"
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        fill="white"
-        viewBox="0 0 20 20"
-        class="h-full w-full stroke-grey-60 transition-colors"
+        <!-- Fill bucket SVG -->
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          class="h-5 w-5 fill-black transition-colors"
+        >
+          <path
+            d="M14 2s-3 3-6 6c-1.2 1.2-1.5 2.3-1 3.2.3.6.8 1 1.4 1h.3l-6.7 6.7c-.4.4-.4 1 0 1.4l1.3 1.3c.4.4 1 .4 1.4 0l6.7-6.7v.3c0 .6.4 1.1 1 1.4.9.5 2 .2 3.2-1 3-3 6-6 6-6s-3-3-6-6zm-3 12c-.5 0-1-.4-1-1s.5-1 1-1 1 .4 1 1-.5 1-1 1z"
+          />
+        </svg>
+      </button>
+      <span
+        class="tool-label absolute -bottom-6 left-1/2 w-max -translate-x-1/2 
+               whitespace-nowrap rounded-full bg-white px-2 py-1 text-center text-sm text-black opacity-0 transition-opacity duration-200"
       >
-        <path
-          d="M9.866 13.335c1.765 0 3.195-1.555 3.195-3.472S11.63 6.39 9.866 6.39 6.672 7.945 6.672 9.863s1.43 3.472 3.194 3.472"
-        />
-        <path
-          d="M13.059 6.39v5.758c0 1.727 2.595 2.025 3.968-.31 1.165-1.975.88-4.988-.575-6.97C14.312 1.947 9.364.857 5.77 3.27 2.467 5.487 1.29 9.973 3.116 13.598c1.806 3.588 6.045 5.327 9.881 4.03"
-        />
-      </svg>
-      <span class="sr-only">Mention</span>
-    </button>
+        Fill
+      </span>
+    </div>
 
-    <!-- Highlight Toggle Button -->
-    <button
-      id="btn-highlight"
-      class="ml-3 md:ml-2 cursor-pointer transition-all duration-200 flex h-5 w-5 items-center justify-center
-             md:h-[15px] md:w-[15px]"
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        fill="white"
-        width="20px"
-        height="20px"
-        viewBox="0 0 24 24"
-        class="h-full w-full stroke-grey-60 transition-colors"
+    <!-- ========== TOOL 4: Erase (eraser icon) ========== -->
+    <div class="tool-container flex flex-col items-center justify-center relative mx-1">
+      <button
+        data-tool="erase"
+        class="tool-btn flex h-7 w-7 items-center justify-center rounded-full transition-all duration-200
+               md:h-[21px] md:w-[21px]"
       >
-        <path
-          d="m20.707 5.826-3.535-3.533a.999.999 0 0 0-1.408-.006L7.096 10.82a1.01 1.01 0 0 0-.273.488l-1.024 4.437L4 18h2.828l1.142-1.129 3.588-.828c.18-.042.345-.133.477-.262l8.667-8.535a1 1 0 0 0 .005-1.42zm-9.369 7.833-2.121-2.12 7.243-7.131 2.12 2.12-7.242 7.131zM4 20h16v2H4z"
-        />
-      </svg>
-      <span class="sr-only">Toggle Highlight</span>
-    </button>
+        <!-- Eraser SVG -->
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          class="h-5 w-5 fill-black transition-colors"
+        >
+          <path
+            d="M16.24 3c-.59 0-1.17.23-1.6.66L2.66 15.64c-.9.9-.9 2.36 0 3.24l3.77 3.77c.9.9 2.36.9 3.24 0l11.98-11.98c.43-.43.66-1.01.66-1.6 0-1.24-1-2.24-2.24-2.24h-2.57c-.59 0-1.17.23-1.6.66L16.24 3zm-7.07 15.3l-2.5-2.5L15.36 6.1l2.5 2.5L9.17 18.3zm8.9-8.9l-2.5-2.5 1.77-1.77c.14-.14.33-.22.53-.22h2.57c.41 0 .75.34.75.75 0 .2-.08.39-.22.53l-1.77 1.77z"
+          />
+        </svg>
+      </button>
+      <span
+        class="tool-label absolute -bottom-6 left-1/2 w-max -translate-x-1/2 
+               whitespace-nowrap rounded-full bg-white px-2 py-1 text-center text-sm text-black opacity-0 transition-opacity duration-200"
+      >
+        Erase
+      </span>
+    </div>
   </div>
 </div>
+         
 <!------editor bar bere ----------------------------------------------------------->
 <div class="relative mt-12" id="editor-container">
 <!-- 1. Actual visible text (topmost) -->
