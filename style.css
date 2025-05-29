@@ -496,8 +496,6 @@ filter: blur(4px);i
 
 #pin {
   position: absolute;
-  top: 60px;
-  left: 360px;
   width: 66px;
   height: 66px;
   cursor: grab;
