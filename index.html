@@ -911,5 +911,96 @@ style="fill:white"/><path d="M1443 1080.1c-34 3.7-54.7 8.1-82.1 17.4-47.8 16.2-9
 </span>Learn more<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"></path></svg>
 </button></div></div></div></div></div></section>
 <script src="script.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const pin = document.getElementById("pin");
+  const wrapper = document.getElementById("main-wrapper");
+
+  let isDragging = false;
+  let offsetX = 0;
+  let offsetY = 0;
+  const dragLimit = 100;
+
+  pin.addEventListener("mousedown", (e) => {
+    isDragging = true;
+    offsetX = e.clientX - pin.offsetLeft;
+    offsetY = e.clientY - pin.offsetTop;
+    pin.style.transition = "none";
+  });
+
+  document.addEventListener("mousemove", (e) => {
+    if (!isDragging) return;
+
+    let newLeft = e.clientX - offsetX;
+    let newTop = e.clientY - offsetY;
+
+    const pinCenter = {
+      x: newLeft + pin.offsetWidth / 2,
+      y: newTop + pin.offsetHeight / 2,
+    };
+
+    const wrapperCenter = {
+      x: wrapper.clientWidth / 2,
+      y: wrapper.clientHeight / 2,
+    };
+
+    const distance = Math.hypot(
+      pinCenter.x - wrapperCenter.x,
+      pinCenter.y - wrapperCenter.y
+    );
+
+    if (distance > dragLimit) {
+      snapToNearest(pinCenter);
+      isDragging = false;
+      return;
+    }
+
+    pin.style.left = newLeft + "px";
+    pin.style.top = newTop + "px";
+  });
+
+  document.addEventListener("mouseup", () => {
+    isDragging = false;
+    pin.style.transition = "all 0.3s ease";
+  });
+
+  function snapToNearest(center) {
+    const w = wrapper.clientWidth;
+    const h = wrapper.clientHeight;
+    const pinW = pin.offsetWidth;
+    const pinH = pin.offsetHeight;
+
+    const distances = {
+      left: center.x,
+      right: w - center.x,
+      top: center.y,
+      bottom: h - center.y,
+    };
+
+    if (distances.bottom < distances.top) {
+      distances.top = distances.bottom;
+    }
+
+    const nearest = Object.keys(distances).reduce((a, b) =>
+      distances[a] < distances[b] ? a : b
+    );
+
+    pin.style.transition = "all 0.3s ease";
+
+    switch (nearest) {
+      case "left":
+        pin.style.left = "30px";
+        break;
+      case "right":
+        pin.style.left = w - pinW - 30 + "px";
+        break;
+      case "top":
+      case "bottom":
+        pin.style.top = "30px";
+        break;
+    }
+  }
+});
+</script>
 </body>
 </html>
