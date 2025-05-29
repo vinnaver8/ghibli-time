@@ -489,25 +489,24 @@ filter: blur(4px);i
 /* Container */
 #main-wrapper {
   position: relative;
-  width: 600px;
-  height: 600px;
-  overflow: visible
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
 }
 
-/* Draggable pin */
 #pin {
   position: absolute;
   top: 60px;
   left: 360px;
-  width: 46px;
+  width: 66px;
   height: 66px;
   cursor: grab;
   z-index: 40;
-  transition: all 2s ease-in-out;
+  transition: all 0.3s ease;
 }
 
-/* While dragging: remove transition & change cursor */
-#pin.dragging {
-  cursor: grabbing;
-  transition: none;
+#pin img {
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
 }
