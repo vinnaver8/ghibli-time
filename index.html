@@ -664,68 +664,23 @@ class="relative rounded-full bg-red border-4 border-red shadow-lg w-full h-full 
 </div>
 </div> </div>   
 <!------editor bar bere ----------------------------------------------------------->
-<div
-  class="relative mt-12 md:absolute md:top-[330px] md:left-[350px]"
-  id="editor-container"
->
-  <!-- 1. Actual visible text (topmost) -->
-  <div
-    id="editor"
-    contenteditable="true"
-    class="relative z-10 whitespace-pre-wrap leading-relaxed text-white font-normal p-2 focus:outline-none"
-  >
-    <span class="font-semibold">Documents in Huly</span> can be used for sharing
-    reference materials among team members, collaborating on plans and
-    roadmaps, storing meeting notes and assigning action items.
-  </div>
-
-  <!-- 2. Yellow highlight layer (middle) -->
-  <div
-    id="highlight-overlay"
-    class="absolute top-0 left-0 inset-0 scale-[1.02] opacity-0 z-0 transition-opacity duration-300 pointer-events-none"
-    style="--highlight-position: 1;"
-  >
-    <span
-      class="pointer-events-none bg-no-repeat text-transparent whitespace-pre-wrap leading-relaxed inline-block p-2"
-      style="
-        background: linear-gradient(
-            90deg,
-            #ffeba4 50%,
-            transparent 50%
-          )
-          100% 0 / 200% 100% no-repeat;
-        background-position: calc((1 - var(--highlight-position)) * 100%) 1;
-      "
-    >
-      <span class="font-semibold">Documents in Huly</span> can be used for
-      sharing reference materials among team members, collaborating on plans and
-      roadmaps, storing meeting notes and assigning action items.
-    </span>
-  </div>
-
-  <!-- 3. Cursor pin overlay (bottom) -->
-  <div
-    id="cursor-overlay"
-    class="absolute top-0 left-0 w-full scale-[1] opacity-0 transition-opacity duration-300 pointer-events-none"
-    style="--cursor-position: 0;"
-  >
-    <span
-      class="pointer-events-none whitespace-pre-wrap leading-relaxed inline-block p-2 md:pr-2"
-      style="
-        background: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9Im5vbmUiIHZpZXdCb3g9IjAgMCAxMCAzNiI+PHBhdGggZmlsbD0iIzMwMzIzNiIgZmlsbC1ydWxlPSJldmVub2RkIiBkPSJNNCAyNi4xQTUuMDAyIDUuMDAyIDAgMCAwIDUgMzZhNSA1IDAgMCAwIDEtOS45VjBINHoiIGNsaXAtcnVsZT0iZXZlbm9kZCIvPjwvc3ZnPg==)
-          100% 0 no-repeat;
-        background-position: calc(var(--cursor-position) * 100%) 8px;
-      "
-      aria-hidden="true"
-    >
-      <span class="font-semibold">Documents in Huly</span> can be used for
-      sharing reference materials among team members, collaborating on plans and
-      roadmaps, storing meeting notes and assigning action items.
-    </span>
-  </div>
+<div class="relative mt-12 md:absolute md:top-[330px] md:left-[350px]" id="editor-container">
+<!-- 1. Actual visible text (topmost) -->
+<div id="editor" contenteditable="true" 
+class="relative z-10 whitespace-pre-wrap leading-relaxed text-white font-normal p-2 focus:outline-none ">
+<span class="font-semibold">Documents in Huly</span> can be used for sharing reference materials among team members, collaborating on plans and roadmaps, storing meeting notes and assigning action items.
+</div>
+<!-- 2. Yellow highlight layer (middle) -->
+<div id="highlight-overlay"
+class="absolute top-0 scale-[1.02] inset-0 opacity-0 z-0 transition-opacity duration-300 pointer-events-none"
+style="--highlight-position: 1;">
+<span class="pointer-events-none bg-no-repeat text-transparent whitespace-pre-wrap leading-relaxed block p-2"
+style="background:linear-gradient(90deg, #ffeba4 50%, transparent 50%) 100% 0 / 200% 100% no-repeat;
+background-position:calc((1 - var(--highlight-position)) * 100%) 1">
+<span class="font-semibold">Documents in Huly</span> can be used for sharing reference materials among team members, collaborating on plans and roadmaps, storing meeting notes and assigning action items.
+</span></div>
 </div>          
-
-          
+<!--------end highlight-position up--->      
 <div class="relative flex items-center top-0 justify-center md:absolute md:top-[520px] md:left-[365px]">
 <img src="board.webp" alt="chat"
 class="w-[360px] h-[240px] md:w-[570px] md:h-[450px] rounded-[20px]" />
