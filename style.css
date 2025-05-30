@@ -494,7 +494,7 @@ filter: blur(4px);i
             padding: 20px;
             box-sizing: border-box;
             min-height: 400px;
-            z-index: 1;
+            overflow:visible;
             }
         #draggablePinWrapper {
             position: absolute;
