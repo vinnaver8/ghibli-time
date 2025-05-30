@@ -547,3 +547,88 @@ document.addEventListener('DOMContentLoaded', () => {
 
   obs.observe(document.getElementById('editor-container'));
 });
+//---Dragging animation---//
+const draggableBox = document.getElementById('draggablePinWrapper');
+const draggableContainer = document.getElementById('draggableContainer');
+const snapTargetRow = document.getElementById('snap-target-row');
+let isDragging = false;
+let offsetX, offsetY;
+function getRect(element) {
+return element.getBoundingClientRect();
+        }
+function snapToTargetRowAndMaintainHorizontalPosition() {
+const containerRect = getRect(draggableContainer);
+const boxRect = getRect(draggableBox);
+if (!snapTargetRow) {
+console.error("Snap target row not found.");
+return;
+}
+const targetRowRect = getRect(snapTargetRow);
+const targetY = (targetRowRect.top + targetRowRect.height / 2) - containerRect.top - (boxRect.height / 2);
+const transformMatrix = new WebKitCSSMatrix(window.getComputedStyle(draggableBox).transform);
+let targetX = transformMatrix.m41;
+targetX = Math.max(0, Math.min(targetX, containerRect.width - boxRect.width));
+draggableBox.style.transform = `translate(${targetX}px, ${targetY}px)`;
+draggableBox.style.left = '0px';
+draggableBox.style.top = '0px';
+        }
+draggableBox.addEventListener('mousedown', (e) => {
+isDragging = true;
+draggableBox.classList.add('dragging');
+const boxRect = getRect(draggableBox);
+offsetX = e.clientX - boxRect.left;
+offsetY = e.clientY - boxRect.top;
+        });
+draggableContainer.addEventListener('mousemove', (e) => {
+if (!isDragging) return;
+const containerRect = getRect(draggableContainer);
+let newX = e.clientX - offsetX - containerRect.left;
+let newY = e.clientY - offsetY - containerRect.top;
+const boxRect = getRect(draggableBox);
+newX = Math.max(0, Math.min(newX, containerRect.width - boxRect.width));
+newY = Math.max(0, Math.min(newY, containerRect.height - boxRect.height));
+draggableBox.style.transform = `translate(${newX}px, ${newY}px)`;
+        });
+draggableContainer.addEventListener('mouseup', () => {
+if (isDragging) {
+isDragging = false;
+draggableBox.classList.remove('dragging');
+snapToTargetRowAndMaintainHorizontalPosition();
+            }
+        });
+draggableBox.addEventListener('touchstart', (e) => {
+isDragging = true;
+draggableBox.classList.add('dragging');
+e.preventDefault();
+const touch = e.touches[0];
+const boxRect = getRect(draggableBox);
+offsetX = touch.clientX - boxRect.left;
+offsetY = touch.clientY - boxRect.top;
+        });
+draggableContainer.addEventListener('touchmove', (e) => {
+if (!isDragging) return;
+e.preventDefault();
+const touch = e.touches[0];
+const containerRect = getRect(draggableContainer);
+let newX = touch.clientX - offsetX - containerRect.left;
+let newY = touch.clientY - offsetY - containerRect.top;
+const boxRect = getRect(draggableBox);
+newX = Math.max(0, Math.min(newX, containerRect.width - boxRect.width));
+newY = Math.max(0, Math.min(newY, containerRect.height - boxRect.height));
+draggableBox.style.transform = `translate(${newX}px, ${newY}px)`;
+        });
+draggableContainer.addEventListener('touchend', () => {
+if (isDragging) {
+isDragging = false;
+draggableBox.classList.remove('dragging');
+snapToTargetRowAndMaintainHorizontalPosition();
+            }
+        });
+window.onload = () => {
+            snapToTargetRowAndMaintainHorizontalPosition();
+        };
+
+        // Recalculate snap position on window resize
+        window.addEventListener('resize', () => {
+            snapToTargetRowAndMaintainHorizontalPosition();
+        });
