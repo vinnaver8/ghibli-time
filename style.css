@@ -486,3 +486,28 @@ filter: blur(4px);i
       to {transform:rotate(360deg)}
     }
 /* pin animation */
+  #draggableContainer {
+            position: relative;
+            width: 90%;
+            max-width: 800px;
+            background-color: #0D0D0D;
+            padding: 20px;
+            box-sizing: border-box;
+            min-height: 400px;
+            z-index: 1;
+            }
+        #draggablePinWrapper {
+            position: absolute;
+            cursor: grab;
+            touch-action: none;
+            transition: transform 0.3s ease-in-out;
+            z-index: 100;
+        }
+
+        #draggablePinWrapper.dragging {
+            cursor: grabbing;
+            transition: none;
+        }
+        #draggablePinWrapper img {
+            pointer-events: none;
+        }
