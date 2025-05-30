@@ -604,7 +604,7 @@ class="relative rounded-full bg-red border-4 border-red shadow-lg w-full h-full 
 <!-- Container -->
 <div class="relative">
     <div id="toolbar"
-        class="absolute md:top-[-30px] md:right-[450px] z-50 mx-auto flex h-10 w-fit min-w-[330px]
+        class="absolute md:top-[-10px] md:right-[500px] z-50 mx-auto flex h-10 w-fit min-w-[330px]
                rounded-md px-1.5 shadow-[0px_10px_20px_0px_#00000080] items-center
                lg:-top-10 lg:left-11
                md:-top-8 md:left-7 md:h-[30px] md:min-w-[218px] md:px-1
@@ -672,7 +672,7 @@ class="relative z-10 whitespace-pre-wrap leading-relaxed text-white font-normal 
 </div>
 <!-- 2. Yellow highlight layer (middle) -->
 <div id="highlight-overlay"
-class="absolute top-0 scale-[1.02] inset-0 opacity-0 z-0 transition-opacity duration-300 pointer-events-none"
+class="absolute top-0 scale-[1.02] inset-0 opacity-0 z-0 transition-opacity duration-300 pointer-events-none md:absolute md:w-[600px]"
 style="--highlight-position: 1;">
 <span class="pointer-events-none bg-no-repeat text-transparent whitespace-pre-wrap leading-relaxed block p-2"
 style="background:linear-gradient(90deg, #ffeba4 50%, transparent 50%) 100% 0 / 200% 100% no-repeat;
@@ -681,7 +681,7 @@ background-position:calc((1 - var(--highlight-position)) * 100%) 1">
 </span></div>
 <!-- 3. Cursor pin overlay (bottom) -->
 <div id="cursor-overlay"
-class="relative absolute w-full scale-[1] opacity-0 transition-opacity duration-300 pointer-events-none"
+class="relative absolute w-full scale-[1] opacity-0 transition-opacity duration-300 pointer-events-none md:absolute md:top-[330px] md:right-[30px]"
 style="--cursor-position: 0;">
 <span class="pointer-events-none md:h-[10px] !bg-[length:10px_36px] bg-no-repeat text-transparent md:!bg-[length:8px_26px] whitespace-pre-wrap leading-relaxed block p-2 md:pr-2 sm:!bg-[length:7px_25px]"
 style="background: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9Im5vbmUiIHZpZXdCb3g9IjAgMCAxMCAzNiI+PHBhdGggZmlsbD0iIzMwMzIzNiIgZmlsbC1ydWxlPSJldmVub2RkIiBkPSJNNCAyNi4xQTUuMDAyIDUuMDAyIDAgMCAwIDUgMzZhNSA1IDAgMCAwIDEtOS45VjBINHoiIGNsaXAtcnVsZT0iZXZlbm9kZCIvPjwvc3ZnPg==)100%0 no-repeat;background-position:calc(var(--cursor-position)*100%) 8px" aria-hidden="true">
