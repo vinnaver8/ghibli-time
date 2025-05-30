@@ -679,7 +679,16 @@ style="background:linear-gradient(90deg, #ffeba4 50%, transparent 50%) 100% 0 / 
 background-position:calc((1 - var(--highlight-position)) * 100%) 1">
 <span class="font-semibold">Documents in Huly</span> can be used for sharing reference materials among team members, collaborating on plans and roadmaps, storing meeting notes and assigning action items.
 </span></div>
-</div>          
+<!-- 3. Cursor pin overlay (bottom) -->
+<div id="cursor-overlay"
+class="relative absolute w-full scale-[1] opacity-0 transition-opacity duration-300 pointer-events-none"
+style="--cursor-position: 0;">
+<span class="pointer-events-none md:h-[10px] !bg-[length:10px_36px] bg-no-repeat text-transparent md:!bg-[length:8px_26px] whitespace-pre-wrap leading-relaxed block p-2 md:pr-2 sm:!bg-[length:7px_25px]"
+style="background: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9Im5vbmUiIHZpZXdCb3g9IjAgMCAxMCAzNiI+PHBhdGggZmlsbD0iIzMwMzIzNiIgZmlsbC1ydWxlPSJldmVub2RkIiBkPSJNNCAyNi4xQTUuMDAyIDUuMDAyIDAgMCAwIDUgMzZhNSA1IDAgMCAwIDEtOS45VjBINHoiIGNsaXAtcnVsZT0iZXZlbm9kZCIvPjwvc3ZnPg==)100%0 no-repeat;background-position:calc(var(--cursor-position)*100%) 8px" aria-hidden="true">
+<span class="font-semibold">Documents in Huly</span> can be used for sharing reference materials among team members, collaborating on plans and roadmaps, storing meeting notes and assigning action items.
+</span>
+</div>
+</div>
 <!--------end highlight-position up--->      
 <div class="relative flex items-center top-0 justify-center md:absolute md:top-[520px] md:left-[365px]">
 <img src="board.webp" alt="chat"
