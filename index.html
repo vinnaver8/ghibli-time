@@ -589,16 +589,14 @@ class="w-[360px] h-[240px] md:w-[250px] md:h-[240px] rounded-[20px] shadow-xl bg
 </p>
 <div id="main-wrapper">
 <div id="draggablePinWrapper"
-class="absolute flex flex-col items-start cursor-grab active:cursor-grabbing select-none float-pin md:top-[20px] md:left-[350px]"
-style="left:1px; top:-20px;">
-<div class="relative w-[66px] h-[66px] md:w-[45px] md:h-[45px] sm:w-[50px] sm:h-[50px] ">
-<div class="absolute inset-0 rounded-full bg-red-500 opacity-50 animate-ping"></div>
-<div class="absolute inset-0 rounded-full border-3 border-red-500"></div>
-<img id="draggablebox"
-src="https://placehold.co/66x66/FF0000/FFFFFF?text=PIN"
-alt="pin"
-class="relative rounded-full bg-red border-4 border-red shadow-lg w-full h-full object-cover pointer-events-none"/>
-</div>
+  class="absolute flex flex-col items-start cursor-grab active:cursor-grabbing select-none float-pin md:top-[20px] md:left-[100px]"
+  style="left:1px; top:-20px;">
+  <div class="relative w-[66px] h-[66px]">
+    <img id="draggablebox"
+     src="blue-pin.png"
+     alt="pin"
+     class="relative w-full h-full object-contain pointer-events-none [filter:drop-shadow(0_0_10px_rgba(0,123,255,0.8))]" />
+  </div>
 </div>
 </div>
 <!-- Container -->
