@@ -511,3 +511,73 @@ filter: blur(4px);i
         #draggablePinWrapper img {
             pointer-events: none;
         }
+/* Left box content  */
+.video-overlay-content {
+            transition: opacity 0.5s ease-in-out;
+        }
+        .user-preview-circle {
+            transition: transform 0.3s ease-out;
+        }
+
+        /* Arrow animation styles for video overlay */
+        .video-overlay-content .arrow-container {
+            position: absolute;
+            top: 50%; /* Center vertically within the overlay */
+            left: 70%; /* Center horizontally wiqthin the overlay */
+            transform: translate(-50%, -50%); /* Adjust for its own size */
+            width: 100px; /* A fixed width for the container to define the central area */
+            height: 50px; /* Height to contain arrows */
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .video-overlay-content .arrow-svg {
+            position: absolute;
+            fill: none;
+            stroke: #EF4444; /* Red color for arrows */
+            stroke-width: 2;
+            opacity: 0; /* Initially hidden */
+            transition: opacity 0.3s ease-in-out;
+            top: 50%; /* Center vertically within its container */
+            transform: translateY(-50%); /* Adjust for its own height */
+        }
+
+        /* Keyframes for arrow animation */
+        @keyframes arrowMoveLeft {
+            0% {
+                transform: translate(0px, -50%) scale(0.8); /* Start at center of container */
+                opacity: 0;
+            }
+            20% {
+                opacity: 1;
+            }
+            100% {
+                transform: translate(-70px, -50%) scale(1); /* Move left from center */
+                opacity: 1;
+            }
+        }
+
+        @keyframes arrowMoveRight {
+            0% {
+                transform: translate(0px, -50%) scale(0.8); /* Start at center of container */
+                opacity: 0;
+            }
+            20% {
+                opacity: 1;
+            }
+            100% {
+                transform: translate(70px, -50%) scale(1); /* Move right from center */
+                opacity: 1;
+            }
+        }
+
+        /* Apply animation when active */
+        .video-overlay-active .arrow-left {
+            animation: arrowMoveLeft 1s forwards;
+            left: 50%; /* Start from center of arrow-container */
+        }
+
+        .video-overlay-active .arrow-right {
+            animation: arrowMoveRight 1s forwards;
+            left: 50%; /* Start from center of arrow-container */
+        }
