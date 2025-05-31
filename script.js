@@ -548,3 +548,59 @@ document.addEventListener('DOMContentLoaded', () => {
   obs.observe(document.getElementById('editor-container'));
 });
 //---Dragging animation---//
+  document.addEventListener('DOMContentLoaded', () => {
+    // Grab references to the section and the card‐wrapper:
+    const metabrainSection = document.querySelector('.metabrain');
+    const cardWrapper = document.getElementById('card-wrapper');
+
+    function updateCardPosition() {
+      if (!metabrainSection || !cardWrapper) return;
+
+      // Viewport height and the card's own height:
+      const viewportHeight = window.innerHeight;
+      const cardHeight = cardWrapper.offsetHeight;
+
+      // Get the section's bounding‐rect relative to viewport
+      const sectionRect = metabrainSection.getBoundingClientRect();
+
+      // We want the card to be vertically centered in the viewport:
+      const desiredTopInViewport = (viewportHeight / 2) - (cardHeight / 2);
+
+      let newTopRelativeToSection;
+
+      // SCENARIO A: If the top of the section is STILL below where
+      // the card would be if it were perfectly centered, keep the card
+      // at its original “top: 80px” (relative to the SECTION).
+      if (sectionRect.top > desiredTopInViewport) {
+        newTopRelativeToSection = 80; // this matches your initial top‐offset in CSS
+      }
+      // SCENARIO B: If the bottom of the section has already scrolled
+      // ABOVE the place where the card’s bottom (if centered) would be,
+      // “pin” the card to the bottom edge of the section so that it
+      // scrolls out naturally with the section.
+      else if (sectionRect.bottom < (desiredTopInViewport + cardHeight)) {
+        // In that case, set the card’s top so that its bottom exactly
+        // matches section’s bottom:
+        newTopRelativeToSection = metabrainSection.offsetHeight - cardHeight;
+      }
+      // SCENARIO C: Otherwise, we are “inside” the sticky‐zone:
+      // put the card exactly centered in the viewport.
+      else {
+        // We know: (card’s top in viewport) = desiredTopInViewport
+        // But card’s top in viewport = sectionRect.top + (card’s top relative to section)
+        // So: cardTopRelative = desiredTopInViewport – sectionRect.top
+        newTopRelativeToSection = desiredTopInViewport - sectionRect.top;
+      }
+
+      // Apply the computed top (in pixels) back onto the card:
+      cardWrapper.style.top = `${newTopRelativeToSection}px`;
+    }
+
+    // Run the positioning logic once immediately:
+    updateCardPosition();
+
+    // Then update on every scroll or resize:
+    window.addEventListener('scroll', updateCardPosition);
+    window.addEventListener('resize', updateCardPosition);
+  });
+
