@@ -577,10 +577,69 @@ class="w-[360px] h-[240px] md:w-[250px] md:h-[240px] rounded-[20px] shadow-xl bg
 <!--drag events------------------------------------------------------------------------------->
 <section
          class="metabrain relative
-         min-h-[1700px]
-         overflow-hidden
+         min-h-[2500px]
+         overflow-hidden 
          pt-32">
-          <div id="draggableContainer" class="relative md:absolute md:w-[570px] md:top-[15px] md:left-[360px] md:text-left text-80 text-center w-full md:w-auto relative overflow-visible pt-32">
+    <div class="relative flex min-h-screen">
+        <div class="fixed left-5 top-1/2 -translate-y-1/2 w-full lg:w-1/4 xl:w-1/5 p-4 flex items-center z-10">
+        <div id="left-video-panel" class="relative bg-black rounded-xl shadow-lg w-[300px] h-[300px] overflow-hidden">
+                <video class="absolute inset-0 w-full h-full object-cover" autoplay loop muted playsinline>
+                    <source src="holographicgradient.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+
+                <div id="video-overlay-0" class="video-overlay-content opacity-100 absolute inset-0 flex flex-col justify-center items-center p-6 text-white bg-black bg-opacity-50">
+                    <h2 class="text-5xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-yellow-500 via-red-500 to-pink-500">
+  Knowledge at <span class="text-transparent bg-clip-text bg-gradient-to-r from-yellow-500 via-red-500 to-pink-500">Fingertips</span>
+                    </h2>
+                    <p class="text-gray-200 text-sm text-center">
+                        Huly offers a wide range of features to create and manage your collaborative tools and boost team efficiency.
+                    </p>
+                    <div class="mt-4 flex items-center justify-center space-x-2">
+                        <span class="inline-block bg-blue-400 text-blue-900 text-xs px-2 py-1 rounded-full">John S.</span>
+                        <span class="inline-block bg-purple-400 text-purple-900 text-xs px-2 py-1 rounded-full">Lilianna</span>
+                    </div>
+                </div>
+
+                <div id="video-overlay-1" class="video-overlay-content opacity-0 absolute inset-0 flex flex-col justify-center items-center p-6 text-white bg-black bg-opacity-50">
+                    <div class="relative w-full h-full flex flex-col justify-center items-center">
+                        <div class="arrow-container">
+                            <svg class="arrow-svg arrow-left" width="24" height="24" viewBox="0 0 24 24">
+                                <path d="M15 18l-6-6 6-6"></path>
+                            </svg>
+                            <svg class="arrow-svg arrow-right" width="24" height="24" viewBox="0 0 24 24">
+                                <path d="M9 18l6-6-6-6"></path>
+                            </svg>
+                        </div>
+                        <h2 class="text-xl font-semibold mb-4 text-white z-10">Team</h2>
+                        <p class="text-gray-200 text-sm text-center z-10">
+                            Enhance teamwork with powerful real-time collaboration features.
+                        </p>
+                        <div class="mt-4 flex items-center justify-center space-x-2 z-10">
+                            <span class="inline-block bg-blue-400 text-blue-900 text-xs px-2 py-1 rounded-full">John S.</span>
+                            <span class="inline-block bg-purple-400 text-purple-900 text-xs px-2 py-1 rounded-full">Lilianna</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="video-overlay-2" class="video-overlay-content opacity-0 absolute inset-0 flex flex-col justify-center items-center p-6 text-white bg-black bg-opacity-50">
+                    <h2 class="text-xl font-semibold mb-4 text-white text-center">Version History</h2>
+                    <p class="text-gray-200 text-sm text-center">
+                        Track every edit effortlessly, and never lose a single change.
+                    </p>
+                    <div class="mt-4 text-gray-300 text-xs">
+                        <p>Finn Hayes - Today, 3:18 PM</p>
+                        <p>Zoe Quinn - Today, 1:50 PM</p>
+                        <p>Ava Neal - Yesterday, 2:55 PM</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="w-full md:ml-[33.333%] lg:ml-[25%] xl:ml-[20%] p-8 md:p-12 lg:p-16 relative z-0">
+        
+        </div></div>
+    <div id="draggableContainer" class="relative md:absolute md:w-[570px] md:top-[15px] md:left-[360px] md:text-left text-80 text-center w-full md:w-auto relative overflow-visible pt-32">
 <h1 class="text-5xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-yellow-500 via-red-500 to-pink-500">
   Knowledge at <span class="text-transparent bg-clip-text bg-gradient-to-r from-yellow-500 via-red-500 to-pink-500">Fingertips</span>
 </h1>
@@ -599,7 +658,6 @@ class="w-[360px] h-[240px] md:w-[250px] md:h-[240px] rounded-[20px] shadow-xl bg
   </div>
 </div>
 </div>
-<!-- Container -->
 <div class="relative">
     <div id="toolbar"
         class="absolute md:absolute md:top-[-5px] md:left-[0px] z-50 mx-auto flex h-20 w-fit min-w-[330px]
@@ -614,54 +672,58 @@ class="w-[360px] h-[240px] md:w-[250px] md:h-[240px] rounded-[20px] shadow-xl bg
                 <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07L14 20.54"></path>
             </svg>
             <span>Link</span>
-</button>
-<button id="btn-bold" class="ml-1.5 transition-all duration-200 p-1 rounded-md hover:bg-gray-700">
-<svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" class="h-5 w-5 md:h-4 md:w-4 fill-gray-400">
-<path d="M8.176 16.331V7.621h4.756q1.31 0 2.186.389t1.317 1.079q.44.684.44 1.577 0 .696-.278 1.224-.277.522-.765.859-.482.33-1.102.47v.115q.678.03 1.27.383.597.354.969.992.37.633.37 1.508 0 .945-.469 1.688-.465.737-1.375 1.166t-2.244.429zm2.511-2.053h2.047q1.05 0 1.532-.4.48-.406.481-1.08 0-.492-.238-.87a1.6 1.6 0 0 0-.678-.591q-.435-.215-1.039-.215h-2.105zm0-4.855h1.862q.517 0 .916-.18.406-.186.638-.522.238-.336.238-.806 0-.644-.458-1.038-.452-.395-1.288-.395h-1.908z"></path>
-</svg>
-<span class="sr-only">Bold</span>
-</button>
-<button id="btn-italic" class="ml-1.5 transition-all duration-200 p-1 rounded-md hover:bg-gray-700">
-<svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" class="h-5 w-5 md:h-4 md:w-4 fill-gray-400">
-<path d="M12.193 6H17V7.556h-2.585l-3.328 9.888H7V18h5.807V16.444h2.586L12.068 6z"></path>
-</svg>
-<span class="sr-only">Italic</span>
-</button>
-<button id="btn-underline" class="ml-1.5 transition-all duration-200 p-1 rounded-md hover:bg-gray-700">
-<svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" class="h-5 w-5 md:h-4 md:w-4 fill-gray-400">
-<path d="M12 17.5q-2.062 0-3.312-1.031-1.25-1.03-1.25-2.875V5h2v8.625q0 1.125.438 1.625.437.5 1.187.5.75 0 1.188-.5.437-.5.437-1.625V5h2v8.625q0 1.844-1.25 2.875-1.25 1.031-3.312 1.031zM4 20h16v2H4z"></path>
-</svg>
-<span class="sr-only">Underline</span>
-</button>
-<button id="btn-strike" class="ml-1.5 transition-all duration-200 p-1 rounded-md hover:bg-gray-700">
-<svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" class="h-5 w-5 md:h-4 md:w-4 fill-gray-400">
-<path d="M12 10.5q-2.062 0-3.312-1.031-1.25-1.03-1.25-2.875V5h2v1.625q0 1.125.438 1.625.437.5 1.187.5.75 0 1.188-.5.437-.5.437-1.625V5h2v1.625q0 1.844-1.25 2.875-1.25 1.031-3.312 1.031zM4 11h16v2H4zM12 17.5q-2.062 0-3.312-1.031-1.25-1.03-1.25-2.875V12h2v1.625q0 1.125.438 1.625.437.5 1.187.5.75 0 1.188-.5.437-.5.437-1.625V12h2v1.625q0 1.844-1.25 2.875-1.25 1.031-3.312 1.031z"></path>
-</svg>
-<span class="sr-only">Strikethrough</span>
-</button>
-<span class="ml-2 h-5 w-px bg-gray-600 md:h-4"></span>
-<button class="ml-2.5 md:ml-1.5 sm:ml-1 p-1 rounded-md hover:bg-gray-700">
-<svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" class="h-5 w-5 md:h-4 md:w-4 fill-gray-400">
-<path d="M12 12c-1.657 0-3-1.343-3-3s1.343-3 3-3 3 1.343 3 3-1.343 3-3 3zm0 2c-2.671 0-8 1.348-8 4v2h16v-2c0-2.652-5.329-4-8-4z"></path>
-</svg>
-<span class="sr-only">Mention</span>
-</button>
-<button id="btn-highlight" class="ml-2 md:ml-1.5 p-1 rounded-md hover:bg-gray-700">
-<svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" class="h-5 w-5 md:h-4 md:w-4 fill-gray-400">
-<path d="m20.707 5.826-3.535-3.533a.999.999 0 0 0-1.408-.006L7.096 10.82a1.01 1.01 0 0 0-.273.488l-1.024 4.437L4 18h2.828l1.142-1.129 3.588-.828c.18-.042.345-.133.477-.262l8.667-8.535a1 1 0 0 0 .005-1.42zm-9.369 7.833-2.121-2.12 7.243-7.131 2.12 2.12-7.242 7.131zM4 20h16v2H4z"></path>
+        </button>
+
+        <button id="btn-bold" class="ml-1.5 transition-all duration-200 p-1 rounded-md hover:bg-gray-700">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" class="h-5 w-5 md:h-4 md:w-4 fill-gray-400">
+                <path d="M8.176 16.331V7.621h4.756q1.31 0 2.186.389t1.317 1.079q.44.684.44 1.577 0 .696-.278 1.224-.277.522-.765.859-.482.33-1.102.47v.115q.678.03 1.27.383.597.354.969.992.37.633.37 1.508 0 .945-.469 1.688-.465.737-1.375 1.166t-2.244.429zm2.511-2.053h2.047q1.05 0 1.532-.4.48-.406.481-1.08 0-.492-.238-.87a1.6 1.6 0 0 0-.678-.591q-.435-.215-1.039-.215h-2.105zm0-4.855h1.862q.517 0 .916-.18.406-.186.638-.522.238-.336.238-.806 0-.644-.458-1.038-.452-.395-1.288-.395h-1.908z"></path>
+            </svg>
+            <span class="sr-only">Bold</span>
+        </button>
+
+        <button id="btn-italic" class="ml-1.5 transition-all duration-200 p-1 rounded-md hover:bg-gray-700">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" class="h-5 w-5 md:h-4 md:w-4 fill-gray-400">
+                <path d="M12.193 6H17V7.556h-2.585l-3.328 9.888H7V18h5.807V16.444h2.586L12.068 6z"></path>
+            </svg>
+            <span class="sr-only">Italic</span>
+        </button>
+
+        <button id="btn-underline" class="ml-1.5 transition-all duration-200 p-1 rounded-md hover:bg-gray-700">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" class="h-5 w-5 md:h-4 md:w-4 fill-gray-400">
+                <path d="M12 17.5q-2.062 0-3.312-1.031-1.25-1.03-1.25-2.875V5h2v8.625q0 1.125.438 1.625.437.5 1.187.5.75 0 1.188-.5.437-.5.437-1.625V5h2v8.625q0 1.844-1.25 2.875-1.25 1.031-3.312 1.031zM4 20h16v2H4z"></path>
+            </svg>
+            <span class="sr-only">Underline</span>
+        </button>
+
+        <button id="btn-strike" class="ml-1.5 transition-all duration-200 p-1 rounded-md hover:bg-gray-700">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" class="h-5 w-5 md:h-4 md:w-4 fill-gray-400">
+                <path d="M12 10.5q-2.062 0-3.312-1.031-1.25-1.03-1.25-2.875V5h2v1.625q0 1.125.438 1.625.437.5 1.187.5.75 0 1.188-.5.437-.5.437-1.625V5h2v1.625q0 1.844-1.25 2.875-1.25 1.031-3.312 1.031zM4 11h16v2H4zM12 17.5q-2.062 0-3.312-1.031-1.25-1.03-1.25-2.875V12h2v1.625q0 1.125.438 1.625.437.5 1.187.5.75 0 1.188-.5.437-.5.437-1.625V12h2v1.625q0 1.844-1.25 2.875-1.25 1.031-3.312 1.031z"></path>
+            </svg>
+            <span class="sr-only">Strikethrough</span>
+        </button>
+
+        <span class="ml-2 h-5 w-px bg-gray-600 md:h-4"></span>
+
+        <button class="ml-2.5 md:ml-1.5 sm:ml-1 p-1 rounded-md hover:bg-gray-700">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" class="h-5 w-5 md:h-4 md:w-4 fill-gray-400">
+                <path d="M12 12c-1.657 0-3-1.343-3-3s1.343-3 3-3 3 1.343 3 3-1.343 3-3 3zm0 2c-2.671 0-8 1.348-8 4v2h16v-2c0-2.652-5.329-4-8-4z"></path>
+            </svg>
+            <span class="sr-only">Mention</span>
+        </button>
+
+        <button id="btn-highlight" class="ml-2 md:ml-1.5 p-1 rounded-md hover:bg-gray-700">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" class="h-5 w-5 md:h-4 md:w-4 fill-gray-400">
+                <path d="m20.707 5.826-3.535-3.533a.999.999 0 0 0-1.408-.006L7.096 10.82a1.01 1.01 0 0 0-.273.488l-1.024 4.437L4 18h2.828l1.142-1.129 3.588-.828c.18-.042.345-.133.477-.262l8.667-8.535a1 1 0 0 0 .005-1.42zm-9.369 7.833-2.121-2.12 7.243-7.131 2.12 2.12-7.242 7.131zM4 20h16v2H4z"></path>
 </svg>
 <span class="sr-only">Toggle Highlight</span>
 </button>
 </div>
 </div> </div>   
-<!------editor bar bere ----------------------------------------------------------->
 <div class="relative mt-12 md:absolute md:top-[330px] md:left-[365px] md:w-[570px]" id="editor-container">
-<!-- 1. Actual visible text (topmost) -->
 <div id="editor" contenteditable="true" 
 class="relative z-10 whitespace-pre-wrap leading-relaxed text-white font-normal p-2 focus:outline-none ">
 <span class="font-semibold">Documents in Huly</span> can be used for sharing reference materials among team members, collaborating on plans and roadmaps, storing meeting notes and assigning action items.
 </div>
-<!-- 2. Yellow highlight layer (middle) -->
 <div id="highlight-overlay"
 class="absolute top-0 scale-[1.02] inset-0 opacity-0 z-0 transition-opacity duration-300 pointer-events-none md:absolute md:w-[570px] md:h-[10px]"
 style="--highlight-position: 1;">
@@ -670,7 +732,6 @@ style="background:linear-gradient(90deg, #ffeba4 50%, transparent 50%) 100% 0 / 
 background-position:calc((1 - var(--highlight-position)) * 100%) 1">
 <span class="font-semibold">Documents in Huly</span> can be used for sharing reference materials among team members, collaborating on plans and roadmaps, storing meeting notes and assigning action items.
 </span></div>
-<!-- 3. Cursor pin overlay (bottom) -->
 <div id="cursor-overlay"
 class="relative absolute w-full scale-[1] opacity-0 transition-opacity duration-300 pointer-events-none md:absolute md:top-[330px] md:right-[30px]"
 style="--cursor-position: 0;">
@@ -680,7 +741,6 @@ style="background: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy5
 </span>
 </div>
 </div>
-<!--------end highlight-position up--->      
 <div class="relative flex items-center top-0 justify-center md:absolute md:top-[520px] md:left-[365px]">
 <img src="board.webp" alt="chat"
 class="w-[360px] h-[240px] md:w-[570px] md:h-[450px] rounded-[20px]" />
@@ -738,23 +798,29 @@ d="M8 16H6a2 2 0 01-2-2V6a2
 </div>
 <script>document .getElementById('copyBtn') .addEventListener('click', () => {
 const code = document.getElementById('codeBlock').innerText;
-navigator.clipboard
- .writeText(code)
- .then(() => { alert('Code copied to clipboard!'); })
- .catch((err) => {  console.error('Copy failed:', err);}); });
+document.execCommand('copy');
+ // Use execCommand for clipboard access in iframes
+ const tempInput = document.createElement('textarea');
+ tempInput.value = code;
+ document.body.appendChild(tempInput);
+ tempInput.select();
+ document.execCommand('copy');
+ document.body.removeChild(tempInput);
+ alert('Code copied to clipboard!');
+ });
 </script>
 <div id="text-block" id="pin" class="relative md:absolute md:top-[1450px] md:left-[365px] md:w-[570px] text-start w-full md:w-auto relative overflow-visible pt-32">
 <p class="max-w-xl mx-auto md:mx-0 mb-12" style="color: #A0A0A0;">Bring your documents to life with text styling, images, files, and code—perfect for planning, documenting, and aligning your team.</p>
 </div>
 <div class="relative">
-<div class="relative flex flex-wrap w-full mx-auto md:absolute md:top-[1102px] md:left-[365px]">
+<div class="relative flex flex-wrap w-full mx-auto md:absolute md:top-[-470px] md:left-[365px]">
 <span class="text-slate-700">Tap here to continue...</span>
 </div>
 </div>
 <div class="relative">
-<div class="mt-3 flex w-fit gap-x-1 rounded-full bg-[#333333] p-[5px] shadow-[0px_4px_10px_0px_rgba(0,0,0,0.15)] sm:mt-2 sm:gap-x-0.5 sm:p-1 md:mt-1.5 mx-auto md:absolute md:top-[1126px] md:left-[370px]">
+<div class="mt-3 flex w-fit gap-x-1 rounded-full bg-[#333333] p-[5px] shadow-[0px_4px_10px_0px_rgba(0,0,0,0.15)] sm:mt-2 sm:gap-x-0.5 sm:p-1 md:mt-1.5 mx-auto md:absolute md:top-[-443px] md:left-[370px]">
 <div class="flex h-10 w-10 items-center justify-center rounded-full bg-black sm:h-[27px] sm:w-[27px] md:h-[30px] md:w-[30px]"> 
-<svg xmlns="[invalid url, do not cite]" fill="#000000" viewBox="0 0 12 12" class="m-auto h-auto w-3.5 stroke-white sm:w-3"><path d="M6 1v10M1 6h10"></path></svg>
+<svg xmlns="http://www.w3.org/2000/svg" fill="#000000" viewBox="0 0 12 12" class="m-auto h-auto w-3.5 stroke-white sm:w-3"><path d="M6 1v10M1 6h10"></path></svg>
 </div>
 <div class="flex h-10 w-10 items-center justify-center rounded-full bg-slate-8 md:h-[30px] md:w-[30px] sm:h-[27px] sm:w-[27px]">
 <img class="m-auto h-auto w-5 sm:w-3" src="camera.svg" height="20" width="20" loading="lazy" alt="">
@@ -764,23 +830,183 @@ navigator.clipboard
 </div>
 </div>
 </div>
-<!-- line 1 -->
 <div
 class="card-wrapper hidden md:block absolute top-[50px] left-[100px] w-[100px] h-[1900px] z-[-2]"
 style="background-image: url('line1.webp'); background-size: cover; background-position: center; background-repeat: no-repeat;">
 </div>
-<!--line box ----------------------------------------------------------------------------------->
-<div
-  id="card-wrapper"
-  class="absolute top-[80px] left-[50px] w-[300px] h-[400px] z-50"
->
-  <img
-    src="lbox.png"
-    alt="Card background"
-    class="absolute inset-0 w-full h-full object-cover rounded-2xl shadow-lg z-50"
-  />
+<div id="card-wrapper"
+class="absolute top-[80px] left-[50px] w-[250px] sm:hidden">
+<div class="sm:hidden relative w-full h-[300px]">
+<img src="lbox.png"alt="Card background"
+class="sm:hidden absolute inset-0 w-full h-full object-cover rounded-2xl shadow-lg"/>
 </div>
+    </div>
+    
 </section>
+ <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const videoOverlayStates = [
+                document.getElementById('video-overlay-0'), // Knowledge at Your Fingertip
+                document.getElementById('video-overlay-1'), // Collaborate
+                document.getElementById('video-overlay-2')  // Version History
+            ];
+            const userPreviewCircle = document.getElementById('user-preview-circle');
+
+            // Scroll thresholds based on the user's screenshot analysis
+            // These values are approximate and can be adjusted
+            const threshold1 = 950; // Corresponds to 'top-[950]' for the first animation
+            const threshold2 = 1830; // Corresponds to 'top-[1830px]' for the second animation
+
+            let currentState = -1; // -1 means initial state, 0, 1, 2 for the actual states
+
+            function updateVideoOverlayContent() {
+                const scrollY = window.scrollY;
+                let newState = 0; // Default to the first state
+
+                if (scrollY >= threshold2) {
+                    newState = 2; // Version History
+                } else if (scrollY >= threshold1) {
+                    newState = 1; // Collaborate
+                } else {
+                    newState = 0; // Knowledge at Your Fingertip
+                }
+
+                if (newState !== currentState) {
+                    // Hide current state
+                    if (currentState !== -1) { // Don't try to hide if it's the initial load
+                        videoOverlayStates[currentState].classList.remove('opacity-100');
+                        videoOverlayStates[currentState].classList.add('opacity-0');
+                        // Remove animation class if previous state was video-overlay-1
+                        if (currentState === 1) {
+                            videoOverlayStates[currentState].classList.remove('video-overlay-active');
+                        }
+                    }
+
+                    // Show new state
+                    videoOverlayStates[newState].classList.remove('opacity-0');
+                    videoOverlayStates[newState].classList.add('opacity-100');
+
+                    // Add animation class if new state is video-overlay-1
+                    if (newState === 1) {
+                        videoOverlayStates[newState].classList.add('video-overlay-active');
+                    }
+
+                    currentState = newState;
+                }
+            }
+
+            function updateUserPreviewCirclePosition() {
+                const scrollY = window.scrollY;
+                const initialRight = 32; // Tailwind 'right-8'
+                const initialTop = 64; // Tailwind 'top-16'
+
+                const newTop = initialTop - (scrollY * 0.1);
+                userPreviewCircle.style.top = `${Math.max(16, newTop)}px`;
+            }
+
+            // Initial call to set the correct state on page load
+            updateVideoOverlayContent();
+            updateUserPreviewCirclePosition();
+
+            // Add scroll event listener
+            window.addEventListener('scroll', () => {
+                updateVideoOverlayContent();
+                updateUserPreviewCirclePosition();
+            });
+
+            // Handle window resize to ensure responsiveness
+            window.addEventListener('resize', () => {
+                updateUserPreviewCirclePosition();
+            });
+        });
+              // draggableContainer here //
+const draggableBox = document.getElementById('draggablePinWrapper');
+const draggableContainer = document.getElementById('draggableContainer');
+const snapTargetRow = document.getElementById('snap-target-row');
+let isDragging = false;
+let offsetX, offsetY;
+function getRect(element) {
+return element.getBoundingClientRect();
+        }
+function snapToTargetRowAndMaintainHorizontalPosition() {
+const containerRect = getRect(draggableContainer);
+const boxRect = getRect(draggableBox);
+if (!snapTargetRow) {
+console.error("Snap target row not found.");
+return;
+}
+const targetRowRect = getRect(snapTargetRow);
+const targetY = (targetRowRect.top + targetRowRect.height / 2) - containerRect.top - (boxRect.height / 2);
+const transformMatrix = new WebKitCSSMatrix(window.getComputedStyle(draggableBox).transform);
+let targetX = transformMatrix.m41;
+targetX = Math.max(0, Math.min(targetX, containerRect.width - boxRect.width));
+draggableBox.style.transform = `translate(${targetX}px, ${targetY}px)`;
+draggableBox.style.left = '0px';
+draggableBox.style.top = '0px';
+        }
+draggableBox.addEventListener('mousedown', (e) => {
+isDragging = true;
+draggableBox.classList.add('dragging');
+const boxRect = getRect(draggableBox);
+offsetX = e.clientX - boxRect.left;
+offsetY = e.clientY - boxRect.top;
+        });
+draggableContainer.addEventListener('mousemove', (e) => {
+if (!isDragging) return;
+const containerRect = getRect(draggableContainer);
+let newX = e.clientX - offsetX - containerRect.left;
+let newY = e.clientY - offsetY - containerRect.top;
+const boxRect = getRect(draggableBox);
+newX = Math.max(0, Math.min(newX, containerRect.width - boxRect.width));
+newY = Math.max(0, Math.min(newY, containerRect.height - boxRect.height));
+draggableBox.style.transform = `translate(${newX}px, ${newY}px)`;
+        });
+draggableContainer.addEventListener('mouseup', () => {
+if (isDragging) {
+isDragging = false;
+draggableBox.classList.remove('dragging');
+snapToTargetRowAndMaintainHorizontalPosition();
+            }
+        });
+draggableBox.addEventListener('touchstart', (e) => {
+isDragging = true;
+draggableBox.classList.add('dragging');
+e.preventDefault();
+const touch = e.touches[0];
+const boxRect = getRect(draggableBox);
+offsetX = touch.clientX - boxRect.left;
+offsetY = touch.clientY - boxRect.top;
+        });
+draggableContainer.addEventListener('touchmove', (e) => {
+if (!isDragging) return;
+e.preventDefault();
+const touch = e.touches[0];
+const containerRect = getRect(draggableContainer);
+let newX = touch.clientX - offsetX - containerRect.left;
+let newY = touch.clientY - offsetY - containerRect.top;
+const boxRect = getRect(draggableBox);
+newX = Math.max(0, Math.min(newX, containerRect.width - boxRect.width));
+newY = Math.max(0, Math.min(newY, containerRect.height - boxRect.height));
+draggableBox.style.transform = `translate(${newX}px, ${newY}px)`;
+        });
+draggableContainer.addEventListener('touchend', () => {
+if (isDragging) {
+isDragging = false;
+draggableBox.classList.remove('dragging');
+snapToTargetRowAndMaintainHorizontalPosition();
+            }
+        });
+window.onload = () => {
+            snapToTargetRowAndMaintainHorizontalPosition();
+        };
+
+        // Recalculate snap position on window resize
+        window.addEventListener('resize', () => {
+            snapToTargetRowAndMaintainHorizontalPosition();
+        });
+  
+ </script>
+
 <!--section 3 end-->
 <section class="py-16 sm:py-32">
 <div class="mx-auto w-full px-6 xl:max-w-7xl space-y-16 sm:space-y-32">
